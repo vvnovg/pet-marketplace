@@ -44,7 +44,19 @@ public class SecurityConfig {
                         // because {id} also matches the literal segment "me".
                         .requestMatchers(HttpMethod.GET, "/users/me").authenticated()
                         .requestMatchers(HttpMethod.GET, "/users/{id}", "/users/{id}/**").permitAll()
-                        .requestMatchers("/swagger-ui/**", "/v3/api-docs/**").permitAll()
+                        // Swagger / OpenAPI must be publicly reachable. Note the separate
+                        // entries: /swagger-ui/** covers the UI assets but NOT the /swagger-ui.html
+                        // redirect entry point (a root segment, not a child path); likewise
+                        // /v3/api-docs/** covers /v3/api-docs and /v3/api-docs/swagger-config but
+                        // NOT /v3/api-docs.yaml. Without these, both fall through to
+                        // anyRequest().authenticated() and the UI fails to open unauthenticated.
+                        .requestMatchers(
+                                "/swagger-ui.html",
+                                "/swagger-ui/**",
+                                "/v3/api-docs",
+                                "/v3/api-docs/**",
+                                "/v3/api-docs.yaml")
+                        .permitAll()
                         .requestMatchers("/actuator/health").permitAll()
                         .requestMatchers("/admin/**").hasAnyRole("ADMIN", "MODERATOR")
                         .anyRequest().authenticated()
