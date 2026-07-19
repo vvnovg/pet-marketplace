@@ -72,6 +72,18 @@ server:
   servlet:
     context-path: /api/v1
 
+kafka:
+  bootstrap-servers: ${KAFKA_BOOTSTRAP_SERVERS:localhost:9092}
+  consumer:
+    group-id: ${KAFKA_CONSUMER_GROUP:pet-marketplace-animal-info}
+    auto-offset-reset: ${KAFKA_AUTO_OFFSET_RESET:earliest}
+    concurrency: ${KAFKA_CONCURRENCY:1}
+  producer:
+    acks: ${KAFKA_PRODUCER_ACKS:all}
+  topics:
+    request: ${KAFKA_TOPIC_REQUEST:pet-marketplace.animal-info.requests}
+    reply: ${KAFKA_TOPIC_REPLY:pet-marketplace.animal-info.replies}
+
 security:
   jwt:
     secret: ${JWT_SECRET:change-me-in-production-use-a-secure-random-string-of-at-least-256-bits}

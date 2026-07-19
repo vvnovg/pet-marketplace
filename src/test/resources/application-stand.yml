@@ -39,3 +39,15 @@ security:
 tests:
   # Base URL the RestClient targets instead of the in-JVM server's random port.
   base-url: ${STAND_BASE_URL:http://localhost:8080/api/v1}
+
+kafka:
+  bootstrap-servers: ${STAND_KAFKA_BOOTSTRAP_SERVERS:localhost:9092}
+  consumer:
+    group-id: ${STAND_KAFKA_CONSUMER_GROUP:pet-marketplace-animal-info-test}
+    auto-offset-reset: earliest
+    concurrency: 1
+  producer:
+    acks: all
+  topics:
+    request: ${STAND_KAFKA_TOPIC_REQUEST:pet-marketplace.animal-info.requests}
+    reply: ${STAND_KAFKA_TOPIC_REPLY:pet-marketplace.animal-info.replies}
