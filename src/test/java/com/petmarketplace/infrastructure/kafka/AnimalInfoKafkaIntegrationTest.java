@@ -188,9 +188,10 @@ class AnimalInfoKafkaIntegrationTest extends IntegrationTestBase {
 
     @Test
     void shouldReplyErrorForMalformedRequestBody() {
-        // Produce raw bytes that are not valid JSON for AnimalInfoRequest. The listener's
-        // ErrorHandlingDeserializer will set value=null + attach the exception header, and the
-        // listener replies ERROR (see AnimalInfoRequestListener: record.value() == null branch).
+        // Produce raw bytes that are not valid JSON for AnimalInfoRequest. KafkaConfig's
+        // failedDeserializationFunction returns the sentinel AnimalInfoRequest(null), which reaches
+        // process() and is reported as ERROR ("Missing listingId"). The reply carries the request's
+        // correlationId (see AnimalInfoRequestListener.process / AnimalInfoRequestListener).
         String correlationId = UUID.randomUUID().toString();
         DefaultKafkaProducerFactory<String, String> badFactory =
                 new DefaultKafkaProducerFactory<>(

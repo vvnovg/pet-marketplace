@@ -69,9 +69,9 @@ public class AnimalInfoRequestListener {
         String correlationId = readCorrelationId(record);
         UUID safeListingId = record.value() != null ? record.value().listingId() : null;
 
-        // Deserialization failure: ErrorHandlingDeserializer (default config, no failedDeserializationFunction)
-        // returns null on failure. A valid AnimalInfoRequest always deserializes to a non-null object
-        // (even {} -> AnimalInfoRequest(null)), so a null value reliably means a deserialization failure.
+        // KafkaConfig installs a failedDeserializationFunction returning AnimalInfoRequest(null) as a sentinel,
+        // so malformed JSON reaches process() (which turns the null listingId into an ERROR reply). This null
+        // branch is retained as a defensive safety net for any future deserializer change that drops the sentinel.
         if (record.value() == null) {
             log.warn("Failed to deserialize animal-info request correlationId={}", correlationId);
             sendReply(correlationId,
