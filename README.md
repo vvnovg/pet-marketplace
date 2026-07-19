@@ -123,6 +123,63 @@ http://localhost:8080/api/v1/v3/api-docs
 
 Protected endpoints require a JWT bearer token. Use `/auth/login` or `/auth/register` + `/auth/verify-email` to obtain one.
 
+## Authentication
+
+Access tokens (JWT, HS256) are valid for **15 minutes**; refresh tokens are valid for **7 days** and rotate on use via `POST /auth/refresh`. Send the access token as `Authorization: Bearer <token>` (or use the **Authorize** button in Swagger UI).
+
+### Obtaining a token on the stand
+
+There is no pre-seeded user — create one and log in. Registration creates a `BUYER` with `is_verified = false`; login rejects unverified accounts, so the email must be verified first.
+
+```bash
+# 1. register (creates an unverified BUYER)
+curl -X POST http://localhost:8080/api/v1/auth/register \
+  -H 'Content-Type: application/json' \
+  -d '{"email":"buyer@stand.local","password":"Password1!","firstName":"Buyer","lastName":"Stand"}'
+
+# 2. verify — with MAIL_ENABLED=false (default) no email is sent; the verify token is in Redis.
+TOKEN=$(docker exec petmarketplace-redis redis-cli --scan --pattern 'verify:*' \
+  | while read k; do v=$(docker exec petmarketplace-redis redis-cli GET "$k"); \
+     [ "$v" = "buyer@stand.local" ] && echo "${k#verify:}"; done | head -1)
+curl -X POST "http://localhost:8080/api/v1/auth/verify-email?token=$TOKEN"
+
+# 3. login
+curl -X POST http://localhost:8080/api/v1/auth/login \
+  -H 'Content-Type: application/json' \
+  -d '{"email":"buyer@stand.local","password":"Password1!"}'
+```
+
+For quick local testing you can skip the email round-trip and flip the flag directly:
+
+```bash
+docker exec petmarketplace-postgres psql -U petmarketplace -d petmarketplace -c \
+  "update users set is_verified = true where email = 'buyer@stand.local';"
+```
+
+### Testing role-restricted endpoints (`/admin/**`)
+
+Public registration only creates `BUYER` accounts (`AuthService.register` hardcodes the role), so `SELLER`, `ADMIN` and `MODERATOR` users must be provisioned directly in the database. The snippet below reuses an existing user's bcrypt hash so the same password works, then you log in to get a token for that role:
+
+```bash
+psqlq() { docker exec petmarketplace-postgres psql -U petmarketplace -d petmarketplace -tA "$@"; }
+HASH=$(psqlq -c "select password_hash from users where email='buyer@stand.local';")
+for ROLE in SELLER ADMIN MODERATOR; do
+  EMAIL="${ROLE,,}@stand.local"
+  psqlq -c "insert into users (id, email, first_name, last_name, password_hash, role, is_active, is_verified, created_at, updated_at)
+            values (gen_random_uuid(), '$EMAIL', '$ROLE', 'Stand', '$HASH', '$ROLE', true, true, now(), now());"
+  UID=$(psqlq -c "select id from users where email='$EMAIL';")
+  psqlq -c "insert into profiles (id, user_id, country, city, rating, total_reviews, created_at)
+            values (gen_random_uuid(), '$UID', 'Russia', 'Moscow', 0, 0, now()) on conflict do nothing;"
+done
+
+# then log in as the role you need:
+curl -X POST http://localhost:8080/api/v1/auth/login \
+  -H 'Content-Type: application/json' \
+  -d '{"email":"admin@stand.local","password":"Password1!"}'
+```
+
+The stand uses the dev default JWT secret (`change-me-in-production-use-a-secure-random-string-of-at-least-256-bits`) unless `JWT_SECRET` is set — tokens minted by the stand validate only against that same secret.
+
 ## Environment Variables
 
 | Variable | Default | Description |
