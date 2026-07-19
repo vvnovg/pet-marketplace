@@ -6,16 +6,13 @@ import java.util.UUID;
 import org.apache.kafka.clients.consumer.ConsumerRecord;
 import org.apache.kafka.common.header.Header;
 import org.apache.kafka.common.header.internals.RecordHeader;
-import org.apache.kafka.common.serialization.ByteArraySerializer;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.kafka.annotation.KafkaListener;
 import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.kafka.support.KafkaHeaders;
-import org.springframework.kafka.support.serializer.SerializationUtils;
 import org.springframework.stereotype.Component;
-import org.springframework.util.backoff.FixedBackOff;
 
 /**
  * Consumes {@link AnimalInfoRequest} from the request topic, looks up the animal, and publishes an
@@ -72,10 +69,10 @@ public class AnimalInfoRequestListener {
         String correlationId = readCorrelationId(record);
         UUID safeListingId = record.value() != null ? record.value().listingId() : null;
 
-        // Deserialization failure: ErrorHandlingDeserializer set value=null and attached the
-        // exception as a header. Reply ERROR with the (possibly generated) correlationId.
-        if (record.value() == null
-                && record.headers().lastHeader(SerializationUtils.VALUE_DESERIALIZER_EXCEPTION_HEADER) != null) {
+        // Deserialization failure: ErrorHandlingDeserializer (default config, no failedDeserializationFunction)
+        // returns null on failure. A valid AnimalInfoRequest always deserializes to a non-null object
+        // (even {} -> AnimalInfoRequest(null)), so a null value reliably means a deserialization failure.
+        if (record.value() == null) {
             log.warn("Failed to deserialize animal-info request correlationId={}", correlationId);
             sendReply(correlationId,
                     AnimalInfoResponse.error(correlationId, null, "Failed to deserialize request"));
