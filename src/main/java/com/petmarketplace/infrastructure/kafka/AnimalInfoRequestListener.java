@@ -109,6 +109,17 @@ public class AnimalInfoRequestListener {
                         replyTopic, (Integer) null, (String) null, response,
                         List.of(new RecordHeader(KafkaHeaders.CORRELATION_ID,
                                 correlationId.getBytes(StandardCharsets.UTF_8))));
-        replyKafkaTemplate.send(reply);
+        // KafkaTemplate.send() is async: produce failures surface on the returned future, not at the
+        // call site. Attach a failure callback so a lost reply is observable (logged at ERROR with the
+        // correlationId/listingId/status) instead of silently dropped. The failure is intentionally
+        // swallowed (not rethrown) — per the no-redelivery contract, ack.acknowledge() is still called
+        // by the caller and we accept the rare lost reply rather than risk duplicating it. The goal here
+        // is observability of the loss, not prevention/retry.
+        replyKafkaTemplate.send(reply).whenComplete((result, ex) -> {
+            if (ex != null) {
+                log.error("Failed to publish animal-info reply correlationId={} listingId={} status={}",
+                        correlationId, response.listingId(), response.status(), ex);
+            }
+        });
     }
 }
