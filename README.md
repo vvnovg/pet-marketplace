@@ -11,6 +11,7 @@ Backend REST API for a pet marketplace. Connects sellers (breeders, shelters, pr
 | ORM | Spring Data JPA (Hibernate) |
 | Database | PostgreSQL 16 |
 | Cache | Redis 7 |
+| Message broker | Apache Kafka (KRaft) + Spring Kafka |
 | Security | Spring Security + JWT (access/refresh tokens) |
 | API Docs | OpenAPI 3 + SpringDoc |
 | Build | Gradle (Kotlin DSL) |
@@ -24,7 +25,7 @@ The application follows a layered architecture:
 
 - `application` — REST controllers, DTOs, mappers and services
 - `domain` — JPA entities, enums and Spring Data repositories
-- `infrastructure` — security, file storage, email notifications and configuration
+- `infrastructure` — security, file storage, email notifications, Kafka integration and configuration
 
 Main modules: auth, users, listings, categories, bookings, messages, reviews, favorites, subscriptions and admin.
 
@@ -42,7 +43,7 @@ Main modules: auth, users, listings, categories, bookings, messages, reviews, fa
 docker-compose up -d
 ```
 
-This starts PostgreSQL, Redis, MinIO and Mailpit.
+This starts PostgreSQL, Redis, MinIO, Mailpit and Kafka (KRaft single-node). The two Kafka topics (`pet-marketplace.animal-info.requests` / `pet-marketplace.animal-info.replies`) are NOT auto-created — provision them once as shown in the [Kafka integration](#kafka-integration) section before first use.
 
 ### 2. Run the application
 
@@ -66,11 +67,11 @@ docker-compose down -v
 
 ## How to Run Tests
 
-The same integration suite (72 tests) runs in two modes.
+The same integration suite (86 tests) runs in two modes.
 
 ### Embedded (Testcontainers) — default
 
-Spins up PostgreSQL and Redis in Docker automatically. Requires Docker.
+Spins up PostgreSQL, Redis and Kafka in Docker automatically. Requires Docker.
 
 ```bash
 gradle test
@@ -94,6 +95,8 @@ gradle bootRun
 # 2. run the tests against it (in another terminal)
 gradle testOnStand
 ```
+
+In stand mode the compose Kafka broker has `AUTO_CREATE_TOPICS_ENABLE=false`, so before `testOnStand` provision the two topics once (commands in the [Kafka integration](#kafka-integration) section); alternatively point `STAND_KAFKA_BOOTSTRAP_SERVERS` at a remote broker where they already exist.
 
 By default this targets a stand at `http://localhost:8080/api/v1` with the local compose database. For a remote stand, override via env vars (the `STAND_JWT_SECRET` must match the stand's `JWT_SECRET` so tokens minted by the tests validate on the stand):
 
