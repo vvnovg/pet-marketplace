@@ -180,6 +180,43 @@ curl -X POST http://localhost:8080/api/v1/auth/login \
 
 The stand uses the dev default JWT secret (`change-me-in-production-use-a-secure-random-string-of-at-least-256-bits`) unless `JWT_SECRET` is set — tokens minted by the stand validate only against that same secret.
 
+## Kafka integration
+
+A request/reply integration lives under `src/main/java/com/petmarketplace/infrastructure/kafka`. An external system produces a `{ "listingId": "<uuid>" }` JSON message to the **request topic** with a `correlationId` Kafka header; the app's `@KafkaListener` (`AnimalInfoRequestListener`) looks up the listing via `AnimalInfoService` and publishes an `AnimalInfoResponse` (status `OK` / `NOT_FOUND` / `ERROR`) to the **reply topic** with the same `correlationId` header. Only `ACTIVE` / `RESERVED` / `SOLD` listings are returned as `OK`; everything else (missing or non-public) is `NOT_FOUND`.
+
+| Topic | Default name |
+|-------|--------------|
+| Request | `pet-marketplace.animal-info.requests` |
+| Reply | `pet-marketplace.animal-info.replies` |
+
+All settings are externalized under the `kafka.*` properties and overridable via env vars:
+
+| Variable | Default | Description |
+|----------|---------|-------------|
+| `KAFKA_BOOTSTRAP_SERVERS` | `localhost:9092` | Kafka broker address |
+| `KAFKA_CONSUMER_GROUP` | `pet-marketplace-animal-info` | Consumer group id |
+| `KAFKA_AUTO_OFFSET_RESET` | `earliest` | Consumer auto-offset-reset |
+| `KAFKA_CONCURRENCY` | `1` | Listener container concurrency |
+| `KAFKA_PRODUCER_ACKS` | `all` | Producer acks setting |
+| `KAFKA_TOPIC_REQUEST` | `pet-marketplace.animal-info.requests` | Request topic name |
+| `KAFKA_TOPIC_REPLY` | `pet-marketplace.animal-info.replies` | Reply topic name |
+
+Topics are NOT auto-created by the app (`KAFKA_AUTO_CREATE_TOPICS_ENABLE=false` in compose). Provision them once before first use (the compose `kafka` service ships with the Confluent CLI):
+
+```bash
+docker exec petmarketplace-kafka kafka-topics --bootstrap-server localhost:9092 \
+  --create --topic pet-marketplace.animal-info.requests --partitions 1 --replication-factor 1
+docker exec petmarketplace-kafka kafka-topics --bootstrap-server localhost:9092 \
+  --create --topic pet-marketplace.animal-info.replies --partitions 1 --replication-factor 1
+docker exec petmarketplace-kafka kafka-topics --bootstrap-server localhost:9092 --list
+```
+
+For non-compose deployments, the operator runs the equivalent `kafka-topics` (or `bin/kafka-topics.sh`) commands against the production broker.
+
+### Stand Kafka requirement
+
+`gradle testOnStand` requires the compose `kafka` service to be running (`docker-compose up -d kafka`) so the stand profile's `kafka.bootstrap-servers` (`localhost:9092`) can reach a broker, or `STAND_KAFKA_BOOTSTRAP_SERVERS` must point at a remote broker.
+
 ## Environment Variables
 
 | Variable | Default | Description |
@@ -210,5 +247,9 @@ The stand uses the dev default JWT secret (`change-me-in-production-use-a-secure
 | `STAND_REDIS_HOST` | `localhost` | Stand Redis host |
 | `STAND_REDIS_PORT` | `6379` | Stand Redis port |
 | `STAND_JWT_SECRET` | the dev default secret | Must match the stand's `JWT_SECRET` |
+| `STAND_KAFKA_BOOTSTRAP_SERVERS` | `localhost:9092` | Stand Kafka broker address |
+| `STAND_KAFKA_CONSUMER_GROUP` | `pet-marketplace-animal-info-test` | Stand-mode consumer group id |
+| `STAND_KAFKA_TOPIC_REQUEST` | `pet-marketplace.animal-info.requests` | Stand-mode request topic |
+| `STAND_KAFKA_TOPIC_REPLY` | `pet-marketplace.animal-info.replies` | Stand-mode reply topic |
 
 These variables can be exported or placed in an `application-local.yml` / `.env` file and referenced via Spring configuration.

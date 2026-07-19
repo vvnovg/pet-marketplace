@@ -99,6 +99,33 @@ JWT properties come from `security.jwt.*` in `application.yml` or from environme
 
 `FileStorageService` is the abstraction. The active implementation is selected by `storage.provider` (`local` or `minio`). Local storage writes to `storage.local.base-path` (default `./uploads`). MinIO settings are in `storage.minio.*`.
 
+## Kafka Integration
+
+A request/reply integration under `infrastructure/kafka`: an external system produces an
+`{ "listingId": "<uuid>" }` message (with a `correlationId` Kafka header, `KafkaHeaders.CORRELATION_ID`) to the request topic, the
+app's `@KafkaListener` (`AnimalInfoRequestListener`) looks up the listing via `AnimalInfoService`,
+and publishes an `AnimalInfoResponse` (status `OK` / `NOT_FOUND` / `ERROR`) to the reply topic with the
+same `correlationId` header. Only `ACTIVE` / `RESERVED` / `SOLD` listings are returned as `OK`;
+everything else (missing or non-public) is `NOT_FOUND`. All wiring is externalized under the `kafka.*`
+properties (broker, consumer/producer settings, topic names), overridable via `KAFKA_*` env vars.
+The package also contains `KafkaConfig` (producer/consumer factories, `KafkaTemplate`, `ConcurrentKafkaListenerContainerFactory`),
+`KafkaIntegrationProperties` (`@ConfigurationProperties("kafka")`), `AnimalInfoRequest`/`AnimalInfoResponse` records,
+`AnimalInfoMapper` (MapStruct), and the `ReplyStatus` enum.
+
+Topics are NOT auto-created by the app (`KAFKA_AUTO_CREATE_TOPICS_ENABLE=false` in compose). Create
+them on any deployment before first use:
+
+    docker exec petmarketplace-kafka kafka-topics --bootstrap-server localhost:9092 \
+      --create --topic pet-marketplace.animal-info.requests --partitions 1 --replication-factor 1
+    docker exec petmarketplace-kafka kafka-topics --bootstrap-server localhost:9092 \
+      --create --topic pet-marketplace.animal-info.replies --partitions 1 --replication-factor 1
+
+Tests: `gradle test` starts a shared `KafkaContainer` (Testcontainers, `apache/kafka:3.7.1` image) in
+`IntegrationTestBase` and binds `kafka.bootstrap-servers` to it. `gradle testOnStand` targets the
+stand's Kafka — the compose `kafka` service (`confluentinc/cp-kafka:7.6.1`, a different image but the
+same Kafka 3.x wire protocol) must be running first (`docker-compose up -d kafka`), or `STAND_KAFKA_*`
+env vars must point at a remote broker.
+
 ## Email and Notifications
 
 Emails are sent asynchronously using a dedicated thread pool. Templates live in `src/main/resources/templates/mail/`. When `mail.enabled` is `false` (default), the `EmailSenderStub` logs messages instead of sending them. Mailpit is available in Docker Compose for local testing on port `1025` (SMTP) and `8025` (web UI).

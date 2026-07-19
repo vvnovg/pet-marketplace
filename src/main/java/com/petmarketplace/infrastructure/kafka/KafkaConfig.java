@@ -1,0 +1,108 @@
+package com.petmarketplace.infrastructure.kafka;
+
+import java.util.HashMap;
+import java.util.Map;
+import org.apache.kafka.clients.consumer.ConsumerConfig;
+import org.apache.kafka.clients.producer.ProducerConfig;
+import org.apache.kafka.common.serialization.StringDeserializer;
+import org.apache.kafka.common.serialization.StringSerializer;
+import org.springframework.boot.context.properties.EnableConfigurationProperties;
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
+import org.springframework.kafka.annotation.EnableKafka;
+import org.springframework.kafka.config.ConcurrentKafkaListenerContainerFactory;
+import org.springframework.kafka.core.ConsumerFactory;
+import org.springframework.kafka.core.DefaultKafkaConsumerFactory;
+import org.springframework.kafka.core.DefaultKafkaProducerFactory;
+import org.springframework.kafka.core.KafkaTemplate;
+import org.springframework.kafka.core.ProducerFactory;
+import org.springframework.kafka.listener.ContainerProperties.AckMode;
+import org.springframework.kafka.listener.DefaultErrorHandler;
+import org.springframework.kafka.support.serializer.ErrorHandlingDeserializer;
+import org.springframework.kafka.support.serializer.JacksonJsonDeserializer;
+import org.springframework.kafka.support.serializer.JacksonJsonSerializer;
+import org.springframework.util.backoff.FixedBackOff;
+import tools.jackson.databind.json.JsonMapper;
+
+/**
+ * Wires the animal-info request/reply Kafka integration from {@link KafkaIntegrationProperties}.
+ * Uses Spring Kafka 4.0's Jackson-3 {@code JacksonJsonSerializer}/{@code JacksonJsonDeserializer}
+ * (NOT the deprecated Jackson-2 variants) so the app stays on a single Jackson 3 classpath.
+ *
+ * Request side: a {@code @KafkaListener} consumes {@link AnimalInfoRequest} (value deserializer
+ * wrapped in {@link ErrorHandlingDeserializer} so a malformed payload yields a null record value
+ * plus a deserialization-exception header instead of throwing the container into retry storms).
+ * Reply side: a {@link KafkaTemplate} publishes {@link AnimalInfoResponse} with no type-info header
+ * (external systems must not be required to emit/read Spring Kafka type headers).
+ */
+@EnableKafka
+@EnableConfigurationProperties(KafkaIntegrationProperties.class)
+@Configuration
+public class KafkaConfig {
+
+    @Bean
+    public ConsumerFactory<String, AnimalInfoRequest> animalInfoConsumerFactory(
+            KafkaIntegrationProperties props, JsonMapper jsonMapper) {
+        Map<String, Object> cfg = new HashMap<>();
+        cfg.put(ConsumerConfig.BOOTSTRAP_SERVERS_CONFIG, props.bootstrapServersOrDefault());
+        cfg.put(ConsumerConfig.GROUP_ID_CONFIG, props.groupIdOrDefault());
+        cfg.put(ConsumerConfig.AUTO_OFFSET_RESET_CONFIG, props.autoOffsetResetOrDefault());
+        cfg.put(ConsumerConfig.ENABLE_AUTO_COMMIT_CONFIG, false);
+        cfg.put(ConsumerConfig.KEY_DESERIALIZER_CLASS_CONFIG, StringDeserializer.class);
+        // ErrorHandlingDeserializer swallows deserialization failures so a poison-pill payload does
+        // not loop the container. In spring-kafka 4.0 the DEFAULT behaviour (return null + attach a
+        // deserialization-exception header) is intercepted by the container's checkDeser BEFORE the
+        // listener is invoked: the record is routed straight to the CommonErrorHandler and the
+        // listener never sees it (so it can never reply). To keep the listener in control of every
+        // reply, install a failedDeserializationFunction that returns a sentinel AnimalInfoRequest(null)
+        // instead of null — no exception header is attached, checkDeser does not fire, and the
+        // listener's process() turns the null listingId into an ERROR reply (with the request's
+        // correlationId header copied through). The listener's record.value() == null branch is kept
+        // as a defensive safety net for any future deserializer that returns null without the header.
+        ErrorHandlingDeserializer<AnimalInfoRequest> valueDeserializer =
+                new ErrorHandlingDeserializer<>(new JacksonJsonDeserializer<>(AnimalInfoRequest.class, jsonMapper));
+        valueDeserializer.setFailedDeserializationFunction(info -> new AnimalInfoRequest(null));
+        return new DefaultKafkaConsumerFactory<>(cfg, new StringDeserializer(), valueDeserializer);
+    }
+
+    @Bean(name = "animalInfoListenerContainerFactory")
+    public ConcurrentKafkaListenerContainerFactory<String, AnimalInfoRequest> animalInfoListenerContainerFactory(
+            ConsumerFactory<String, AnimalInfoRequest> animalInfoConsumerFactory,
+            KafkaIntegrationProperties props) {
+        ConcurrentKafkaListenerContainerFactory<String, AnimalInfoRequest> factory =
+                new ConcurrentKafkaListenerContainerFactory<>();
+        factory.setConsumerFactory(animalInfoConsumerFactory);
+        factory.setConcurrency(props.concurrencyOrDefault());
+        // MANUAL_IMMEDIATE so the listener's Acknowledgment parameter is populated and its
+        // ack.acknowledge() commits each record after a reply has been published. (AckMode.RECORD
+        // auto-acks after the listener returns but does NOT inject an Acknowledgment argument —
+        // the listener's `ack.acknowledge()` call then throws "No Acknowledgment available",
+        // failing every record. This surfaces only in the end-to-end test; Task 6's unit test
+        // mocked the Acknowledgment so it never hit this.)
+        factory.getContainerProperties().setAckMode(AckMode.MANUAL_IMMEDIATE);
+        // No retries (FixedBackOff(0, 0) => zero attempts); the default recoverer logs and stops. The
+        // listener catches every exception itself and always replies, so this handler is only a
+        // safety net — it must never redeliver a record.
+        factory.setCommonErrorHandler(new DefaultErrorHandler(new FixedBackOff(0L, 0L)));
+        return factory;
+    }
+
+    @Bean
+    public ProducerFactory<String, AnimalInfoResponse> animalInfoProducerFactory(
+            KafkaIntegrationProperties props, JsonMapper jsonMapper) {
+        Map<String, Object> cfg = new HashMap<>();
+        cfg.put(ProducerConfig.BOOTSTRAP_SERVERS_CONFIG, props.bootstrapServersOrDefault());
+        cfg.put(ProducerConfig.KEY_SERIALIZER_CLASS_CONFIG, StringSerializer.class);
+        cfg.put(ProducerConfig.ACKS_CONFIG, props.acksOrDefault());
+        cfg.put(ProducerConfig.ENABLE_IDEMPOTENCE_CONFIG, true);
+        return new DefaultKafkaProducerFactory<>(cfg,
+                new StringSerializer(),
+                new JacksonJsonSerializer<AnimalInfoResponse>(jsonMapper).noTypeInfo());
+    }
+
+    @Bean(name = "animalInfoKafkaTemplate")
+    public KafkaTemplate<String, AnimalInfoResponse> animalInfoKafkaTemplate(
+            ProducerFactory<String, AnimalInfoResponse> animalInfoProducerFactory) {
+        return new KafkaTemplate<>(animalInfoProducerFactory);
+    }
+}

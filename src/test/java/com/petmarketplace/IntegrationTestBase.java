@@ -32,6 +32,8 @@ import org.springframework.test.context.TestExecutionListeners.MergeMode;
 import org.springframework.web.client.RestClient;
 import org.testcontainers.containers.GenericContainer;
 import org.testcontainers.containers.PostgreSQLContainer;
+import org.testcontainers.kafka.KafkaContainer;
+import org.testcontainers.utility.DockerImageName;
 
 /**
  * Two run modes, selected by the {@code tests.mode} system property:
@@ -75,6 +77,12 @@ public abstract class IntegrationTestBase {
 
     private static final String POSTGRES_IMAGE = "postgres:16-alpine";
     private static final String REDIS_IMAGE = "redis:7-alpine";
+    // The new Testcontainers KafkaContainer (1.21.0) is built for the official apache/kafka image
+    // (KRaft mode) — it starts the broker via /etc/kafka/docker/run, which the confluent image does
+    // NOT ship. The confluent image's startup script is missing, so the container exits with code
+    // 127. apache/kafka ships that entrypoint and the "Transitioning from RECOVERY to RUNNING" log
+    // line the container's LogMessageWaitStrategy waits for. Tag pinned for reproducibility.
+    private static final String KAFKA_IMAGE = "apache/kafka:3.7.1";
 
     // Shared containers: started ONCE per JVM and kept alive for the whole test run. Using
     // @Container instead would stop each container after its test class completes, but the
@@ -90,11 +98,21 @@ public abstract class IntegrationTestBase {
     private static final GenericContainer<?> REDIS = new GenericContainer<>(REDIS_IMAGE)
             .withExposedPorts(6379);
 
+    // Shared Kafka broker for the animal-info request/reply integration tests. Same shared-container
+    // rationale as POSTGRES/REDIS: started once per JVM in the static block (NOT @Container), so the
+    // cached Spring context's @KafkaListener container keeps a stable bootstrap address across test
+    // classes. In stand mode this is never started (the stand profile supplies kafka.bootstrap-servers).
+    // KafkaContainer's constructor asserts the image is compatible with "apache/kafka" (its
+    // reference image). apache/kafka:3.7.1 IS apache/kafka, so no asCompatibleSubstituteFor is
+    // needed — parse and pass directly.
+    private static final KafkaContainer KAFKA = new KafkaContainer(DockerImageName.parse(KAFKA_IMAGE));
+
     static {
         if (!STAND_MODE) {
             try {
                 POSTGRES.start();
                 REDIS.start();
+                KAFKA.start();
                 dockerAvailable = true;
             } catch (Exception e) {
                 // Docker unavailable: leave containers unstarted. TestModeCondition then disables
@@ -130,6 +148,8 @@ public abstract class IntegrationTestBase {
 
         registry.add("spring.data.redis.host", REDIS::getHost);
         registry.add("spring.data.redis.port", REDIS::getFirstMappedPort);
+
+        registry.add("kafka.bootstrap-servers", KAFKA::getBootstrapServers);
     }
 
     @LocalServerPort

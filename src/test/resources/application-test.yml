@@ -71,3 +71,15 @@ logging:
     org.hibernate.SQL: WARN
   pattern:
     console: "%d{yyyy-MM-dd HH:mm:ss.SSS} [%thread] %-5level %logger{36} - %msg%n"
+
+kafka:
+  bootstrap-servers: placeholder-overridden-by-dynamic-property-source
+  consumer:
+    group-id: pet-marketplace-animal-info-test
+    auto-offset-reset: earliest
+    concurrency: 1
+  producer:
+    acks: all
+  topics:
+    request: pet-marketplace.animal-info.requests
+    reply: pet-marketplace.animal-info.replies
