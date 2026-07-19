@@ -32,6 +32,12 @@ Run a single test class:
 gradle test --tests "com.petmarketplace.application.auth.controller.AuthControllerTest"
 ```
 
+Run the same suite against an external stand instead of Testcontainers (no Docker needed; the stand must already be running — `docker-compose up -d && gradle bootRun`):
+
+```bash
+gradle testOnStand
+```
+
 Run the application locally:
 
 ```bash
@@ -76,6 +82,7 @@ Spring Security is configured in `infrastructure/security/SecurityConfig`:
 
 - Stateless JWT sessions.
 - Public endpoints: `/auth/**`, `/categories/**`, `GET /listings/**`, `GET /users/{id}/**`, Swagger, `/actuator/health`.
+- `GET /users/me` is registered as authenticated *before* `GET /users/{id}` (which is public), so the literal segment `me` is not swallowed by the `{id}` path variable.
 - `/admin/**` requires `ADMIN` or `MODERATOR` role.
 - All other endpoints require authentication.
 
@@ -106,7 +113,14 @@ Active profile is `dev` by default. Profile-specific settings are merged from `a
 
 ## Testing
 
-Integration tests extend `IntegrationTestBase`, which starts Testcontainers for PostgreSQL and Redis and binds them via `@DynamicPropertySource`. The `test` profile uses a dedicated JWT secret and a random server port. Tests are skipped automatically when Docker is unavailable (`@Testcontainers(disabledWithoutDocker = true)`).
+Integration tests extend `IntegrationTestBase` and run in **two modes** selected by the `tests.mode` system property:
+
+- **embedded** (default, `gradle test`) — Testcontainers starts PostgreSQL and Redis once per JVM in `IntegrationTestBase`'s static block (NOT `@Container`, which would stop them per class while the cached Spring context keeps a dead DataSource → `ConnectException`). `@DynamicPropertySource` binds the containers. Requires Docker; `TestModeCondition` skips the suite cleanly when Docker is absent.
+- **stand** (`gradle testOnStand`) — no Testcontainers. The app still boots in-JVM, but the `stand` profile (`application-stand.yml`) points its DataSource/Redis/JWT secret at an already-running external stand and the RestClient targets `tests.base-url` instead of the in-JVM port. `StandDataTestExecutionListener` runs `src/test/resources/stand/seed.sql` before each test class and `cleanup.sql` after (even on failure), via `ResourceDatabasePopulator` against the context `DataSource`. Override the stand location with `STAND_BASE_URL`, `STAND_DB_URL`, `STAND_DB_USER`, `STAND_DB_PASSWORD`, `STAND_REDIS_HOST`, `STAND_REDIS_PORT`, `STAND_JWT_SECRET` env vars.
+
+Stand mode shares the stand's DB and JWT secret rather than being pure HTTP because public registration only creates `BUYER` accounts (`AuthService.register` hardcodes the role), so the tests create `SELLER`/`ADMIN`/`MODERATOR` users directly via the autowired `UserRepository` — only valid against the stand if the test JVM signs JWTs with the same secret. Test-created rows are identified by `email LIKE '%@example.com'` and deleted in FK-dependency order (the entities' `@ManyToOne` FKs have no `ON DELETE CASCADE`).
+
+The `test` profile uses a dedicated JWT secret and a random server port. `IntegrationTestBase` builds its `RestClient` with `RestClient.builder()` (Spring Boot 4 has no auto-configured `RestClient.Builder` bean); tests that inspect raw JSON read the body as a `String` and parse it rather than deserializing into `JsonNode` (the default converter mishandles it on this Jackson 2/3 mixed classpath — the app uses Jackson 3, there is no Jackson 2 `ObjectMapper` bean).
 
 ## Code Conventions
 

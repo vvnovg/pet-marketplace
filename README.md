@@ -66,7 +66,11 @@ docker-compose down -v
 
 ## How to Run Tests
 
-Integration tests use Testcontainers to spin up PostgreSQL and Redis automatically.
+The same integration suite (72 tests) runs in two modes.
+
+### Embedded (Testcontainers) — default
+
+Spins up PostgreSQL and Redis in Docker automatically. Requires Docker.
 
 ```bash
 gradle test
@@ -76,6 +80,31 @@ To run a single test class:
 
 ```bash
 gradle test --tests "com.petmarketplace.application.auth.controller.AuthControllerTest"
+```
+
+### Against an external stand — `testOnStand`
+
+Runs the tests against an already-running instance of the app (local `docker-compose up -d && gradle bootRun`, or a remote stand) instead of Testcontainers. No Docker required on the test machine. The test JVM connects to the stand's database and Redis and drives the stand's HTTP API; test data is seeded before each test class and cleaned up after.
+
+```bash
+# 1. start the stand (in one terminal)
+docker-compose up -d
+gradle bootRun
+
+# 2. run the tests against it (in another terminal)
+gradle testOnStand
+```
+
+By default this targets a stand at `http://localhost:8080/api/v1` with the local compose database. For a remote stand, override via env vars (the `STAND_JWT_SECRET` must match the stand's `JWT_SECRET` so tokens minted by the tests validate on the stand):
+
+```bash
+STAND_BASE_URL=http://stand.example.com/api/v1 \
+STAND_DB_URL=jdbc:postgresql://stand.example.com:5432/petmarketplace \
+STAND_DB_USER=petmarketplace \
+STAND_DB_PASSWORD=petmarketplace \
+STAND_REDIS_HOST=stand.example.com \
+STAND_JWT_SECRET=<the stand's JWT secret> \
+gradle testOnStand
 ```
 
 ## API Documentation
@@ -112,5 +141,17 @@ Protected endpoints require a JWT bearer token. Use `/auth/login` or `/auth/regi
 | `MAIL_PORT` | `1025` | SMTP port |
 | `MAIL_USERNAME` | `` | SMTP username |
 | `MAIL_PASSWORD` | `` | SMTP password |
+
+### Stand test mode (`testOnStand`)
+
+| Variable | Default | Description |
+|----------|---------|-------------|
+| `STAND_BASE_URL` | `http://localhost:8080/api/v1` | Base URL the tests drive via HTTP |
+| `STAND_DB_URL` | `jdbc:postgresql://localhost:5432/petmarketplace` | JDBC URL of the stand's database |
+| `STAND_DB_USER` | `petmarketplace` | Stand database username |
+| `STAND_DB_PASSWORD` | `petmarketplace` | Stand database password |
+| `STAND_REDIS_HOST` | `localhost` | Stand Redis host |
+| `STAND_REDIS_PORT` | `6379` | Stand Redis port |
+| `STAND_JWT_SECRET` | the dev default secret | Must match the stand's `JWT_SECRET` |
 
 These variables can be exported or placed in an `application-local.yml` / `.env` file and referenced via Spring configuration.
