@@ -26,13 +26,15 @@ Run all tests (requires Docker for Testcontainers):
 gradle test
 ```
 
+> **If `gradle test` reports 0 tests / everything skipped:** Testcontainers cannot reach the Docker daemon. `build.gradle.kts` already sets `api.version=1.45` and `TESTCONTAINERS_RYUK_DISABLED=true` (Docker Desktop's engine rejects docker-java's default API version 1.32, and its raw socket can't bind-mount the Ryuk reaper). The remaining machine-specific piece is the engine socket in `~/.testcontainers.properties` (`docker.host=...`), which is intentionally not in the repo. Ensure Docker Desktop is running and that file points at a reachable socket; containers are started once per JVM in `IntegrationTestBase`'s static block (PostgreSQL, Redis, Kafka), not via `@Container`.
+
 Run a single test class:
 
 ```bash
 gradle test --tests "com.petmarketplace.application.auth.controller.AuthControllerTest"
 ```
 
-Run the same suite against an external stand instead of Testcontainers (no Docker needed; the stand must already be running — `docker-compose up -d && gradle bootRun`):
+Run the same suite against an external stand instead of Testcontainers (no Docker needed; the stand must already be running — `docker-compose up -d && gradle bootRun`). The stand-mode Kafka test also needs the two topics provisioned on the compose broker (see Kafka Integration) — `KAFKA_AUTO_CREATE_TOPICS_ENABLE=false`.
 
 ```bash
 gradle testOnStand
@@ -53,7 +55,7 @@ The application follows a layered architecture under `src/main/java/com/petmarke
 
 - `application` — REST controllers, DTOs (Java records), MapStruct mappers and services. Organized by domain module: `auth`, `user`, `category`, `listing`, `booking`, `message`, `review`, `favorite`, `subscription`, `admin`.
 - `domain` — JPA entities extending `BaseEntity` or `AuditEntity`, enums and Spring Data JPA repositories.
-- `infrastructure` — cross-cutting concerns: Spring Security/JWT, file storage (local or MinIO), email sending, localized name resolution.
+- `infrastructure` — cross-cutting concerns: Spring Security/JWT, file storage (local or MinIO), email sending, localized name resolution, Kafka integration (animal-info request/reply, see below).
 - `config` — Spring configuration beans (cache, async, OpenAPI, JPA auditing).
 - `exception` — `GlobalExceptionHandler` returning a consistent `ApiError` JSON structure.
 
@@ -142,7 +144,7 @@ Active profile is `dev` by default. Profile-specific settings are merged from `a
 
 Integration tests extend `IntegrationTestBase` and run in **two modes** selected by the `tests.mode` system property:
 
-- **embedded** (default, `gradle test`) — Testcontainers starts PostgreSQL and Redis once per JVM in `IntegrationTestBase`'s static block (NOT `@Container`, which would stop them per class while the cached Spring context keeps a dead DataSource → `ConnectException`). `@DynamicPropertySource` binds the containers. Requires Docker; `TestModeCondition` skips the suite cleanly when Docker is absent.
+- **embedded** (default, `gradle test`) — Testcontainers starts PostgreSQL, Redis and Kafka once per JVM in `IntegrationTestBase`'s static block (NOT `@Container`, which would stop them per class while the cached Spring context keeps a dead DataSource → `ConnectException`). The Kafka container uses the `apache/kafka:3.7.1` image (Testcontainers 1.21.0's `org.testcontainers.kafka.KafkaContainer` requires it; the confluent image exits 127). `@DynamicPropertySource` binds the containers (`kafka.bootstrap-servers` ← `KAFKA::getBootstrapServers`). Requires Docker; `TestModeCondition` skips the suite cleanly when Docker is absent.
 - **stand** (`gradle testOnStand`) — no Testcontainers. The app still boots in-JVM, but the `stand` profile (`application-stand.yml`) points its DataSource/Redis/JWT secret at an already-running external stand and the RestClient targets `tests.base-url` instead of the in-JVM port. `StandDataTestExecutionListener` runs `src/test/resources/stand/seed.sql` before each test class and `cleanup.sql` after (even on failure), via `ResourceDatabasePopulator` against the context `DataSource`. Override the stand location with `STAND_BASE_URL`, `STAND_DB_URL`, `STAND_DB_USER`, `STAND_DB_PASSWORD`, `STAND_REDIS_HOST`, `STAND_REDIS_PORT`, `STAND_JWT_SECRET` env vars.
 
 Stand mode shares the stand's DB and JWT secret rather than being pure HTTP because public registration only creates `BUYER` accounts (`AuthService.register` hardcodes the role), so the tests create `SELLER`/`ADMIN`/`MODERATOR` users directly via the autowired `UserRepository` — only valid against the stand if the test JVM signs JWTs with the same secret. Test-created rows are identified by `email LIKE '%@example.com'` and deleted in FK-dependency order (the entities' `@ManyToOne` FKs have no `ON DELETE CASCADE`).
@@ -155,3 +157,4 @@ The `test` profile uses a dedicated JWT secret and a random server port. `Integr
 - MapStruct uses the Spring component model (`-Amapstruct.defaultComponentModel=spring`).
 - Java compile uses `-parameters` so Spring cache keys can reference method argument names.
 - Business errors throw `BusinessException` (maps to HTTP 409) or `ValidationException` (HTTP 400). Not-found cases throw `ResourceNotFoundException` (HTTP 404).
+- **Serialization uses Jackson 3** (`tools.jackson.databind.*`, `JsonMapper` bean). There is no Jackson 2 `ObjectMapper` bean — do not introduce one. The Kafka serdes in `KafkaConfig` also use Jackson 3 (`JacksonJsonSerializer`/`JacksonJsonDeserializer` with `.noTypeInfo()` so no `__TypeId__` header is written on the wire). The only Jackson 2 artifacts on the classpath are transitive (springdoc/jjwt) and must not reach the JSON serdes.
