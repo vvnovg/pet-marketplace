@@ -213,7 +213,7 @@ docker exec petmarketplace-kafka kafka-topics --bootstrap-server localhost:9092 
 
 For non-compose deployments, the operator runs the equivalent `kafka-topics` (or `bin/kafka-topics.sh`) commands against the production broker.
 
-### Stand test mode (`testOnStand`)
+### Stand Kafka requirement
 
 `gradle testOnStand` requires the compose `kafka` service to be running (`docker-compose up -d kafka`) so the stand profile's `kafka.bootstrap-servers` (`localhost:9092`) can reach a broker, or `STAND_KAFKA_BOOTSTRAP_SERVERS` must point at a remote broker.
 

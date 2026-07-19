@@ -102,7 +102,7 @@ JWT properties come from `security.jwt.*` in `application.yml` or from environme
 ## Kafka Integration
 
 A request/reply integration under `infrastructure/kafka`: an external system produces an
-`{ "listingId": "<uuid>" }` message (with a `correlationId` Kafka header) to the request topic, the
+`{ "listingId": "<uuid>" }` message (with a `correlationId` Kafka header, `KafkaHeaders.CORRELATION_ID`) to the request topic, the
 app's `@KafkaListener` (`AnimalInfoRequestListener`) looks up the listing via `AnimalInfoService`,
 and publishes an `AnimalInfoResponse` (status `OK` / `NOT_FOUND` / `ERROR`) to the reply topic with the
 same `correlationId` header. Only `ACTIVE` / `RESERVED` / `SOLD` listings are returned as `OK`;
