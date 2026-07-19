@@ -1,0 +1,132 @@
+spring:
+  application:
+    name: pet-marketplace
+  profiles:
+    active: dev
+
+  servlet:
+    multipart:
+      enabled: true
+      max-file-size: 5MB
+      max-request-size: 25MB
+
+  datasource:
+    url: jdbc:postgresql://localhost:5432/petmarketplace
+    username: petmarketplace
+    password: petmarketplace
+    driver-class-name: org.postgresql.Driver
+    hikari:
+      pool-name: PetMarketplaceHikariPool
+      minimum-idle: 5
+      maximum-pool-size: 20
+      connection-timeout: 20000
+
+  jpa:
+    open-in-view: false
+    hibernate:
+      ddl-auto: none
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.PostgreSQLDialect
+        format_sql: true
+        jdbc:
+          time_zone: UTC
+    show-sql: false
+
+  liquibase:
+    enabled: true
+    change-log: classpath:/db/changelog/db.changelog-master.yaml
+    default-schema: public
+
+  data:
+    redis:
+      host: localhost
+      port: 6379
+      timeout: 2000ms
+      connect-timeout: 2000ms
+      database: 0
+
+  mail:
+    host: localhost
+    port: 1025
+    username: ""
+    password: ""
+    protocol: smtp
+    default-encoding: UTF-8
+    properties:
+      mail:
+        smtp:
+          auth: false
+          starttls:
+            enable: false
+        transport:
+          protocol: smtp
+        debug: false
+
+  jackson:
+    default-property-inclusion: non_null
+    time-zone: UTC
+
+server:
+  port: 8080
+  servlet:
+    context-path: /api/v1
+
+security:
+  jwt:
+    secret: ${JWT_SECRET:change-me-in-production-use-a-secure-random-string-of-at-least-256-bits}
+    access-expiration-minutes: 15
+    refresh-expiration-days: 7
+
+storage:
+  provider: local
+  local:
+    base-path: ${STORAGE_LOCAL_PATH:./uploads}
+  minio:
+    endpoint: http://localhost:9000
+    access-key: minioadmin
+    secret-key: minioadmin
+    bucket-name: petmarketplace
+
+mail:
+  enabled: false
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health,info,metrics,prometheus
+      base-path: /actuator
+  endpoint:
+    health:
+      show-details: when-authorized
+  info:
+    env:
+      enabled: true
+
+logging:
+  level:
+    root: INFO
+    com.petmarketplace: INFO
+    org.springframework.security: INFO
+    org.hibernate.SQL: DEBUG
+    org.hibernate.type.descriptor.sql.BasicBinder: TRACE
+  pattern:
+    console: "%d{yyyy-MM-dd HH:mm:ss.SSS} [%thread] %-5level %logger{36} - %msg%n"
+
+---
+spring:
+  config:
+    activate:
+      on-profile: dev
+
+  jpa:
+    show-sql: true
+
+  mail:
+    debug: true
+
+logging:
+  level:
+    com.petmarketplace: DEBUG
+    org.springframework.web: DEBUG

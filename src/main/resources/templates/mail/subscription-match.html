@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8"/>
+    <title>New matching listing</title>
+</head>
+<body style="font-family: Arial, sans-serif; color: #333;">
+    <h2>Hello, <span th:text="${userName}">User</span>!</h2>
+    <p>A new listing matching your subscription is now available.</p>
+    <table style="border-collapse: collapse; width: 100%; max-width: 500px;">
+        <tr>
+            <td style="padding: 8px; border: 1px solid #ddd;"><strong>Title</strong></td>
+            <td style="padding: 8px; border: 1px solid #ddd;" th:text="${listing.title}">Title</td>
+        </tr>
+        <tr th:if="${listing.price} != null">
+            <td style="padding: 8px; border: 1px solid #ddd;"><strong>Price</strong></td>
+            <td style="padding: 8px; border: 1px solid #ddd;" th:text="${listing.price} + ' ' + (${listing.currency} ?: '')">Price</td>
+        </tr>
+        <tr th:if="${listing.locationCity} != null">
+            <td style="padding: 8px; border: 1px solid #ddd;"><strong>City</strong></td>
+            <td style="padding: 8px; border: 1px solid #ddd;" th:text="${listing.locationCity}">City</td>
+        </tr>
+    </table>
+    <p>
+        <a th:href="${listingLink}" href="#"
+           style="display: inline-block; padding: 12px 24px; background-color: #4CAF50; color: #fff; text-decoration: none; border-radius: 4px;">
+            View listing
+        </a>
+    </p>
+    <p>If the button doesn't work, copy and paste this link into your browser:</p>
+    <p><a th:href="${listingLink}" th:text="${listingLink}">listing link</a></p>
+</body>
+</html>

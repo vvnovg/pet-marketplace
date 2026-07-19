@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8"/>
+    <title>Listing status update</title>
+</head>
+<body style="font-family: Arial, sans-serif; color: #333;">
+    <h2>Hello, <span th:text="${sellerName}">Seller</span>!</h2>
+    <p>The status of your listing has been updated.</p>
+    <table style="border-collapse: collapse; width: 100%; max-width: 500px;">
+        <tr>
+            <td style="padding: 8px; border: 1px solid #ddd;"><strong>Listing</strong></td>
+            <td style="padding: 8px; border: 1px solid #ddd;" th:text="${listing.title}">Title</td>
+        </tr>
+        <tr>
+            <td style="padding: 8px; border: 1px solid #ddd;"><strong>New status</strong></td>
+            <td style="padding: 8px; border: 1px solid #ddd;" th:text="${statusLabel}">Status</td>
+        </tr>
+    </table>
+    <p>
+        <a th:href="${listingLink}" href="#"
+           style="display: inline-block; padding: 12px 24px; background-color: #2196F3; color: #fff; text-decoration: none; border-radius: 4px;">
+            View listing
+        </a>
+    </p>
+    <p>If the button doesn't work, copy and paste this link into your browser:</p>
+    <p><a th:href="${listingLink}" th:text="${listingLink}">listing link</a></p>
+</body>
+</html>

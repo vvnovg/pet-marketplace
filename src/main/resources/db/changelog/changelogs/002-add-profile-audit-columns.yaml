@@ -1,0 +1,22 @@
+databaseChangeLog:
+  - logicalFilePath: db/changelog/changelogs/002-add-profile-audit-columns.yaml
+
+  - changeSet:
+      id: 018-add-profile-audit-columns
+      author: liquibase
+      changes:
+        - addColumn:
+            tableName: profiles
+            columns:
+              - column:
+                  name: created_at
+                  type: TIMESTAMP
+                  defaultValueComputed: now()
+                  constraints:
+                    nullable: false
+              - column:
+                  name: updated_at
+                  type: TIMESTAMP
+                  defaultValueComputed: now()
+                  constraints:
+                    nullable: false

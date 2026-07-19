@@ -1,0 +1,13 @@
+databaseChangeLog:
+  - include:
+      file: changelogs/001-init-schema.yaml
+      relativeToChangelogFile: true
+  - include:
+      file: changelogs/002-add-profile-audit-columns.yaml
+      relativeToChangelogFile: true
+  - include:
+      file: changelogs/003-update-reviews-table.yaml
+      relativeToChangelogFile: true
+  - include:
+      file: changelogs/004-add-subscription-indexes.yaml
+      relativeToChangelogFile: true

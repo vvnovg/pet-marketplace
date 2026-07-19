@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8"/>
+    <title>New message</title>
+</head>
+<body style="font-family: Arial, sans-serif; color: #333;">
+    <h2>Hello, <span th:text="${receiverName}">User</span>!</h2>
+    <p>You have received a new message from <strong th:text="${senderName}">Sender</strong>.</p>
+    <p th:if="${message.content} != null and !${message.content.isBlank()}" style="background: #f5f5f5; padding: 12px; border-left: 4px solid #4CAF50;">
+        <span th:text="${message.content}">Message text</span>
+    </p>
+    <p th:if="${hasAttachment}">The message also contains an attachment.</p>
+    <p>
+        <a th:href="${conversationLink}" href="#"
+           style="display: inline-block; padding: 12px 24px; background-color: #4CAF50; color: #fff; text-decoration: none; border-radius: 4px;">
+            View conversation
+        </a>
+    </p>
+    <p>If the button doesn't work, copy and paste this link into your browser:</p>
+    <p><a th:href="${conversationLink}" th:text="${conversationLink}">conversation link</a></p>
+</body>
+</html>

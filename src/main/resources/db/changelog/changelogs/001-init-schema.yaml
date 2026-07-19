@@ -1,0 +1,942 @@
+databaseChangeLog:
+  - logicalFilePath: db/changelog/changelogs/001-init-schema.yaml
+
+  # -----------------------------------------------------------------------------
+  # NOTE ON UUID GENERATION
+  # Primary keys are intentionally left without a database default so that the
+  # application can generate UUIDs. This avoids a hard dependency on the
+  # pgcrypto extension and makes unit/integration tests with H2 easier.
+  # If you prefer database-side generation, add:
+  #   defaultValueComputed: gen_random_uuid()
+  # (and make sure the pgcrypto extension is available).
+  # -----------------------------------------------------------------------------
+
+  - changeSet:
+      id: 001-create-table-users
+      author: liquibase
+      changes:
+        - createTable:
+            tableName: users
+            remarks: Platform accounts with credentials and role information
+            columns:
+              - column:
+                  name: id
+                  type: UUID
+                  remarks: Surrogate primary key
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+              - column:
+                  name: email
+                  type: VARCHAR(255)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: phone
+                  type: VARCHAR(20)
+              - column:
+                  name: password_hash
+                  type: VARCHAR(255)
+              - column:
+                  name: first_name
+                  type: VARCHAR(100)
+              - column:
+                  name: last_name
+                  type: VARCHAR(100)
+              - column:
+                  name: avatar_url
+                  type: VARCHAR(500)
+              - column:
+                  name: role
+                  type: VARCHAR(30)
+                  remarks: BUYER, SELLER, ADMIN, MODERATOR
+                  constraints:
+                    nullable: false
+              - column:
+                  name: is_verified
+                  type: BOOLEAN
+                  defaultValueBoolean: false
+              - column:
+                  name: is_active
+                  type: BOOLEAN
+                  defaultValueBoolean: true
+              - column:
+                  name: created_at
+                  type: TIMESTAMP
+                  defaultValueComputed: now()
+              - column:
+                  name: updated_at
+                  type: TIMESTAMP
+                  defaultValueComputed: now()
+
+  - changeSet:
+      id: 002-create-table-profiles
+      author: liquibase
+      changes:
+        - createTable:
+            tableName: profiles
+            remarks: Extended public/private user profile information
+            columns:
+              - column:
+                  name: id
+                  type: UUID
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+              - column:
+                  name: user_id
+                  type: UUID
+                  constraints:
+                    nullable: false
+              - column:
+                  name: bio
+                  type: TEXT
+              - column:
+                  name: country
+                  type: VARCHAR(100)
+              - column:
+                  name: city
+                  type: VARCHAR(100)
+              - column:
+                  name: address
+                  type: VARCHAR(255)
+              - column:
+                  name: latitude
+                  type: DECIMAL(9,6)
+              - column:
+                  name: longitude
+                  type: DECIMAL(9,6)
+              - column:
+                  name: rating
+                  type: DECIMAL(2,1)
+                  defaultValueNumeric: 0.0
+              - column:
+                  name: total_reviews
+                  type: INT
+                  defaultValueNumeric: 0
+
+  - changeSet:
+      id: 003-create-table-categories
+      author: liquibase
+      changes:
+        - createTable:
+            tableName: categories
+            remarks: Animal categories with optional parent for a tree structure
+            columns:
+              - column:
+                  name: id
+                  type: UUID
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+              - column:
+                  name: name_ru
+                  type: VARCHAR(100)
+              - column:
+                  name: name_en
+                  type: VARCHAR(100)
+              - column:
+                  name: slug
+                  type: VARCHAR(100)
+              - column:
+                  name: parent_id
+                  type: UUID
+
+  - changeSet:
+      id: 004-create-table-breeds
+      author: liquibase
+      changes:
+        - createTable:
+            tableName: breeds
+            remarks: Breeds belonging to a category
+            columns:
+              - column:
+                  name: id
+                  type: UUID
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+              - column:
+                  name: category_id
+                  type: UUID
+                  constraints:
+                    nullable: false
+              - column:
+                  name: name_ru
+                  type: VARCHAR(100)
+              - column:
+                  name: name_en
+                  type: VARCHAR(100)
+
+  - changeSet:
+      id: 005-create-table-listings
+      author: liquibase
+      changes:
+        - createTable:
+            tableName: listings
+            remarks: Pet sale advertisements
+            columns:
+              - column:
+                  name: id
+                  type: UUID
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+              - column:
+                  name: seller_id
+                  type: UUID
+                  constraints:
+                    nullable: false
+              - column:
+                  name: category_id
+                  type: UUID
+                  constraints:
+                    nullable: false
+              - column:
+                  name: breed_id
+                  type: UUID
+              - column:
+                  name: title
+                  type: VARCHAR(255)
+              - column:
+                  name: description
+                  type: TEXT
+              - column:
+                  name: price
+                  type: DECIMAL(12,2)
+              - column:
+                  name: currency
+                  type: VARCHAR(3)
+              - column:
+                  name: gender
+                  type: VARCHAR(20)
+              - column:
+                  name: age_months
+                  type: INT
+              - column:
+                  name: color
+                  type: VARCHAR(100)
+              - column:
+                  name: weight_kg
+                  type: DECIMAL(5,2)
+              - column:
+                  name: health_info
+                  type: TEXT
+              - column:
+                  name: has_vaccination
+                  type: BOOLEAN
+                  defaultValueBoolean: false
+              - column:
+                  name: has_documents
+                  type: BOOLEAN
+                  defaultValueBoolean: false
+              - column:
+                  name: location_country
+                  type: VARCHAR(100)
+              - column:
+                  name: location_city
+                  type: VARCHAR(100)
+              - column:
+                  name: status
+                  type: VARCHAR(30)
+                  remarks: DRAFT, PENDING_MODERATION, ACTIVE, SOLD, ARCHIVED, REJECTED
+                  constraints:
+                    nullable: false
+              - column:
+                  name: views_count
+                  type: INT
+                  defaultValueNumeric: 0
+              - column:
+                  name: created_at
+                  type: TIMESTAMP
+                  defaultValueComputed: now()
+              - column:
+                  name: updated_at
+                  type: TIMESTAMP
+                  defaultValueComputed: now()
+
+  - changeSet:
+      id: 006-create-table-listing-images
+      author: liquibase
+      changes:
+        - createTable:
+            tableName: listing_images
+            remarks: Photos attached to a listing
+            columns:
+              - column:
+                  name: id
+                  type: UUID
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+              - column:
+                  name: listing_id
+                  type: UUID
+                  constraints:
+                    nullable: false
+              - column:
+                  name: url
+                  type: VARCHAR(500)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: order_index
+                  type: INT
+                  defaultValueNumeric: 0
+              - column:
+                  name: is_main
+                  type: BOOLEAN
+                  defaultValueBoolean: false
+
+  - changeSet:
+      id: 007-create-table-bookings
+      author: liquibase
+      changes:
+        - createTable:
+            tableName: bookings
+            remarks: Reservation/deal requests between a buyer and a seller
+            columns:
+              - column:
+                  name: id
+                  type: UUID
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+              - column:
+                  name: listing_id
+                  type: UUID
+                  constraints:
+                    nullable: false
+              - column:
+                  name: buyer_id
+                  type: UUID
+                  constraints:
+                    nullable: false
+              - column:
+                  name: seller_id
+                  type: UUID
+                  constraints:
+                    nullable: false
+              - column:
+                  name: status
+                  type: VARCHAR(30)
+                  remarks: PENDING, CONFIRMED, CANCELLED, COMPLETED
+                  constraints:
+                    nullable: false
+              - column:
+                  name: message
+                  type: TEXT
+              - column:
+                  name: created_at
+                  type: TIMESTAMP
+                  defaultValueComputed: now()
+              - column:
+                  name: updated_at
+                  type: TIMESTAMP
+                  defaultValueComputed: now()
+
+  - changeSet:
+      id: 008-create-table-reviews
+      author: liquibase
+      changes:
+        - createTable:
+            tableName: reviews
+            remarks: Reviews left by one user about another after a completed booking
+            columns:
+              - column:
+                  name: id
+                  type: UUID
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+              - column:
+                  name: author_id
+                  type: UUID
+                  constraints:
+                    nullable: false
+              - column:
+                  name: recipient_id
+                  type: UUID
+                  constraints:
+                    nullable: false
+              - column:
+                  name: booking_id
+                  type: UUID
+                  constraints:
+                    nullable: false
+              - column:
+                  name: rating
+                  type: INT
+                  constraints:
+                    nullable: false
+              - column:
+                  name: comment
+                  type: TEXT
+              - column:
+                  name: status
+                  type: VARCHAR(30)
+                  remarks: PENDING_MODERATION, APPROVED, REJECTED
+                  constraints:
+                    nullable: false
+              - column:
+                  name: created_at
+                  type: TIMESTAMP
+                  defaultValueComputed: now()
+
+  - changeSet:
+      id: 009-create-table-messages
+      author: liquibase
+      changes:
+        - createTable:
+            tableName: messages
+            remarks: Private chat messages between users
+            columns:
+              - column:
+                  name: id
+                  type: UUID
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+              - column:
+                  name: sender_id
+                  type: UUID
+                  constraints:
+                    nullable: false
+              - column:
+                  name: receiver_id
+                  type: UUID
+                  constraints:
+                    nullable: false
+              - column:
+                  name: listing_id
+                  type: UUID
+              - column:
+                  name: content
+                  type: TEXT
+              - column:
+                  name: attachment_url
+                  type: VARCHAR(500)
+              - column:
+                  name: is_read
+                  type: BOOLEAN
+                  defaultValueBoolean: false
+              - column:
+                  name: created_at
+                  type: TIMESTAMP
+                  defaultValueComputed: now()
+
+  - changeSet:
+      id: 010-create-table-favorites
+      author: liquibase
+      changes:
+        - createTable:
+            tableName: favorites
+            remarks: Saved listings for quick access
+            columns:
+              - column:
+                  name: id
+                  type: UUID
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+              - column:
+                  name: user_id
+                  type: UUID
+                  constraints:
+                    nullable: false
+              - column:
+                  name: listing_id
+                  type: UUID
+                  constraints:
+                    nullable: false
+              - column:
+                  name: created_at
+                  type: TIMESTAMP
+                  defaultValueComputed: now()
+
+  - changeSet:
+      id: 011-create-table-subscriptions
+      author: liquibase
+      changes:
+        - createTable:
+            tableName: subscriptions
+            remarks: Saved search filters for email notifications about new listings
+            columns:
+              - column:
+                  name: id
+                  type: UUID
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+              - column:
+                  name: user_id
+                  type: UUID
+                  constraints:
+                    nullable: false
+              - column:
+                  name: filters
+                  type: JSONB
+                  constraints:
+                    nullable: false
+              - column:
+                  name: is_active
+                  type: BOOLEAN
+                  defaultValueBoolean: true
+              - column:
+                  name: created_at
+                  type: TIMESTAMP
+                  defaultValueComputed: now()
+
+  - changeSet:
+      id: 012-add-foreign-keys
+      author: liquibase
+      changes:
+        # User-owned / protected references use RESTRICT to prevent accidental
+        # data loss when deleting a user account.
+        - addForeignKeyConstraint:
+            baseTableName: profiles
+            baseColumnNames: user_id
+            referencedTableName: users
+            referencedColumnNames: id
+            constraintName: fk_profiles_user_id
+            onDelete: CASCADE
+
+        - addForeignKeyConstraint:
+            baseTableName: categories
+            baseColumnNames: parent_id
+            referencedTableName: categories
+            referencedColumnNames: id
+            constraintName: fk_categories_parent_id
+            onDelete: RESTRICT
+
+        - addForeignKeyConstraint:
+            baseTableName: breeds
+            baseColumnNames: category_id
+            referencedTableName: categories
+            referencedColumnNames: id
+            constraintName: fk_breeds_category_id
+            onDelete: RESTRICT
+
+        - addForeignKeyConstraint:
+            baseTableName: listings
+            baseColumnNames: seller_id
+            referencedTableName: users
+            referencedColumnNames: id
+            constraintName: fk_listings_seller_id
+            onDelete: RESTRICT
+
+        - addForeignKeyConstraint:
+            baseTableName: listings
+            baseColumnNames: category_id
+            referencedTableName: categories
+            referencedColumnNames: id
+            constraintName: fk_listings_category_id
+            onDelete: RESTRICT
+
+        # Keep the listing even if a breed is removed.
+        - addForeignKeyConstraint:
+            baseTableName: listings
+            baseColumnNames: breed_id
+            referencedTableName: breeds
+            referencedColumnNames: id
+            constraintName: fk_listings_breed_id
+            onDelete: SET NULL
+
+        # Child records that belong to a listing are removed with the listing.
+        - addForeignKeyConstraint:
+            baseTableName: listing_images
+            baseColumnNames: listing_id
+            referencedTableName: listings
+            referencedColumnNames: id
+            constraintName: fk_listing_images_listing_id
+            onDelete: CASCADE
+
+        - addForeignKeyConstraint:
+            baseTableName: bookings
+            baseColumnNames: listing_id
+            referencedTableName: listings
+            referencedColumnNames: id
+            constraintName: fk_bookings_listing_id
+            onDelete: CASCADE
+
+        - addForeignKeyConstraint:
+            baseTableName: bookings
+            baseColumnNames: buyer_id
+            referencedTableName: users
+            referencedColumnNames: id
+            constraintName: fk_bookings_buyer_id
+            onDelete: RESTRICT
+
+        - addForeignKeyConstraint:
+            baseTableName: bookings
+            baseColumnNames: seller_id
+            referencedTableName: users
+            referencedColumnNames: id
+            constraintName: fk_bookings_seller_id
+            onDelete: RESTRICT
+
+        - addForeignKeyConstraint:
+            baseTableName: reviews
+            baseColumnNames: author_id
+            referencedTableName: users
+            referencedColumnNames: id
+            constraintName: fk_reviews_author_id
+            onDelete: RESTRICT
+
+        - addForeignKeyConstraint:
+            baseTableName: reviews
+            baseColumnNames: recipient_id
+            referencedTableName: users
+            referencedColumnNames: id
+            constraintName: fk_reviews_recipient_id
+            onDelete: RESTRICT
+
+        # Preserve reviews as transaction history; do not allow booking deletion.
+        - addForeignKeyConstraint:
+            baseTableName: reviews
+            baseColumnNames: booking_id
+            referencedTableName: bookings
+            referencedColumnNames: id
+            constraintName: fk_reviews_booking_id
+            onDelete: RESTRICT
+
+        - addForeignKeyConstraint:
+            baseTableName: messages
+            baseColumnNames: sender_id
+            referencedTableName: users
+            referencedColumnNames: id
+            constraintName: fk_messages_sender_id
+            onDelete: RESTRICT
+
+        - addForeignKeyConstraint:
+            baseTableName: messages
+            baseColumnNames: receiver_id
+            referencedTableName: users
+            referencedColumnNames: id
+            constraintName: fk_messages_receiver_id
+            onDelete: RESTRICT
+
+        - addForeignKeyConstraint:
+            baseTableName: messages
+            baseColumnNames: listing_id
+            referencedTableName: listings
+            referencedColumnNames: id
+            constraintName: fk_messages_listing_id
+            onDelete: SET NULL
+
+        - addForeignKeyConstraint:
+            baseTableName: favorites
+            baseColumnNames: user_id
+            referencedTableName: users
+            referencedColumnNames: id
+            constraintName: fk_favorites_user_id
+            onDelete: RESTRICT
+
+        - addForeignKeyConstraint:
+            baseTableName: favorites
+            baseColumnNames: listing_id
+            referencedTableName: listings
+            referencedColumnNames: id
+            constraintName: fk_favorites_listing_id
+            onDelete: CASCADE
+
+        - addForeignKeyConstraint:
+            baseTableName: subscriptions
+            baseColumnNames: user_id
+            referencedTableName: users
+            referencedColumnNames: id
+            constraintName: fk_subscriptions_user_id
+            onDelete: RESTRICT
+
+  - changeSet:
+      id: 013-add-unique-constraints
+      author: liquibase
+      changes:
+        - addUniqueConstraint:
+            tableName: users
+            columnNames: email
+            constraintName: uq_users_email
+        - addUniqueConstraint:
+            tableName: profiles
+            columnNames: user_id
+            constraintName: uq_profiles_user_id
+        - addUniqueConstraint:
+            tableName: categories
+            columnNames: slug
+            constraintName: uq_categories_slug
+        - addUniqueConstraint:
+            tableName: reviews
+            columnNames: booking_id
+            constraintName: uq_reviews_booking_id
+        - addUniqueConstraint:
+            tableName: favorites
+            columnNames: user_id, listing_id
+            constraintName: uq_favorites_user_listing
+
+  - changeSet:
+      id: 014-add-check-constraints
+      author: liquibase
+      changes:
+        - sql:
+            sql: "ALTER TABLE reviews ADD CONSTRAINT chk_reviews_rating CHECK (rating >= 1 AND rating <= 5)"
+
+  - changeSet:
+      id: 015-create-indexes
+      author: liquibase
+      changes:
+        # users.email is already covered by the unique constraint uq_users_email.
+        - createIndex:
+            tableName: listings
+            indexName: idx_listings_seller_id
+            columns:
+              - column:
+                  name: seller_id
+        - createIndex:
+            tableName: listings
+            indexName: idx_listings_category_id
+            columns:
+              - column:
+                  name: category_id
+        - createIndex:
+            tableName: listings
+            indexName: idx_listings_breed_id
+            columns:
+              - column:
+                  name: breed_id
+        - createIndex:
+            tableName: listings
+            indexName: idx_listings_status
+            columns:
+              - column:
+                  name: status
+        - createIndex:
+            tableName: listings
+            indexName: idx_listings_location_city
+            columns:
+              - column:
+                  name: location_city
+        - createIndex:
+            tableName: listings
+            indexName: idx_listings_price
+            columns:
+              - column:
+                  name: price
+        - createIndex:
+            tableName: bookings
+            indexName: idx_bookings_buyer_id
+            columns:
+              - column:
+                  name: buyer_id
+        - createIndex:
+            tableName: bookings
+            indexName: idx_bookings_seller_id
+            columns:
+              - column:
+                  name: seller_id
+        - createIndex:
+            tableName: bookings
+            indexName: idx_bookings_listing_id
+            columns:
+              - column:
+                  name: listing_id
+        - createIndex:
+            tableName: messages
+            indexName: idx_messages_sender_id
+            columns:
+              - column:
+                  name: sender_id
+        - createIndex:
+            tableName: messages
+            indexName: idx_messages_receiver_id
+            columns:
+              - column:
+                  name: receiver_id
+        - createIndex:
+            tableName: reviews
+            indexName: idx_reviews_recipient_id
+            columns:
+              - column:
+                  name: recipient_id
+        # favorites.user_id is already covered by the leading column of the unique
+        # constraint uq_favorites_user_listing.
+        - createIndex:
+            tableName: favorites
+            indexName: idx_favorites_listing_id
+            columns:
+              - column:
+                  name: listing_id
+
+  - changeSet:
+      id: 016-seed-categories
+      author: liquibase
+      changes:
+        - insert:
+            tableName: categories
+            columns:
+              - column: { name: id, value: '11111111-1111-1111-1111-111111111111' }
+              - column: { name: name_ru, value: 'Собаки' }
+              - column: { name: name_en, value: 'Dogs' }
+              - column: { name: slug, value: 'dogs' }
+        - insert:
+            tableName: categories
+            columns:
+              - column: { name: id, value: '22222222-2222-2222-2222-222222222222' }
+              - column: { name: name_ru, value: 'Кошки' }
+              - column: { name: name_en, value: 'Cats' }
+              - column: { name: slug, value: 'cats' }
+        - insert:
+            tableName: categories
+            columns:
+              - column: { name: id, value: '33333333-3333-3333-3333-333333333333' }
+              - column: { name: name_ru, value: 'Птицы' }
+              - column: { name: name_en, value: 'Birds' }
+              - column: { name: slug, value: 'birds' }
+        - insert:
+            tableName: categories
+            columns:
+              - column: { name: id, value: '44444444-4444-4444-4444-444444444444' }
+              - column: { name: name_ru, value: 'Грызуны' }
+              - column: { name: name_en, value: 'Rodents' }
+              - column: { name: slug, value: 'rodents' }
+        - insert:
+            tableName: categories
+            columns:
+              - column: { name: id, value: '55555555-5555-5555-5555-555555555555' }
+              - column: { name: name_ru, value: 'Рептилии' }
+              - column: { name: name_en, value: 'Reptiles' }
+              - column: { name: slug, value: 'reptiles' }
+        - insert:
+            tableName: categories
+            columns:
+              - column: { name: id, value: '66666666-6666-6666-6666-666666666666' }
+              - column: { name: name_ru, value: 'Рыбы' }
+              - column: { name: name_en, value: 'Fish' }
+              - column: { name: slug, value: 'fish' }
+        - insert:
+            tableName: categories
+            columns:
+              - column: { name: id, value: '77777777-7777-7777-7777-777777777777' }
+              - column: { name: name_ru, value: 'Другие' }
+              - column: { name: name_en, value: 'Other' }
+              - column: { name: slug, value: 'other' }
+
+  - changeSet:
+      id: 017-seed-breeds
+      author: liquibase
+      changes:
+        # Dogs
+        - insert:
+            tableName: breeds
+            columns:
+              - column: { name: id, value: '10000000-0000-0000-0000-000000000001' }
+              - column: { name: category_id, value: '11111111-1111-1111-1111-111111111111' }
+              - column: { name: name_ru, value: 'Лабрадор-ретривер' }
+              - column: { name: name_en, value: 'Labrador Retriever' }
+        - insert:
+            tableName: breeds
+            columns:
+              - column: { name: id, value: '10000000-0000-0000-0000-000000000002' }
+              - column: { name: category_id, value: '11111111-1111-1111-1111-111111111111' }
+              - column: { name: name_ru, value: 'Немецкая овчарка' }
+              - column: { name: name_en, value: 'German Shepherd' }
+        - insert:
+            tableName: breeds
+            columns:
+              - column: { name: id, value: '10000000-0000-0000-0000-000000000003' }
+              - column: { name: category_id, value: '11111111-1111-1111-1111-111111111111' }
+              - column: { name: name_ru, value: 'Бульдог' }
+              - column: { name: name_en, value: 'Bulldog' }
+        - insert:
+            tableName: breeds
+            columns:
+              - column: { name: id, value: '10000000-0000-0000-0000-000000000004' }
+              - column: { name: category_id, value: '11111111-1111-1111-1111-111111111111' }
+              - column: { name: name_ru, value: 'Пудель' }
+              - column: { name: name_en, value: 'Poodle' }
+        - insert:
+            tableName: breeds
+            columns:
+              - column: { name: id, value: '10000000-0000-0000-0000-000000000005' }
+              - column: { name: category_id, value: '11111111-1111-1111-1111-111111111111' }
+              - column: { name: name_ru, value: 'Бигль' }
+              - column: { name: name_en, value: 'Beagle' }
+        # Cats
+        - insert:
+            tableName: breeds
+            columns:
+              - column: { name: id, value: '20000000-0000-0000-0000-000000000001' }
+              - column: { name: category_id, value: '22222222-2222-2222-2222-222222222222' }
+              - column: { name: name_ru, value: 'Сиамская кошка' }
+              - column: { name: name_en, value: 'Siamese' }
+        - insert:
+            tableName: breeds
+            columns:
+              - column: { name: id, value: '20000000-0000-0000-0000-000000000002' }
+              - column: { name: category_id, value: '22222222-2222-2222-2222-222222222222' }
+              - column: { name: name_ru, value: 'Персидская кошка' }
+              - column: { name: name_en, value: 'Persian' }
+        - insert:
+            tableName: breeds
+            columns:
+              - column: { name: id, value: '20000000-0000-0000-0000-000000000003' }
+              - column: { name: category_id, value: '22222222-2222-2222-2222-222222222222' }
+              - column: { name: name_ru, value: 'Мейн-кун' }
+              - column: { name: name_en, value: 'Maine Coon' }
+        - insert:
+            tableName: breeds
+            columns:
+              - column: { name: id, value: '20000000-0000-0000-0000-000000000004' }
+              - column: { name: category_id, value: '22222222-2222-2222-2222-222222222222' }
+              - column: { name: name_ru, value: 'Британская короткошёрстная' }
+              - column: { name: name_en, value: 'British Shorthair' }
+        - insert:
+            tableName: breeds
+            columns:
+              - column: { name: id, value: '20000000-0000-0000-0000-000000000005' }
+              - column: { name: category_id, value: '22222222-2222-2222-2222-222222222222' }
+              - column: { name: name_ru, value: 'Бенгальская кошка' }
+              - column: { name: name_en, value: 'Bengal' }
+        # Birds
+        - insert:
+            tableName: breeds
+            columns:
+              - column: { name: id, value: '30000000-0000-0000-0000-000000000001' }
+              - column: { name: category_id, value: '33333333-3333-3333-3333-333333333333' }
+              - column: { name: name_ru, value: 'Попугай' }
+              - column: { name: name_en, value: 'Parrot' }
+        - insert:
+            tableName: breeds
+            columns:
+              - column: { name: id, value: '30000000-0000-0000-0000-000000000002' }
+              - column: { name: category_id, value: '33333333-3333-3333-3333-333333333333' }
+              - column: { name: name_ru, value: 'Канарейка' }
+              - column: { name: name_en, value: 'Canary' }
+        - insert:
+            tableName: breeds
+            columns:
+              - column: { name: id, value: '30000000-0000-0000-0000-000000000003' }
+              - column: { name: category_id, value: '33333333-3333-3333-3333-333333333333' }
+              - column: { name: name_ru, value: 'Корелла' }
+              - column: { name: name_en, value: 'Cockatiel' }
+        # Rodents
+        - insert:
+            tableName: breeds
+            columns:
+              - column: { name: id, value: '40000000-0000-0000-0000-000000000001' }
+              - column: { name: category_id, value: '44444444-4444-4444-4444-444444444444' }
+              - column: { name: name_ru, value: 'Хомяк' }
+              - column: { name: name_en, value: 'Hamster' }
+        - insert:
+            tableName: breeds
+            columns:
+              - column: { name: id, value: '40000000-0000-0000-0000-000000000002' }
+              - column: { name: category_id, value: '44444444-4444-4444-4444-444444444444' }
+              - column: { name: name_ru, value: 'Морская свинка' }
+              - column: { name: name_en, value: 'Guinea Pig' }
+        - insert:
+            tableName: breeds
+            columns:
+              - column: { name: id, value: '40000000-0000-0000-0000-000000000003' }
+              - column: { name: category_id, value: '44444444-4444-4444-4444-444444444444' }
+              - column: { name: name_ru, value: 'Кролик' }
+              - column: { name: name_en, value: 'Rabbit' }

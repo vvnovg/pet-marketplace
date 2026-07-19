@@ -1,0 +1,20 @@
+databaseChangeLog:
+  - logicalFilePath: db/changelog/changelogs/003-update-reviews-table.yaml
+
+  - changeSet:
+      id: 001-add-reviews-updated-at
+      author: liquibase
+      changes:
+        - addColumn:
+            tableName: reviews
+            columns:
+              - column:
+                  name: updated_at
+                  type: TIMESTAMP
+                  defaultValueComputed: now()
+                  constraints:
+                    nullable: false
+        - setColumnRemarks:
+            tableName: reviews
+            columnName: status
+            remarks: "PENDING, APPROVED, REJECTED"

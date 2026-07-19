@@ -1,0 +1,62 @@
+# Aider
+.aider*
+
+# Claude Code
+.claude/
+
+# Java / Gradle
+.gradle/
+build/
+bin/
+dependency-sources/
+!gradle/wrapper/gradle-wrapper.jar
+!gradle/wrapper/gradle-wrapper.properties
+*.class
+*.jar
+*.war
+*.ear
+*.log
+*.pid
+*.seed
+*.pid.lock
+
+# Maven
+ target/
+
+# IntelliJ IDEA
+.idea/
+*.iml
+*.ipr
+*.iws
+out/
+
+# VS Code
+.vscode/
+
+# Eclipse
+.classpath
+.project
+.settings/
+
+# NetBeans
+nbproject/
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Docker
+.env
+.env.local
+.env.*.local
+
+# Application uploads / runtime data
+uploads/
+temp/
+logs/
+
+# Test reports
+html/
+report/
+coverage/
+*.exec

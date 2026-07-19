@@ -1,0 +1,19 @@
+databaseChangeLog:
+  - logicalFilePath: db/changelog/changelogs/004-add-subscription-indexes.yaml
+
+  - changeSet:
+      id: 018-add-subscription-indexes
+      author: liquibase
+      changes:
+        - createIndex:
+            tableName: subscriptions
+            indexName: idx_subscriptions_user_id
+            columns:
+              - column:
+                  name: user_id
+        - createIndex:
+            tableName: subscriptions
+            indexName: idx_subscriptions_active
+            columns:
+              - column:
+                  name: is_active

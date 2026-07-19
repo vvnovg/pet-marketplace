@@ -1,0 +1,41 @@
+# Profile applied ON TOP of `test` when tests.mode=stand (see IntegrationTestBase's
+# ActiveProfilesResolver). In stand mode the integration tests do NOT spin up Testcontainers;
+# instead the test JVM connects to an already-running stand (its Postgres + Redis) over JDBC/Redis
+# and drives the stand's HTTP API. Because public registration only creates BUYER accounts, the
+# tests still create SELLER/ADMIN/MODERATOR users by writing them straight to the stand's shared
+# DB (IntegrationTestBase.createUser uses the autowired repositories) — which only works if the
+# test JVM shares the stand's DB AND signs JWTs with the stand's secret. That is what this file
+# configures.
+#
+# Defaults target a stand started locally with `docker-compose up -d && gradle bootRun` (dev
+# profile, no JWT_SECRET override → the dev default secret below). To point at a remote stand,
+# set the corresponding STAND_* env var when running `gradle testOnStand`, e.g.:
+#   STAND_BASE_URL=http://stand.example.com/api/v1 \
+#   STAND_DB_URL=jdbc:postgresql://stand.example.com:5432/petmarketplace \
+#   STAND_JWT_SECRET=<the stand's security.jwt.secret> \
+#   gradle testOnStand
+spring:
+  datasource:
+    url: ${STAND_DB_URL:jdbc:postgresql://localhost:5432/petmarketplace}
+    username: ${STAND_DB_USER:petmarketplace}
+    password: ${STAND_DB_PASSWORD:petmarketplace}
+    driver-class-name: org.postgresql.Driver
+
+  data:
+    redis:
+      host: ${STAND_REDIS_HOST:localhost}
+      port: ${STAND_REDIS_PORT:6379}
+
+  # The stand owns its own schema; the test JVM must not re-run migrations against it.
+  liquibase:
+    enabled: false
+
+security:
+  jwt:
+    # MUST match the stand's security.jwt.secret so tokens minted in-JVM validate on the stand.
+    # Defaults to application.yml's dev default secret (used by a plain `gradle bootRun`).
+    secret: ${STAND_JWT_SECRET:change-me-in-production-use-a-secure-random-string-of-at-least-256-bits}
+
+tests:
+  # Base URL the RestClient targets instead of the in-JVM server's random port.
+  base-url: ${STAND_BASE_URL:http://localhost:8080/api/v1}
