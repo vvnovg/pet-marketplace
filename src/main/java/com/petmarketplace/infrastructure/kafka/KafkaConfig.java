@@ -49,11 +49,19 @@ public class KafkaConfig {
         cfg.put(ConsumerConfig.AUTO_OFFSET_RESET_CONFIG, props.autoOffsetResetOrDefault());
         cfg.put(ConsumerConfig.ENABLE_AUTO_COMMIT_CONFIG, false);
         cfg.put(ConsumerConfig.KEY_DESERIALIZER_CLASS_CONFIG, StringDeserializer.class);
-        // ErrorHandlingDeserializer swallows deserialization failures: value becomes null and the
-        // exception is attached as a header (ErrorHandlingDeserializer.VALUE_DESERIALIZER_EXCEPTION_HEADER),
-        // so the listener can reply ERROR instead of the container looping on a poison pill.
+        // ErrorHandlingDeserializer swallows deserialization failures so a poison-pill payload does
+        // not loop the container. In spring-kafka 4.0 the DEFAULT behaviour (return null + attach a
+        // deserialization-exception header) is intercepted by the container's checkDeser BEFORE the
+        // listener is invoked: the record is routed straight to the CommonErrorHandler and the
+        // listener never sees it (so it can never reply). To keep the listener in control of every
+        // reply, install a failedDeserializationFunction that returns a sentinel AnimalInfoRequest(null)
+        // instead of null — no exception header is attached, checkDeser does not fire, and the
+        // listener's process() turns the null listingId into an ERROR reply (with the request's
+        // correlationId header copied through). The listener's record.value() == null branch is kept
+        // as a defensive safety net for any future deserializer that returns null without the header.
         ErrorHandlingDeserializer<AnimalInfoRequest> valueDeserializer =
                 new ErrorHandlingDeserializer<>(new JacksonJsonDeserializer<>(AnimalInfoRequest.class, jsonMapper));
+        valueDeserializer.setFailedDeserializationFunction(info -> new AnimalInfoRequest(null));
         return new DefaultKafkaConsumerFactory<>(cfg, new StringDeserializer(), valueDeserializer);
     }
 
@@ -65,7 +73,13 @@ public class KafkaConfig {
                 new ConcurrentKafkaListenerContainerFactory<>();
         factory.setConsumerFactory(animalInfoConsumerFactory);
         factory.setConcurrency(props.concurrencyOrDefault());
-        factory.getContainerProperties().setAckMode(AckMode.RECORD);
+        // MANUAL_IMMEDIATE so the listener's Acknowledgment parameter is populated and its
+        // ack.acknowledge() commits each record after a reply has been published. (AckMode.RECORD
+        // auto-acks after the listener returns but does NOT inject an Acknowledgment argument —
+        // the listener's `ack.acknowledge()` call then throws "No Acknowledgment available",
+        // failing every record. This surfaces only in the end-to-end test; Task 6's unit test
+        // mocked the Acknowledgment so it never hit this.)
+        factory.getContainerProperties().setAckMode(AckMode.MANUAL_IMMEDIATE);
         // No retries (FixedBackOff(0, 0) => zero attempts); the default recoverer logs and stops. The
         // listener catches every exception itself and always replies, so this handler is only a
         // safety net — it must never redeliver a record.

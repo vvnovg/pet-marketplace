@@ -77,7 +77,12 @@ public abstract class IntegrationTestBase {
 
     private static final String POSTGRES_IMAGE = "postgres:16-alpine";
     private static final String REDIS_IMAGE = "redis:7-alpine";
-    private static final String KAFKA_IMAGE = "confluentinc/cp-kafka:7.6.1";
+    // The new Testcontainers KafkaContainer (1.21.0) is built for the official apache/kafka image
+    // (KRaft mode) — it starts the broker via /etc/kafka/docker/run, which the confluent image does
+    // NOT ship. The confluent image's startup script is missing, so the container exits with code
+    // 127. apache/kafka ships that entrypoint and the "Transitioning from RECOVERY to RUNNING" log
+    // line the container's LogMessageWaitStrategy waits for. Tag pinned for reproducibility.
+    private static final String KAFKA_IMAGE = "apache/kafka:3.7.1";
 
     // Shared containers: started ONCE per JVM and kept alive for the whole test run. Using
     // @Container instead would stop each container after its test class completes, but the
@@ -97,6 +102,9 @@ public abstract class IntegrationTestBase {
     // rationale as POSTGRES/REDIS: started once per JVM in the static block (NOT @Container), so the
     // cached Spring context's @KafkaListener container keeps a stable bootstrap address across test
     // classes. In stand mode this is never started (the stand profile supplies kafka.bootstrap-servers).
+    // KafkaContainer's constructor asserts the image is compatible with "apache/kafka" (its
+    // reference image). apache/kafka:3.7.1 IS apache/kafka, so no asCompatibleSubstituteFor is
+    // needed — parse and pass directly.
     private static final KafkaContainer KAFKA = new KafkaContainer(DockerImageName.parse(KAFKA_IMAGE));
 
     static {
