@@ -5,9 +5,9 @@ services:
     image: postgres:16-alpine
     container_name: petmarketplace-postgres
     environment:
-      POSTGRES_DB: petmarketplace
-      POSTGRES_USER: petmarketplace
-      POSTGRES_PASSWORD: petmarketplace
+      POSTGRES_DB: ${POSTGRES_DB:-petmarketplace}
+      POSTGRES_USER: ${POSTGRES_USER:-petmarketplace}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-petmarketplace}
     volumes:
       - postgres-data:/var/lib/postgresql/data
     healthcheck:
@@ -73,9 +73,9 @@ services:
       CLUSTER_ID: "a6H0HOoYSDivVZWtRvFS1A"
       KAFKA_NODE_ID: 1
       KAFKA_PROCESS_ROLES: "broker,controller"
-      KAFKA_LISTENERS: PLAINTEXT://0.0.0.0:9092,CONTROLLER://0.0.0.0:9093
-      KAFKA_ADVERTISED_LISTENERS: PLAINTEXT://localhost:9092
-      KAFKA_LISTENER_SECURITY_PROTOCOL_MAP: CONTROLLER:PLAINTEXT,PLAINTEXT:PLAINTEXT
+      KAFKA_LISTENERS: PLAINTEXT://0.0.0.0:9092,DOCKER://0.0.0.0:29092,CONTROLLER://0.0.0.0:9093
+      KAFKA_ADVERTISED_LISTENERS: PLAINTEXT://localhost:9092,DOCKER://kafka:29092
+      KAFKA_LISTENER_SECURITY_PROTOCOL_MAP: CONTROLLER:PLAINTEXT,PLAINTEXT:PLAINTEXT,DOCKER:PLAINTEXT
       KAFKA_CONTROLLER_LISTENER_NAMES: CONTROLLER
       KAFKA_CONTROLLER_QUORUM_VOTERS: "1@kafka:9093"
       KAFKA_INTER_BROKER_LISTENER_NAME: PLAINTEXT
@@ -94,11 +94,58 @@ services:
     networks:
       - petmarketplace-network
 
+  app:
+    build: .
+    image: pet-marketplace:local
+    container_name: petmarketplace-app
+    environment:
+      SPRING_PROFILES_ACTIVE: prod
+      SPRING_DATASOURCE_URL: jdbc:postgresql://postgres:5432/${POSTGRES_DB:-petmarketplace}
+      SPRING_DATASOURCE_USERNAME: ${POSTGRES_USER:-petmarketplace}
+      SPRING_DATASOURCE_PASSWORD: ${POSTGRES_PASSWORD:-petmarketplace}
+      SPRING_DATA_REDIS_HOST: redis
+      SPRING_DATA_REDIS_PORT: "6379"
+      KAFKA_BOOTSTRAP_SERVERS: kafka:29092
+      JWT_SECRET: ${JWT_SECRET:-change-me-in-production-use-a-secure-random-string-of-at-least-256-bits}
+      STORAGE_LOCAL_PATH: /app/uploads
+    volumes:
+      - app-uploads:/app/uploads
+    depends_on:
+      postgres:
+        condition: service_healthy
+      redis:
+        condition: service_healthy
+      kafka:
+        condition: service_healthy
+    healthcheck:
+      test: ["CMD-SHELL", "curl -fsS http://localhost:8080/api/v1/actuator/health || exit 1"]
+      interval: 15s
+      timeout: 5s
+      retries: 12
+      start_period: 50s
+    networks:
+      - petmarketplace-network
+
+  caddy:
+    image: caddy:2-alpine
+    container_name: petmarketplace-caddy
+    ports:
+      - "8080:80"
+    volumes:
+      - ./Caddyfile:/etc/caddy/Caddyfile:ro
+      - ./static:/srv/static:ro
+    depends_on:
+      app:
+        condition: service_healthy
+    networks:
+      - petmarketplace-network
+
 volumes:
   postgres-data:
   redis-data:
   minio-data:
   mailpit-data:
+  app-uploads:
 
 networks:
   petmarketplace-network:

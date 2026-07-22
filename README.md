@@ -11,6 +11,7 @@ Backend REST API for a pet marketplace. Connects sellers (breeders, shelters, pr
 | ORM | Spring Data JPA (Hibernate) |
 | Database | PostgreSQL 16 |
 | Cache | Redis 7 |
+| Message broker | Apache Kafka (KRaft) + Spring Kafka |
 | Security | Spring Security + JWT (access/refresh tokens) |
 | API Docs | OpenAPI 3 + SpringDoc |
 | Build | Gradle (Kotlin DSL) |
@@ -24,7 +25,7 @@ The application follows a layered architecture:
 
 - `application` — REST controllers, DTOs, mappers and services
 - `domain` — JPA entities, enums and Spring Data repositories
-- `infrastructure` — security, file storage, email notifications and configuration
+- `infrastructure` — security, file storage, email notifications, Kafka integration and configuration
 
 Main modules: auth, users, listings, categories, bookings, messages, reviews, favorites, subscriptions and admin.
 
@@ -42,7 +43,7 @@ Main modules: auth, users, listings, categories, bookings, messages, reviews, fa
 docker-compose up -d
 ```
 
-This starts PostgreSQL, Redis, MinIO and Mailpit.
+This starts PostgreSQL, Redis, MinIO, Mailpit and Kafka (KRaft single-node). The two Kafka topics (`pet-marketplace.animal-info.requests` / `pet-marketplace.animal-info.replies`) are NOT auto-created — provision them once as shown in the [Kafka integration](#kafka-integration) section before first use.
 
 ### 2. Run the application
 
@@ -66,11 +67,11 @@ docker-compose down -v
 
 ## How to Run Tests
 
-The same integration suite (72 tests) runs in two modes.
+The same integration suite (86 tests) runs in two modes.
 
 ### Embedded (Testcontainers) — default
 
-Spins up PostgreSQL and Redis in Docker automatically. Requires Docker.
+Spins up PostgreSQL, Redis and Kafka in Docker automatically. Requires Docker.
 
 ```bash
 gradle test
@@ -94,6 +95,8 @@ gradle bootRun
 # 2. run the tests against it (in another terminal)
 gradle testOnStand
 ```
+
+In stand mode the compose Kafka broker has `AUTO_CREATE_TOPICS_ENABLE=false`, so before `testOnStand` provision the two topics once (commands in the [Kafka integration](#kafka-integration) section); alternatively point `STAND_KAFKA_BOOTSTRAP_SERVERS` at a remote broker where they already exist.
 
 By default this targets a stand at `http://localhost:8080/api/v1` with the local compose database. For a remote stand, override via env vars (the `STAND_JWT_SECRET` must match the stand's `JWT_SECRET` so tokens minted by the tests validate on the stand):
 
@@ -253,3 +256,82 @@ For non-compose deployments, the operator runs the equivalent `kafka-topics` (or
 | `STAND_KAFKA_TOPIC_REPLY` | `pet-marketplace.animal-info.replies` | Stand-mode reply topic |
 
 These variables can be exported or placed in an `application-local.yml` / `.env` file and referenced via Spring configuration.
+
+
+## Deploy (public demo)
+
+Run the full stack in Docker Compose on the host and publish it through the Keenetic cloud domain.
+
+### 1. Prerequisites on the host (Debian)
+
+```bash
+# Docker Engine + Compose plugin
+sudo apt-get update
+sudo apt-get install -y ca-certificates curl
+sudo install -m 0755 -d /etc/apt/keyrings
+curl -fsSL https://download.docker.com/linux/debian/gpg | sudo gpg --dearmor -o /etc/apt/keyrings/docker.gpg
+echo "deb [arch=amd64 signed-by=/etc/apt/keyrings/docker.gpg] https://download.docker.com/linux/debian bookworm stable" \
+  | sudo tee /etc/apt/sources.list.d/docker.list
+sudo apt-get update
+sudo apt-get install -y docker-ce docker-ce-cli containerd.io docker-buildx-plugin docker-compose-plugin
+```
+
+### 2. Configure and start the stack
+
+```bash
+cp .env.example .env
+# edit .env: set POSTGRES_PASSWORD and JWT_SECRET (>= 256 bits, e.g. `openssl rand -base64 48`)
+docker compose -f docker-compose.yml up -d --build
+```
+
+> Uses `-f docker-compose.yml` so the dev-only `docker-compose.override.yml` (which publishes Postgres/Redis/MinIO/Mailpit ports to the host) is NOT loaded on the public deployment.
+
+Create the Kafka topics (the broker has `KAFKA_AUTO_CREATE_TOPICS_ENABLE=false`):
+
+```bash
+docker exec petmarketplace-kafka kafka-topics --bootstrap-server localhost:9092 \
+  --create --if-not-exists --topic pet-marketplace.animal-info.requests --partitions 1 --replication-factor 1
+docker exec petmarketplace-kafka kafka-topics --bootstrap-server localhost:9092 \
+  --create --if-not-exists --topic pet-marketplace.animal-info.replies --partitions 1 --replication-factor 1
+```
+
+Verify locally on the host:
+
+```bash
+curl -fsS http://localhost:8080/api/v1/actuator/health   # {"status":"UP",...}
+curl -fsS http://localhost:8080/                          # demo front HTML
+```
+
+### 3. Open the firewall port
+
+The host's nftables `input` chain has `policy drop` and only allows SSH (and a couple of other ports). Allow the router to reach the app on `8080` and persist the rule:
+
+```bash
+sudo nft insert rule inet filter input iifname "enp1s0" tcp dport 8080 accept
+sudo sh -c 'nft -s list ruleset > /etc/nftables.conf'
+```
+
+(If the host loads rules from a different file, save to that file instead; verify with `sudo nft list chain inet filter input`.)
+
+### 4. Publish via the Keenetic cloud (recommended — keeps the existing domain)
+
+`netcraze.link` is a KeenDNS domain: the Keenetic cloud (front `78.47.125.180`) terminates HTTPS (Let's Encrypt cert `novgorodtsev.netcraze.link`) and tunnels to the Keenetic router, which forwards to an internal `IP:port`.
+
+In the Keenetic web GUI (KeenDNS / "Доступ из интернета"), retarget the `www.novgorodtsev.netcraze.link` cloud publication to:
+
+- internal host: `192.168.1.81`
+- port: `8080`
+- protocol: HTTP (TLS is handled by the cloud)
+
+Then verify publicly:
+
+```bash
+curl -fsS https://www.novgorodtsev.netcraze.link/api/v1/actuator/health
+```
+
+### 5. Alternative last-mile options
+
+If the Keenetic publication cannot target an arbitrary `IP:port`:
+
+- **Cloudflare Tunnel (no router/domain changes):** install `cloudflared` on the host and run `cloudflared tunnel --url http://localhost:8080` for an instant `https://<random>.trycloudflare.com`.
+- **Direct router port-forward:** forward `80/443` on the Keenetic to `192.168.1.81`, repoint the netcraze A-record to the router's WAN IP `185.155.18.14`, and switch the `Caddyfile` to `:80` + `:443` with automatic HTTPS (Caddy obtains its own Let's Encrypt cert). Note: a dynamic home WAN IP requires a dynDNS A-record.
