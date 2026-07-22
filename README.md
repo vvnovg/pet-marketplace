@@ -256,3 +256,80 @@ For non-compose deployments, the operator runs the equivalent `kafka-topics` (or
 | `STAND_KAFKA_TOPIC_REPLY` | `pet-marketplace.animal-info.replies` | Stand-mode reply topic |
 
 These variables can be exported or placed in an `application-local.yml` / `.env` file and referenced via Spring configuration.
+
+
+## Deploy (public demo)
+
+Run the full stack in Docker Compose on the host and publish it through the Keenetic cloud domain.
+
+### 1. Prerequisites on the host (Debian)
+
+```bash
+# Docker Engine + Compose plugin
+sudo apt-get update
+sudo apt-get install -y ca-certificates curl
+sudo install -m 0755 -d /etc/apt/keyrings
+curl -fsSL https://download.docker.com/linux/debian/gpg | sudo gpg --dearmor -o /etc/apt/keyrings/docker.gpg
+echo "deb [arch=amd64 signed-by=/etc/apt/keyrings/docker.gpg] https://download.docker.com/linux/debian bookworm stable" \
+  | sudo tee /etc/apt/sources.list.d/docker.list
+sudo apt-get update
+sudo apt-get install -y docker-ce docker-ce-cli containerd.io docker-buildx-plugin docker-compose-plugin
+```
+
+### 2. Configure and start the stack
+
+```bash
+cp .env.example .env
+# edit .env: set POSTGRES_PASSWORD and JWT_SECRET (>= 256 bits, e.g. `openssl rand -base64 48`)
+docker compose up -d --build
+```
+
+Create the Kafka topics (the broker has `KAFKA_AUTO_CREATE_TOPICS_ENABLE=false`):
+
+```bash
+docker exec petmarketplace-kafka kafka-topics --bootstrap-server localhost:9092 \
+  --create --if-not-exists --topic pet-marketplace.animal-info.requests --partitions 1 --replication-factor 1
+docker exec petmarketplace-kafka kafka-topics --bootstrap-server localhost:9092 \
+  --create --if-not-exists --topic pet-marketplace.animal-info.replies --partitions 1 --replication-factor 1
+```
+
+Verify locally on the host:
+
+```bash
+curl -fsS http://localhost:8080/api/v1/actuator/health   # {"status":"UP",...}
+curl -fsS http://localhost:8080/                          # demo front HTML
+```
+
+### 3. Open the firewall port
+
+The host's nftables `input` chain has `policy drop` and only allows SSH (and a couple of other ports). Allow the router to reach the app on `8080` and persist the rule:
+
+```bash
+sudo nft insert rule inet filter input iifname "enp1s0" tcp dport 8080 accept
+sudo sh -c 'nft -s list ruleset > /etc/nftables.conf'
+```
+
+(If the host loads rules from a different file, save to that file instead; verify with `sudo nft list chain inet filter input`.)
+
+### 4. Publish via the Keenetic cloud (recommended — keeps the existing domain)
+
+`netcraze.link` is a KeenDNS domain: the Keenetic cloud (front `78.47.125.180`) terminates HTTPS (Let's Encrypt cert `novgorodtsev.netcraze.link`) and tunnels to the Keenetic router, which forwards to an internal `IP:port`.
+
+In the Keenetic web GUI (KeenDNS / "Доступ из интернета"), retarget the `www.novgorodtsev.netcraze.link` cloud publication to:
+
+- internal host: `192.168.1.81`
+- port: `8080`
+- protocol: HTTP (TLS is handled by the cloud)
+
+Then verify publicly:
+
+```bash
+curl -fsS https://www.novgorodtsev.netcraze.link/api/v1/actuator/health
+```
+
+### 5. Alternative last-mile options
+
+If the Keenetic publication cannot target an arbitrary `IP:port`:
+
+- **Cloudflare Tunnel (no router/domain changes):** install `cloudflared` on the host and run `cloudflared tunnel --url http://localhost:8080` for an instant `https://<random>.trycloudflare.com`.
+- **Direct router port-forward:** forward `80/443` on the Keenetic to `192.168.1.81`, repoint the netcraze A-record to the router's WAN IP `185.155.18.14`, and switch the `Caddyfile` to `:80` + `:443` with automatic HTTPS (Caddy obtains its own Let's Encrypt cert). Note: a dynamic home WAN IP requires a dynDNS A-record.
