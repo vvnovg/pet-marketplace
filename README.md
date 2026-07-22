@@ -281,8 +281,10 @@ sudo apt-get install -y docker-ce docker-ce-cli containerd.io docker-buildx-plug
 ```bash
 cp .env.example .env
 # edit .env: set POSTGRES_PASSWORD and JWT_SECRET (>= 256 bits, e.g. `openssl rand -base64 48`)
-docker compose up -d --build
+docker compose -f docker-compose.yml up -d --build
 ```
+
+> Uses `-f docker-compose.yml` so the dev-only `docker-compose.override.yml` (which publishes Postgres/Redis/MinIO/Mailpit ports to the host) is NOT loaded on the public deployment.
 
 Create the Kafka topics (the broker has `KAFKA_AUTO_CREATE_TOPICS_ENABLE=false`):
 
