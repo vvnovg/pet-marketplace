@@ -30,6 +30,11 @@ kafka:
 mail:
   enabled: false
 
+management:
+  health:
+    mail:
+      enabled: false
+
 logging:
   level:
     root: WARN
