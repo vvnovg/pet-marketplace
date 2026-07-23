@@ -1,6 +1,6 @@
 databaseChangeLog:
   - changeSet:
-      id: 018-seed-breeds-reptiles
+      id: 021-seed-breeds-reptiles
       author: seed
       preConditions:
         - onFail: MARK_RAN
@@ -13,7 +13,7 @@ databaseChangeLog:
             columns:
               - column: { name: id, value: '55500000-0000-0000-0000-000000000001' }
               - column: { name: category_id, value: '55555555-5555-5555-5555-555555555555' }
-              - column: { name: name_ru, value: 'Хорнетная змея' }
+              - column: { name: name_ru, value: 'Кукурузная змея' }
               - column: { name: name_en, value: 'Corn Snake' }
         - insert:
             tableName: breeds
@@ -30,7 +30,7 @@ databaseChangeLog:
               - column: { name: name_ru, value: 'Шаровидный питон' }
               - column: { name: name_en, value: 'Ball Python' }
   - changeSet:
-      id: 019-seed-breeds-fish
+      id: 022-seed-breeds-fish
       author: seed
       preConditions:
         - onFail: MARK_RAN
@@ -60,7 +60,7 @@ databaseChangeLog:
               - column: { name: name_ru, value: 'Скалярия' }
               - column: { name: name_en, value: 'Angelfish' }
   - changeSet:
-      id: 020-seed-breeds-other
+      id: 023-seed-breeds-other
       author: seed
       preConditions:
         - onFail: MARK_RAN
