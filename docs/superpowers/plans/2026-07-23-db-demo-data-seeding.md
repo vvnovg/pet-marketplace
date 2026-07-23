@@ -4,7 +4,7 @@
 
 **Goal:** Populate the production demo stack (Docker Compose, `prod` profile) with ~250 rows of realistic, status-consistent marketplace data via two idempotent Liquibase seed changesets, while keeping Testcontainers integration tests on a clean DB.
 
-**Architecture:** Two new Liquibase YAML changesets included from `db.changelog-master.yaml`: `005` fills the reference-data gap (breeds for `reptiles`/`fish`/`other`) and runs in every context; `006` seeds all demo business data (users → profiles → listings → images → bookings → reviews → messages → favorites → subscriptions) under `contextFilter: "prod or dev or stand"` with a `count(users)==0` guard. Profile config files set `liquibase.contexts` so `test` (Testcontainers) skips `006`. One shared BCrypt hash authenticates all demo accounts with password `Demo12345`.
+**Architecture:** Two new Liquibase YAML changesets included from `db.changelog-master.yaml`: `005` fills the reference-data gap (breeds for `reptiles`/`fish`/`other`) and runs in every context; `006` seeds all demo business data (users → profiles → listings → images → bookings → reviews → messages → favorites → subscriptions) under `contextFilter: "prod or dev or stand"`. Each INSERT changeset guards on its OWN target table being empty (per-table idempotency — see Global Constraints), so all blocks run on the first `up` and the seed is re-runnable after `down -v`. Profile config files set `liquibase.contexts` so `test` (Testcontainers) skips `006`. One shared BCrypt hash authenticates all demo accounts with password `Demo12345`.
 
 **Tech Stack:** Spring Boot 4.x, Liquibase (YAML changelogs), PostgreSQL 16, BCrypt (`$2b$10$`), JDK 26, Gradle 9, Docker Compose.
 
@@ -21,6 +21,7 @@
 - Timestamps: AuditEntity tables (`users`, `profiles`, `listings`, `bookings`, `reviews`) have `created_at`/`updated_at` with DB `now()` default — omit in inserts. Base + `@CreatedDate` tables (`messages`, `favorites`, `subscriptions`) rely on `created_at` `now()` default — omit. If a specific order is needed (messages), supply `created_at` explicitly as `'2026-07-01 10:00:00+03'` incrementing.
 - Commit message style: conventional commits, end with `Co-Authored-By: Claude <noreply@anthropic.com>`. Commit per task.
 - After editing any Liquibase YAML, validate syntax with: `python3 -c "import yaml; yaml.safe_load(open('<file>'))"` (yaml is stdlib-available via the system Python).
+- **Idempotency guard scheme (per-table, NOT per-changeset `count(users)==0`):** Liquibase evaluates a changeset's `preConditions` immediately before that changeset runs, in file order. If every demo changeset guarded on `count(users)==0`, then after `024-seed-demo-users` inserts the users, the guard is already false for `025`–`033` → they are all skipped (`onFail: MARK_RAN`) on the first run → only users would ever be seeded. Instead: **every INSERT changeset guards on its OWN target table being empty** — `024` `count(users)==0`, `025` `count(profiles)==0`, `026` `count(listings)==0`, `027` `count(listing_images)==0`, `028` `count(bookings)==0`, `029` `count(reviews)==0`, `031` `count(messages)==0`, `032` `count(favorites)==0`, `033` `count(subscriptions)==0`, all with `onFail: MARK_RAN`. The rating `UPDATE` changeset `030` is **idempotent** (recomputes from reviews) so it has **NO count-precondition** — only `contextFilter`. This keeps the seed idempotent across `down/up` (each table's guard stays true until that table is populated) AND re-runnable after `down -v`.
 
 ---
 
@@ -248,7 +249,7 @@ databaseChangeLog:
 
 - [ ] **Step 2: Append the profiles block to the same changeset**
 
-Add a second `changeSet` `id: 025-seed-demo-profiles` (same `author: seed`, same `contextFilter`, same `preConditions` `count(users)==0 → MARK_RAN`) containing 47 `insert` blocks into `profiles`, one per user, columns:
+Add a second `changeSet` `id: 025-seed-demo-profiles` (same `author: seed`, same `contextFilter`, `preConditions` `count(profiles)==0 → MARK_RAN` — see Global Constraints: guard on the OWN table, NOT `count(users)==0`) containing 47 `insert` blocks into `profiles`, one per user, columns:
 ```yaml
               - column: { name: user_id, value: '<matching user id>' }
               - column: { name: country, value: 'Россия' }
@@ -273,7 +274,7 @@ Expected: BUILD SUCCESSFUL (resources compile; `006` not yet included in master 
 
 ```bash
 git add src/main/resources/db/changelog/changelogs/006-seed-demo-data.yaml
-git commit -m "feat(seed): demo users and profiles (003 part 1/4)
+git commit -m "feat(seed): demo users and profiles (006 part 1/4)
 
 Co-Authored-By: Claude <noreply@anthropic.com>"
 ```
@@ -304,7 +305,7 @@ Co-Authored-By: Claude <noreply@anthropic.com>"
 
 - [ ] **Step 1: Append the listings changeSet**
 
-`id: 026-seed-demo-listings`, same `author/contextFilter/preConditions`. 100 `insert` blocks into `listings`. Each insert columns:
+`id: 026-seed-demo-listings`, same `author: seed`, same `contextFilter: "prod or dev or stand"`, `preConditions` `count(listings)==0 → MARK_RAN` (guard on the OWN table — see Global Constraints). 100 `insert` blocks into `listings`. Each insert columns:
 ```yaml
               - column: { name: id, value: 'bbbbbbbb-bbbb-bbbb-bbbb-bbbbbbbb<NNNN>' }
               - column: { name: seller_id, value: 'aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaa<seller>' }
@@ -330,7 +331,7 @@ For `breed_id`: category `other` (`77777777-...`) — use one of `77700000-...00
 
 - [ ] **Step 2: Append the listing_images changeSet**
 
-`id: 027-seed-demo-listing-images`, same guard. ~150 inserts (1-2 per listing; 1 image for listings `0001..0050`, 2 images for `0051..0100`). UUID scheme `cccccccc-cccc-cccc-cccc-cccccccc0001`..`0150`. Columns:
+`id: 027-seed-demo-listing-images`, same author/contextFilter, `preConditions` `count(listing_images)==0 → MARK_RAN`. ~150 inserts (1-2 per listing; 1 image for listings `0001..0050`, 2 images for `0051..0100`). UUID scheme `cccccccc-cccc-cccc-cccc-cccccccc0001`..`0150`. Columns:
 ```yaml
               - column: { name: id, value: 'cccccccc-cccc-cccc-cccc-cccccccc<NNNN>' }
               - column: { name: listing_id, value: 'bbbbbbbb-bbbb-bbbb-bbbb-bbbbbbbb<listing>' }
@@ -349,7 +350,7 @@ Expected: no output, then BUILD SUCCESSFUL.
 
 ```bash
 git add src/main/resources/db/changelog/changelogs/006-seed-demo-data.yaml
-git commit -m "feat(seed): demo listings and images (003 part 2/4)
+git commit -m "feat(seed): demo listings and images (006 part 2/4)
 
 Co-Authored-By: Claude <noreply@anthropic.com>"
 ```
@@ -375,7 +376,7 @@ Co-Authored-By: Claude <noreply@anthropic.com>"
 
 - [ ] **Step 1: Append the bookings changeSet**
 
-`id: 028-seed-demo-bookings`, same guard. 40 `insert` blocks into `bookings`. Columns:
+`id: 028-seed-demo-bookings`, same author/contextFilter, `preConditions` `count(bookings)==0 → MARK_RAN`. 40 `insert` blocks into `bookings`. Columns:
 ```yaml
               - column: { name: id, value: 'dddddddd-dddd-dddd-dddd-dddddddd<NNNN>' }
               - column: { name: listing_id, value: 'bbbbbbbb-bbbb-bbbb-bbbb-bbbbbbbb<listing-per-pair>' }
@@ -388,7 +389,7 @@ Map each booking to its paired listing per the table above. Ensure `listing_id` 
 
 - [ ] **Step 2: Append the reviews changeSet**
 
-`id: 029-seed-demo-reviews`, same guard. 20 `insert` blocks into `reviews`, each on a distinct COMPLETED booking (bookings `0016..0035` provide exactly 20 COMPLETED bookings — one review per booking satisfies the unique `booking_id` constraint). Reviews `0001..0015` → status APPROVED (on completed bookings `0016..0030`); reviews `0016..0020` → status PENDING (on completed bookings `0031..0035`).
+`id: 029-seed-demo-reviews`, same author/contextFilter, `preConditions` `count(reviews)==0 → MARK_RAN`. 20 `insert` blocks into `reviews`, each on a distinct COMPLETED booking (bookings `0016..0035` provide exactly 20 COMPLETED bookings — one review per booking satisfies the unique `booking_id` constraint). Reviews `0001..0015` → status APPROVED (on completed bookings `0016..0030`); reviews `0016..0020` → status PENDING (on completed bookings `0031..0035`).
 
   Each review insert columns:
 ```yaml
@@ -404,7 +405,7 @@ Reviews `0001..0015` → APPROVED (on completed bookings `0016..0030`), `0016..0
 
 - [ ] **Step 3: Append the profile rating UPDATE**
 
-`id: 030-seed-demo-profile-ratings`, same guard. One `update` per seller that received approved reviews, setting `rating` = average of their approved reviews (rounded to 1 decimal) and `total_reviews` = count. Use `sql` raw blocks:
+`id: 030-seed-demo-profile-ratings`, same author/contextFilter, **NO count-precondition** (this is an idempotent `UPDATE` that recomputes from `reviews`, so it must run whenever reviews exist — see Global Constraints). One `update` per seller that received approved reviews, setting `rating` = average of their approved reviews (rounded to 1 decimal) and `total_reviews` = count. Use `sql` raw blocks:
 ```yaml
       changes:
         - sql:
@@ -421,7 +422,7 @@ Expected: no output, then BUILD SUCCESSFUL.
 
 ```bash
 git add src/main/resources/db/changelog/changelogs/006-seed-demo-data.yaml
-git commit -m "feat(seed): demo bookings, reviews, profile ratings (003 part 3/4)
+git commit -m "feat(seed): demo bookings, reviews, profile ratings (006 part 3/4)
 
 Co-Authored-By: Claude <noreply@anthropic.com>"
 ```
@@ -438,7 +439,7 @@ Co-Authored-By: Claude <noreply@anthropic.com>"
 
 - [ ] **Step 1: Append messages changeSet**
 
-`id: 031-seed-demo-messages`, same guard. ~30 inserts across 6 chats (each chat = a buyer↔seller pair around one listing). UUID scheme `12121212-1212-1212-1212-12121212<NNNN>` (last group = 8 hex + 4-digit suffix). Columns:
+`id: 031-seed-demo-messages`, same author/contextFilter, `preConditions` `count(messages)==0 → MARK_RAN`. ~30 inserts across 6 chats (each chat = a buyer↔seller pair around one listing). UUID scheme `12121212-1212-1212-1212-12121212<NNNN>` (last group = 8 hex + 4-digit suffix). Columns:
 ```yaml
               - column: { name: id, value: '12121212-1212-1212-1212-12121212<NNNN>' }
               - column: { name: sender_id, value: '<one side>' }
@@ -448,11 +449,11 @@ Co-Authored-By: Claude <noreply@anthropic.com>"
               - column: { name: is_read, valueBoolean: <true|false> }
               - column: { name: created_at, valueComputed: "'2026-07-01 10:00:00+03' + interval '<N> minute'" }
 ```
-6 chats: (buyer19↔seller3, listing 0001), (buyer20↔seller4, listing 0002), (buyer21↔seller5, listing 0003), (buyer22↔seller6, listing 0004), (buyer23↔seller7, listing 0005), (buyer24↔seller8, listing 0006). 5 messages per chat, alternating sender, `created_at` incrementing by 2 minutes. Last message in each chat `is_read=false`, earlier `true`.
+6 chats (seller = the listing's actual seller under the Task 3 round-robin that skips BUYER 0008 — listing 0006 maps to seller 0009, not 0008): (buyer19↔seller3, listing 0001), (buyer20↔seller4, listing 0002), (buyer21↔seller5, listing 0003), (buyer22↔seller6, listing 0004), (buyer23↔seller7, listing 0005), (buyer24↔seller9, listing 0006). 5 messages per chat, alternating sender, `created_at` incrementing by 2 minutes. Last message in each chat `is_read=false`, earlier `true`.
 
 - [ ] **Step 2: Append favorites changeSet**
 
-`id: 032-seed-demo-favorites`, same guard. ~25 inserts. UUID scheme `13131313-1313-1313-1313-13131313<NNNN>` (last group = 8 hex + 4-digit suffix, 0001..0025). Columns:
+`id: 032-seed-demo-favorites`, same author/contextFilter, `preConditions` `count(favorites)==0 → MARK_RAN`. ~25 inserts. UUID scheme `13131313-1313-1313-1313-13131313<NNNN>` (last group = 8 hex + 4-digit suffix, 0001..0025). Columns:
 ```yaml
               - column: { name: id, value: '13131313-1313-1313-1313-13131313<NNNN>' }
               - column: { name: user_id, value: 'aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaa<buyer>' }
@@ -462,7 +463,7 @@ Assign buyers `0019..0043` to ACTIVE listings `0001..0025` (unique pairs — eac
 
 - [ ] **Step 3: Append subscriptions changeSet**
 
-`id: 033-seed-demo-subscriptions`, same guard. ~10 inserts. UUID scheme `14141414-1414-1414-1414-14141414<NNNN>` (last group = 8 hex + 4-digit suffix, 0001..0010). Columns:
+`id: 033-seed-demo-subscriptions`, same author/contextFilter, `preConditions` `count(subscriptions)==0 → MARK_RAN`. ~10 inserts. UUID scheme `14141414-1414-1414-1414-14141414<NNNN>` (last group = 8 hex + 4-digit suffix, 0001..0010). Columns:
 ```yaml
               - column: { name: id, value: '14141414-1414-1414-1414-14141414<NNNN>' }
               - column: { name: user_id, value: 'aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaa<buyer>' }
@@ -480,7 +481,7 @@ Expected: no output, then BUILD SUCCESSFUL.
 
 ```bash
 git add src/main/resources/db/changelog/changelogs/006-seed-demo-data.yaml
-git commit -m "feat(seed): demo messages, favorites, subscriptions (003 part 4/4)
+git commit -m "feat(seed): demo messages, favorites, subscriptions (006 part 4/4)
 
 Co-Authored-By: Claude <noreply@anthropic.com>"
 ```
