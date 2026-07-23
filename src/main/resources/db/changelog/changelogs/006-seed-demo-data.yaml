@@ -4820,3 +4820,556 @@ databaseChangeLog:
       changes:
         - sql:
             sql: UPDATE profiles p SET rating = COALESCE((SELECT ROUND(AVG(r.rating)::numeric, 1) FROM reviews r WHERE r.recipient_id = p.user_id AND r.status = 'APPROVED'), 0.0), total_reviews = COALESCE((SELECT count(*) FROM reviews r WHERE r.recipient_id = p.user_id AND r.status = 'APPROVED'), 0)
+
+  - changeSet:
+      id: 031-seed-demo-messages
+      author: seed
+      contextFilter: "prod or dev or stand"
+      preConditions:
+        - onFail: MARK_RAN
+        - sqlCheck:
+            expectedResult: 0
+            sql: SELECT count(*) FROM messages
+      changes:
+        - insert:
+            tableName: messages
+            columns:
+              - column: { name: id, value: '12121212-1212-1212-1212-121212120001' }
+              - column: { name: sender_id, value: 'aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaa0019' }
+              - column: { name: receiver_id, value: 'aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaa0003' }
+              - column: { name: listing_id, value: 'bbbbbbbb-bbbb-bbbb-bbbb-bbbbbbbb0001' }
+              - column: { name: content, value: 'Здравствуйте! Сиамская кошка ещё доступна?' }
+              - column: { name: is_read, valueBoolean: true }
+              - column: { name: created_at, valueComputed: "'2026-07-01 10:00:00+03' + interval '0 minute'" }
+        - insert:
+            tableName: messages
+            columns:
+              - column: { name: id, value: '12121212-1212-1212-1212-121212120002' }
+              - column: { name: sender_id, value: 'aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaa0003' }
+              - column: { name: receiver_id, value: 'aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaa0019' }
+              - column: { name: listing_id, value: 'bbbbbbbb-bbbb-bbbb-bbbb-bbbbbbbb0001' }
+              - column: { name: content, value: 'Добрый день! Да, щенок доступен, 8 месяцев.' }
+              - column: { name: is_read, valueBoolean: true }
+              - column: { name: created_at, valueComputed: "'2026-07-01 10:00:00+03' + interval '2 minute'" }
+        - insert:
+            tableName: messages
+            columns:
+              - column: { name: id, value: '12121212-1212-1212-1212-121212120003' }
+              - column: { name: sender_id, value: 'aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaa0019' }
+              - column: { name: receiver_id, value: 'aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaa0003' }
+              - column: { name: listing_id, value: 'bbbbbbbb-bbbb-bbbb-bbbb-bbbbbbbb0001' }
+              - column: { name: content, value: 'Какие прививки сделаны и есть ли документы?' }
+              - column: { name: is_read, valueBoolean: true }
+              - column: { name: created_at, valueComputed: "'2026-07-01 10:00:00+03' + interval '4 minute'" }
+        - insert:
+            tableName: messages
+            columns:
+              - column: { name: id, value: '12121212-1212-1212-1212-121212120004' }
+              - column: { name: sender_id, value: 'aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaa0003' }
+              - column: { name: receiver_id, value: 'aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaa0019' }
+              - column: { name: listing_id, value: 'bbbbbbbb-bbbb-bbbb-bbbb-bbbbbbbb0001' }
+              - column: { name: content, value: 'Документы оформляются, прививки пока не ставили.' }
+              - column: { name: is_read, valueBoolean: true }
+              - column: { name: created_at, valueComputed: "'2026-07-01 10:00:00+03' + interval '6 minute'" }
+        - insert:
+            tableName: messages
+            columns:
+              - column: { name: id, value: '12121212-1212-1212-1212-121212120005' }
+              - column: { name: sender_id, value: 'aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaa0019' }
+              - column: { name: receiver_id, value: 'aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaa0003' }
+              - column: { name: listing_id, value: 'bbbbbbbb-bbbb-bbbb-bbbb-bbbbbbbb0001' }
+              - column: { name: content, value: 'Можно посмотреть на выходных?' }
+              - column: { name: is_read, valueBoolean: false }
+              - column: { name: created_at, valueComputed: "'2026-07-01 10:00:00+03' + interval '8 minute'" }
+        - insert:
+            tableName: messages
+            columns:
+              - column: { name: id, value: '12121212-1212-1212-1212-121212120006' }
+              - column: { name: sender_id, value: 'aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaa0020' }
+              - column: { name: receiver_id, value: 'aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaa0004' }
+              - column: { name: listing_id, value: 'bbbbbbbb-bbbb-bbbb-bbbb-bbbbbbbb0002' }
+              - column: { name: content, value: 'Здравствуйте, канарейка ещё продаётся?' }
+              - column: { name: is_read, valueBoolean: true }
+              - column: { name: created_at, valueComputed: "'2026-07-01 10:00:00+03' + interval '0 minute'" }
+        - insert:
+            tableName: messages
+            columns:
+              - column: { name: id, value: '12121212-1212-1212-1212-121212120007' }
+              - column: { name: sender_id, value: 'aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaa0004' }
+              - column: { name: receiver_id, value: 'aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaa0020' }
+              - column: { name: listing_id, value: 'bbbbbbbb-bbbb-bbbb-bbbb-bbbbbbbb0002' }
+              - column: { name: content, value: 'Здравствуйте! Да, птенец 15 месяцев, самка.' }
+              - column: { name: is_read, valueBoolean: true }
+              - column: { name: created_at, valueComputed: "'2026-07-01 10:00:00+03' + interval '2 minute'" }
+        - insert:
+            tableName: messages
+            columns:
+              - column: { name: id, value: '12121212-1212-1212-1212-121212120008' }
+              - column: { name: sender_id, value: 'aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaa0020' }
+              - column: { name: receiver_id, value: 'aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaa0004' }
+              - column: { name: listing_id, value: 'bbbbbbbb-bbbb-bbbb-bbbb-bbbbbbbb0002' }
+              - column: { name: content, value: 'Какая цена и можно ли торговаться?' }
+              - column: { name: is_read, valueBoolean: true }
+              - column: { name: created_at, valueComputed: "'2026-07-01 10:00:00+03' + interval '4 minute'" }
+        - insert:
+            tableName: messages
+            columns:
+              - column: { name: id, value: '12121212-1212-1212-1212-121212120009' }
+              - column: { name: sender_id, value: 'aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaa0004' }
+              - column: { name: receiver_id, value: 'aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaa0020' }
+              - column: { name: listing_id, value: 'bbbbbbbb-bbbb-bbbb-bbbb-bbbbbbbb0002' }
+              - column: { name: content, value: 'Цена 7468 руб, немного уступлю.' }
+              - column: { name: is_read, valueBoolean: true }
+              - column: { name: created_at, valueComputed: "'2026-07-01 10:00:00+03' + interval '6 minute'" }
+        - insert:
+            tableName: messages
+            columns:
+              - column: { name: id, value: '12121212-1212-1212-1212-121212120010' }
+              - column: { name: sender_id, value: 'aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaa0020' }
+              - column: { name: receiver_id, value: 'aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaa0004' }
+              - column: { name: listing_id, value: 'bbbbbbbb-bbbb-bbbb-bbbb-bbbbbbbb0002' }
+              - column: { name: content, value: 'Хорошо, договоримся при встрече.' }
+              - column: { name: is_read, valueBoolean: false }
+              - column: { name: created_at, valueComputed: "'2026-07-01 10:00:00+03' + interval '8 minute'" }
+        - insert:
+            tableName: messages
+            columns:
+              - column: { name: id, value: '12121212-1212-1212-1212-121212120011' }
+              - column: { name: sender_id, value: 'aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaa0021' }
+              - column: { name: receiver_id, value: 'aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaa0005' }
+              - column: { name: listing_id, value: 'bbbbbbbb-bbbb-bbbb-bbbb-bbbbbbbb0003' }
+              - column: { name: content, value: 'Здравствуйте! Животное ещё доступно?' }
+              - column: { name: is_read, valueBoolean: true }
+              - column: { name: created_at, valueComputed: "'2026-07-01 10:00:00+03' + interval '0 minute'" }
+        - insert:
+            tableName: messages
+            columns:
+              - column: { name: id, value: '12121212-1212-1212-1212-121212120012' }
+              - column: { name: sender_id, value: 'aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaa0005' }
+              - column: { name: receiver_id, value: 'aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaa0021' }
+              - column: { name: listing_id, value: 'bbbbbbbb-bbbb-bbbb-bbbb-bbbbbbbb0003' }
+              - column: { name: content, value: 'Добрый день! Да, в наличии.' }
+              - column: { name: is_read, valueBoolean: true }
+              - column: { name: created_at, valueComputed: "'2026-07-01 10:00:00+03' + interval '2 minute'" }
+        - insert:
+            tableName: messages
+            columns:
+              - column: { name: id, value: '12121212-1212-1212-1212-121212120013' }
+              - column: { name: sender_id, value: 'aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaa0021' }
+              - column: { name: receiver_id, value: 'aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaa0005' }
+              - column: { name: listing_id, value: 'bbbbbbbb-bbbb-bbbb-bbbb-bbbbbbbb0003' }
+              - column: { name: content, value: 'Подскажите характер и здоровье.' }
+              - column: { name: is_read, valueBoolean: true }
+              - column: { name: created_at, valueComputed: "'2026-07-01 10:00:00+03' + interval '4 minute'" }
+        - insert:
+            tableName: messages
+            columns:
+              - column: { name: id, value: '12121212-1212-1212-1212-121212120014' }
+              - column: { name: sender_id, value: 'aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaa0005' }
+              - column: { name: receiver_id, value: 'aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaa0021' }
+              - column: { name: listing_id, value: 'bbbbbbbb-bbbb-bbbb-bbbb-bbbbbbbb0003' }
+              - column: { name: content, value: 'Здоров, активен, контактировал с людьми.' }
+              - column: { name: is_read, valueBoolean: true }
+              - column: { name: created_at, valueComputed: "'2026-07-01 10:00:00+03' + interval '6 minute'" }
+        - insert:
+            tableName: messages
+            columns:
+              - column: { name: id, value: '12121212-1212-1212-1212-121212120015' }
+              - column: { name: sender_id, value: 'aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaa0021' }
+              - column: { name: receiver_id, value: 'aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaa0005' }
+              - column: { name: listing_id, value: 'bbbbbbbb-bbbb-bbbb-bbbb-bbbbbbbb0003' }
+              - column: { name: content, value: 'Когда можно забрать?' }
+              - column: { name: is_read, valueBoolean: false }
+              - column: { name: created_at, valueComputed: "'2026-07-01 10:00:00+03' + interval '8 minute'" }
+        - insert:
+            tableName: messages
+            columns:
+              - column: { name: id, value: '12121212-1212-1212-1212-121212120016' }
+              - column: { name: sender_id, value: 'aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaa0022' }
+              - column: { name: receiver_id, value: 'aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaa0006' }
+              - column: { name: listing_id, value: 'bbbbbbbb-bbbb-bbbb-bbbb-bbbbbbbb0004' }
+              - column: { name: content, value: 'Здравствуйте, интересует ваше объявление.' }
+              - column: { name: is_read, valueBoolean: true }
+              - column: { name: created_at, valueComputed: "'2026-07-01 10:00:00+03' + interval '0 minute'" }
+        - insert:
+            tableName: messages
+            columns:
+              - column: { name: id, value: '12121212-1212-1212-1212-121212120017' }
+              - column: { name: sender_id, value: 'aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaa0006' }
+              - column: { name: receiver_id, value: 'aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaa0022' }
+              - column: { name: listing_id, value: 'bbbbbbbb-bbbb-bbbb-bbbb-bbbbbbbb0004' }
+              - column: { name: content, value: 'Здравствуйте! Что хотите узнать?' }
+              - column: { name: is_read, valueBoolean: true }
+              - column: { name: created_at, valueComputed: "'2026-07-01 10:00:00+03' + interval '2 minute'" }
+        - insert:
+            tableName: messages
+            columns:
+              - column: { name: id, value: '12121212-1212-1212-1212-121212120018' }
+              - column: { name: sender_id, value: 'aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaa0022' }
+              - column: { name: receiver_id, value: 'aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaa0006' }
+              - column: { name: listing_id, value: 'bbbbbbbb-bbbb-bbbb-bbbb-bbbbbbbb0004' }
+              - column: { name: content, value: 'Возраст и окрас точные?' }
+              - column: { name: is_read, valueBoolean: true }
+              - column: { name: created_at, valueComputed: "'2026-07-01 10:00:00+03' + interval '4 minute'" }
+        - insert:
+            tableName: messages
+            columns:
+              - column: { name: id, value: '12121212-1212-1212-1212-121212120019' }
+              - column: { name: sender_id, value: 'aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaa0006' }
+              - column: { name: receiver_id, value: 'aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaa0022' }
+              - column: { name: listing_id, value: 'bbbbbbbb-bbbb-bbbb-bbbb-bbbbbbbb0004' }
+              - column: { name: content, value: 'Да, как в описании, всё верно.' }
+              - column: { name: is_read, valueBoolean: true }
+              - column: { name: created_at, valueComputed: "'2026-07-01 10:00:00+03' + interval '6 minute'" }
+        - insert:
+            tableName: messages
+            columns:
+              - column: { name: id, value: '12121212-1212-1212-1212-121212120020' }
+              - column: { name: sender_id, value: 'aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaa0022' }
+              - column: { name: receiver_id, value: 'aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaa0006' }
+              - column: { name: listing_id, value: 'bbbbbbbb-bbbb-bbbb-bbbb-bbbbbbbb0004' }
+              - column: { name: content, value: 'Оформим встречу на этой неделе?' }
+              - column: { name: is_read, valueBoolean: false }
+              - column: { name: created_at, valueComputed: "'2026-07-01 10:00:00+03' + interval '8 minute'" }
+        - insert:
+            tableName: messages
+            columns:
+              - column: { name: id, value: '12121212-1212-1212-1212-121212120021' }
+              - column: { name: sender_id, value: 'aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaa0023' }
+              - column: { name: receiver_id, value: 'aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaa0007' }
+              - column: { name: listing_id, value: 'bbbbbbbb-bbbb-bbbb-bbbb-bbbbbbbb0005' }
+              - column: { name: content, value: 'Добрый день! Ещё не продали?' }
+              - column: { name: is_read, valueBoolean: true }
+              - column: { name: created_at, valueComputed: "'2026-07-01 10:00:00+03' + interval '0 minute'" }
+        - insert:
+            tableName: messages
+            columns:
+              - column: { name: id, value: '12121212-1212-1212-1212-121212120022' }
+              - column: { name: sender_id, value: 'aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaa0007' }
+              - column: { name: receiver_id, value: 'aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaa0023' }
+              - column: { name: listing_id, value: 'bbbbbbbb-bbbb-bbbb-bbbb-bbbbbbbb0005' }
+              - column: { name: content, value: 'Здравствуйте! Ещё актуально.' }
+              - column: { name: is_read, valueBoolean: true }
+              - column: { name: created_at, valueComputed: "'2026-07-01 10:00:00+03' + interval '2 minute'" }
+        - insert:
+            tableName: messages
+            columns:
+              - column: { name: id, value: '12121212-1212-1212-1212-121212120023' }
+              - column: { name: sender_id, value: 'aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaa0023' }
+              - column: { name: receiver_id, value: 'aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaa0007' }
+              - column: { name: listing_id, value: 'bbbbbbbb-bbbb-bbbb-bbbb-bbbbbbbb0005' }
+              - column: { name: content, value: 'Готовы ли вы к обмену?' }
+              - column: { name: is_read, valueBoolean: true }
+              - column: { name: created_at, valueComputed: "'2026-07-01 10:00:00+03' + interval '4 minute'" }
+        - insert:
+            tableName: messages
+            columns:
+              - column: { name: id, value: '12121212-1212-1212-1212-121212120024' }
+              - column: { name: sender_id, value: 'aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaa0007' }
+              - column: { name: receiver_id, value: 'aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaa0023' }
+              - column: { name: listing_id, value: 'bbbbbbbb-bbbb-bbbb-bbbb-bbbbbbbb0005' }
+              - column: { name: content, value: 'Только продажа, извините.' }
+              - column: { name: is_read, valueBoolean: true }
+              - column: { name: created_at, valueComputed: "'2026-07-01 10:00:00+03' + interval '6 minute'" }
+        - insert:
+            tableName: messages
+            columns:
+              - column: { name: id, value: '12121212-1212-1212-1212-121212120025' }
+              - column: { name: sender_id, value: 'aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaa0023' }
+              - column: { name: receiver_id, value: 'aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaa0007' }
+              - column: { name: listing_id, value: 'bbbbbbbb-bbbb-bbbb-bbbb-bbbbbbbb0005' }
+              - column: { name: content, value: 'Понятно, подумаю и отвечу.' }
+              - column: { name: is_read, valueBoolean: false }
+              - column: { name: created_at, valueComputed: "'2026-07-01 10:00:00+03' + interval '8 minute'" }
+        - insert:
+            tableName: messages
+            columns:
+              - column: { name: id, value: '12121212-1212-1212-1212-121212120026' }
+              - column: { name: sender_id, value: 'aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaa0024' }
+              - column: { name: receiver_id, value: 'aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaa0009' }
+              - column: { name: listing_id, value: 'bbbbbbbb-bbbb-bbbb-bbbb-bbbbbbbb0006' }
+              - column: { name: content, value: 'Здравствуйте! Объявление ещё актуально?' }
+              - column: { name: is_read, valueBoolean: true }
+              - column: { name: created_at, valueComputed: "'2026-07-01 10:00:00+03' + interval '0 minute'" }
+        - insert:
+            tableName: messages
+            columns:
+              - column: { name: id, value: '12121212-1212-1212-1212-121212120027' }
+              - column: { name: sender_id, value: 'aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaa0009' }
+              - column: { name: receiver_id, value: 'aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaa0024' }
+              - column: { name: listing_id, value: 'bbbbbbbb-bbbb-bbbb-bbbb-bbbbbbbb0006' }
+              - column: { name: content, value: 'Здравствуйте! Да, доступно.' }
+              - column: { name: is_read, valueBoolean: true }
+              - column: { name: created_at, valueComputed: "'2026-07-01 10:00:00+03' + interval '2 minute'" }
+        - insert:
+            tableName: messages
+            columns:
+              - column: { name: id, value: '12121212-1212-1212-1212-121212120028' }
+              - column: { name: sender_id, value: 'aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaa0024' }
+              - column: { name: receiver_id, value: 'aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaa0009' }
+              - column: { name: listing_id, value: 'bbbbbbbb-bbbb-bbbb-bbbb-bbbbbbbb0006' }
+              - column: { name: content, value: 'Можно посмотреть фото подробнее?' }
+              - column: { name: is_read, valueBoolean: true }
+              - column: { name: created_at, valueComputed: "'2026-07-01 10:00:00+03' + interval '4 minute'" }
+        - insert:
+            tableName: messages
+            columns:
+              - column: { name: id, value: '12121212-1212-1212-1212-121212120029' }
+              - column: { name: sender_id, value: 'aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaa0009' }
+              - column: { name: receiver_id, value: 'aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaa0024' }
+              - column: { name: listing_id, value: 'bbbbbbbb-bbbb-bbbb-bbbb-bbbbbbbb0006' }
+              - column: { name: content, value: 'Пришлю дополнительно в личку.' }
+              - column: { name: is_read, valueBoolean: true }
+              - column: { name: created_at, valueComputed: "'2026-07-01 10:00:00+03' + interval '6 minute'" }
+        - insert:
+            tableName: messages
+            columns:
+              - column: { name: id, value: '12121212-1212-1212-1212-121212120030' }
+              - column: { name: sender_id, value: 'aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaa0024' }
+              - column: { name: receiver_id, value: 'aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaa0009' }
+              - column: { name: listing_id, value: 'bbbbbbbb-bbbb-bbbb-bbbb-bbbbbbbb0006' }
+              - column: { name: content, value: 'Спасибо, буду ждать.' }
+              - column: { name: is_read, valueBoolean: false }
+              - column: { name: created_at, valueComputed: "'2026-07-01 10:00:00+03' + interval '8 minute'" }
+
+  - changeSet:
+      id: 032-seed-demo-favorites
+      author: seed
+      contextFilter: "prod or dev or stand"
+      preConditions:
+        - onFail: MARK_RAN
+        - sqlCheck:
+            expectedResult: 0
+            sql: SELECT count(*) FROM favorites
+      changes:
+        - insert:
+            tableName: favorites
+            columns:
+              - column: { name: id, value: '13131313-1313-1313-1313-131313130001' }
+              - column: { name: user_id, value: 'aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaa0019' }
+              - column: { name: listing_id, value: 'bbbbbbbb-bbbb-bbbb-bbbb-bbbbbbbb0001' }
+        - insert:
+            tableName: favorites
+            columns:
+              - column: { name: id, value: '13131313-1313-1313-1313-131313130002' }
+              - column: { name: user_id, value: 'aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaa0020' }
+              - column: { name: listing_id, value: 'bbbbbbbb-bbbb-bbbb-bbbb-bbbbbbbb0002' }
+        - insert:
+            tableName: favorites
+            columns:
+              - column: { name: id, value: '13131313-1313-1313-1313-131313130003' }
+              - column: { name: user_id, value: 'aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaa0021' }
+              - column: { name: listing_id, value: 'bbbbbbbb-bbbb-bbbb-bbbb-bbbbbbbb0003' }
+        - insert:
+            tableName: favorites
+            columns:
+              - column: { name: id, value: '13131313-1313-1313-1313-131313130004' }
+              - column: { name: user_id, value: 'aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaa0022' }
+              - column: { name: listing_id, value: 'bbbbbbbb-bbbb-bbbb-bbbb-bbbbbbbb0004' }
+        - insert:
+            tableName: favorites
+            columns:
+              - column: { name: id, value: '13131313-1313-1313-1313-131313130005' }
+              - column: { name: user_id, value: 'aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaa0023' }
+              - column: { name: listing_id, value: 'bbbbbbbb-bbbb-bbbb-bbbb-bbbbbbbb0005' }
+        - insert:
+            tableName: favorites
+            columns:
+              - column: { name: id, value: '13131313-1313-1313-1313-131313130006' }
+              - column: { name: user_id, value: 'aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaa0024' }
+              - column: { name: listing_id, value: 'bbbbbbbb-bbbb-bbbb-bbbb-bbbbbbbb0006' }
+        - insert:
+            tableName: favorites
+            columns:
+              - column: { name: id, value: '13131313-1313-1313-1313-131313130007' }
+              - column: { name: user_id, value: 'aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaa0025' }
+              - column: { name: listing_id, value: 'bbbbbbbb-bbbb-bbbb-bbbb-bbbbbbbb0007' }
+        - insert:
+            tableName: favorites
+            columns:
+              - column: { name: id, value: '13131313-1313-1313-1313-131313130008' }
+              - column: { name: user_id, value: 'aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaa0026' }
+              - column: { name: listing_id, value: 'bbbbbbbb-bbbb-bbbb-bbbb-bbbbbbbb0008' }
+        - insert:
+            tableName: favorites
+            columns:
+              - column: { name: id, value: '13131313-1313-1313-1313-131313130009' }
+              - column: { name: user_id, value: 'aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaa0027' }
+              - column: { name: listing_id, value: 'bbbbbbbb-bbbb-bbbb-bbbb-bbbbbbbb0009' }
+        - insert:
+            tableName: favorites
+            columns:
+              - column: { name: id, value: '13131313-1313-1313-1313-131313130010' }
+              - column: { name: user_id, value: 'aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaa0028' }
+              - column: { name: listing_id, value: 'bbbbbbbb-bbbb-bbbb-bbbb-bbbbbbbb0010' }
+        - insert:
+            tableName: favorites
+            columns:
+              - column: { name: id, value: '13131313-1313-1313-1313-131313130011' }
+              - column: { name: user_id, value: 'aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaa0029' }
+              - column: { name: listing_id, value: 'bbbbbbbb-bbbb-bbbb-bbbb-bbbbbbbb0011' }
+        - insert:
+            tableName: favorites
+            columns:
+              - column: { name: id, value: '13131313-1313-1313-1313-131313130012' }
+              - column: { name: user_id, value: 'aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaa0030' }
+              - column: { name: listing_id, value: 'bbbbbbbb-bbbb-bbbb-bbbb-bbbbbbbb0012' }
+        - insert:
+            tableName: favorites
+            columns:
+              - column: { name: id, value: '13131313-1313-1313-1313-131313130013' }
+              - column: { name: user_id, value: 'aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaa0031' }
+              - column: { name: listing_id, value: 'bbbbbbbb-bbbb-bbbb-bbbb-bbbbbbbb0013' }
+        - insert:
+            tableName: favorites
+            columns:
+              - column: { name: id, value: '13131313-1313-1313-1313-131313130014' }
+              - column: { name: user_id, value: 'aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaa0032' }
+              - column: { name: listing_id, value: 'bbbbbbbb-bbbb-bbbb-bbbb-bbbbbbbb0014' }
+        - insert:
+            tableName: favorites
+            columns:
+              - column: { name: id, value: '13131313-1313-1313-1313-131313130015' }
+              - column: { name: user_id, value: 'aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaa0033' }
+              - column: { name: listing_id, value: 'bbbbbbbb-bbbb-bbbb-bbbb-bbbbbbbb0015' }
+        - insert:
+            tableName: favorites
+            columns:
+              - column: { name: id, value: '13131313-1313-1313-1313-131313130016' }
+              - column: { name: user_id, value: 'aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaa0034' }
+              - column: { name: listing_id, value: 'bbbbbbbb-bbbb-bbbb-bbbb-bbbbbbbb0016' }
+        - insert:
+            tableName: favorites
+            columns:
+              - column: { name: id, value: '13131313-1313-1313-1313-131313130017' }
+              - column: { name: user_id, value: 'aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaa0035' }
+              - column: { name: listing_id, value: 'bbbbbbbb-bbbb-bbbb-bbbb-bbbbbbbb0017' }
+        - insert:
+            tableName: favorites
+            columns:
+              - column: { name: id, value: '13131313-1313-1313-1313-131313130018' }
+              - column: { name: user_id, value: 'aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaa0036' }
+              - column: { name: listing_id, value: 'bbbbbbbb-bbbb-bbbb-bbbb-bbbbbbbb0018' }
+        - insert:
+            tableName: favorites
+            columns:
+              - column: { name: id, value: '13131313-1313-1313-1313-131313130019' }
+              - column: { name: user_id, value: 'aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaa0037' }
+              - column: { name: listing_id, value: 'bbbbbbbb-bbbb-bbbb-bbbb-bbbbbbbb0019' }
+        - insert:
+            tableName: favorites
+            columns:
+              - column: { name: id, value: '13131313-1313-1313-1313-131313130020' }
+              - column: { name: user_id, value: 'aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaa0038' }
+              - column: { name: listing_id, value: 'bbbbbbbb-bbbb-bbbb-bbbb-bbbbbbbb0020' }
+        - insert:
+            tableName: favorites
+            columns:
+              - column: { name: id, value: '13131313-1313-1313-1313-131313130021' }
+              - column: { name: user_id, value: 'aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaa0039' }
+              - column: { name: listing_id, value: 'bbbbbbbb-bbbb-bbbb-bbbb-bbbbbbbb0021' }
+        - insert:
+            tableName: favorites
+            columns:
+              - column: { name: id, value: '13131313-1313-1313-1313-131313130022' }
+              - column: { name: user_id, value: 'aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaa0040' }
+              - column: { name: listing_id, value: 'bbbbbbbb-bbbb-bbbb-bbbb-bbbbbbbb0022' }
+        - insert:
+            tableName: favorites
+            columns:
+              - column: { name: id, value: '13131313-1313-1313-1313-131313130023' }
+              - column: { name: user_id, value: 'aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaa0041' }
+              - column: { name: listing_id, value: 'bbbbbbbb-bbbb-bbbb-bbbb-bbbbbbbb0023' }
+        - insert:
+            tableName: favorites
+            columns:
+              - column: { name: id, value: '13131313-1313-1313-1313-131313130024' }
+              - column: { name: user_id, value: 'aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaa0042' }
+              - column: { name: listing_id, value: 'bbbbbbbb-bbbb-bbbb-bbbb-bbbbbbbb0024' }
+        - insert:
+            tableName: favorites
+            columns:
+              - column: { name: id, value: '13131313-1313-1313-1313-131313130025' }
+              - column: { name: user_id, value: 'aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaa0043' }
+              - column: { name: listing_id, value: 'bbbbbbbb-bbbb-bbbb-bbbb-bbbbbbbb0025' }
+
+  - changeSet:
+      id: 033-seed-demo-subscriptions
+      author: seed
+      contextFilter: "prod or dev or stand"
+      preConditions:
+        - onFail: MARK_RAN
+        - sqlCheck:
+            expectedResult: 0
+            sql: SELECT count(*) FROM subscriptions
+      changes:
+        - insert:
+            tableName: subscriptions
+            columns:
+              - column: { name: id, value: '14141414-1414-1414-1414-141414140001' }
+              - column: { name: user_id, value: 'aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaa0019' }
+              - column: { name: filters, value: '{"categoryId":"11111111-1111-1111-1111-111111111111","city":"Москва","maxPrice":50000}' }
+              - column: { name: is_active, valueBoolean: true }
+        - insert:
+            tableName: subscriptions
+            columns:
+              - column: { name: id, value: '14141414-1414-1414-1414-141414140002' }
+              - column: { name: user_id, value: 'aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaa0020' }
+              - column: { name: filters, value: '{"categoryId":"22222222-2222-2222-2222-222222222222","city":"Санкт-Петербург","maxPrice":45000}' }
+              - column: { name: is_active, valueBoolean: true }
+        - insert:
+            tableName: subscriptions
+            columns:
+              - column: { name: id, value: '14141414-1414-1414-1414-141414140003' }
+              - column: { name: user_id, value: 'aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaa0021' }
+              - column: { name: filters, value: '{"categoryId":"33333333-3333-3333-3333-333333333333","city":"Казань","maxPrice":30000}' }
+              - column: { name: is_active, valueBoolean: true }
+        - insert:
+            tableName: subscriptions
+            columns:
+              - column: { name: id, value: '14141414-1414-1414-1414-141414140004' }
+              - column: { name: user_id, value: 'aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaa0022' }
+              - column: { name: filters, value: '{"categoryId":"44444444-4444-4444-4444-444444444444","city":"Новосибирск","maxPrice":75000}' }
+              - column: { name: is_active, valueBoolean: true }
+        - insert:
+            tableName: subscriptions
+            columns:
+              - column: { name: id, value: '14141414-1414-1414-1414-141414140005' }
+              - column: { name: user_id, value: 'aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaa0023' }
+              - column: { name: filters, value: '{"categoryId":"55555555-5555-5555-5555-555555555555","city":"Екатеринбург","maxPrice":60000}' }
+              - column: { name: is_active, valueBoolean: true }
+        - insert:
+            tableName: subscriptions
+            columns:
+              - column: { name: id, value: '14141414-1414-1414-1414-141414140006' }
+              - column: { name: user_id, value: 'aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaa0024' }
+              - column: { name: filters, value: '{"categoryId":"66666666-6666-6666-6666-666666666666","city":"Москва","maxPrice":90000}' }
+              - column: { name: is_active, valueBoolean: true }
+        - insert:
+            tableName: subscriptions
+            columns:
+              - column: { name: id, value: '14141414-1414-1414-1414-141414140007' }
+              - column: { name: user_id, value: 'aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaa0025' }
+              - column: { name: filters, value: '{"categoryId":"77777777-7777-7777-7777-777777777777","city":"Санкт-Петербург","maxPrice":120000}' }
+              - column: { name: is_active, valueBoolean: true }
+        - insert:
+            tableName: subscriptions
+            columns:
+              - column: { name: id, value: '14141414-1414-1414-1414-141414140008' }
+              - column: { name: user_id, value: 'aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaa0026' }
+              - column: { name: filters, value: '{"categoryId":"11111111-1111-1111-1111-111111111111","city":"Казань","maxPrice":40000}' }
+              - column: { name: is_active, valueBoolean: true }
+        - insert:
+            tableName: subscriptions
+            columns:
+              - column: { name: id, value: '14141414-1414-1414-1414-141414140009' }
+              - column: { name: user_id, value: 'aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaa0027' }
+              - column: { name: filters, value: '{"categoryId":"22222222-2222-2222-2222-222222222222","city":"Новосибирск","maxPrice":110000}' }
+              - column: { name: is_active, valueBoolean: true }
+        - insert:
+            tableName: subscriptions
+            columns:
+              - column: { name: id, value: '14141414-1414-1414-1414-141414140010' }
+              - column: { name: user_id, value: 'aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaa0028' }
+              - column: { name: filters, value: '{"categoryId":"33333333-3333-3333-3333-333333333333","city":"Екатеринбург","maxPrice":80000}' }
+              - column: { name: is_active, valueBoolean: true }
