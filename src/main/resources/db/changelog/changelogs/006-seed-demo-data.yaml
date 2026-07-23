@@ -1123,7 +1123,7 @@ databaseChangeLog:
             tableName: listings
             columns:
               - column: { name: id, value: 'bbbbbbbb-bbbb-bbbb-bbbb-bbbbbbbb0006' }
-              - column: { name: seller_id, value: 'aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaa0008' }
+              - column: { name: seller_id, value: 'aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaa0009' }
               - column: { name: category_id, value: '77777777-7777-7777-7777-777777777777' }
               - column: { name: breed_id, value: '77700000-0000-0000-0000-000000000002' }
               - column: { name: title, value: 'Феррет детёныш' }
@@ -1143,11 +1143,11 @@ databaseChangeLog:
             tableName: listings
             columns:
               - column: { name: id, value: 'bbbbbbbb-bbbb-bbbb-bbbb-bbbbbbbb0007' }
-              - column: { name: seller_id, value: 'aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaa0009' }
+              - column: { name: seller_id, value: 'aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaa0010' }
               - column: { name: category_id, value: '11111111-1111-1111-1111-111111111111' }
               - column: { name: breed_id, value: '10000000-0000-0000-0000-000000000002' }
               - column: { name: title, value: 'Немецкая овчарка щенок' }
-              - column: { name: description, value: 'Продаю Немецкая овчарка. г. Москва.' }
+              - column: { name: description, value: 'Продаю Немецкая овчарка. г. Санкт-Петербург.' }
               - column: { name: price, valueNumeric: 13638 }
               - column: { name: currency, value: 'RUB' }
               - column: { name: gender, value: 'MALE' }
@@ -1156,18 +1156,18 @@ databaseChangeLog:
               - column: { name: has_vaccination, valueBoolean: false }
               - column: { name: has_documents, valueBoolean: false }
               - column: { name: location_country, value: 'Россия' }
-              - column: { name: location_city, value: 'Москва' }
+              - column: { name: location_city, value: 'Санкт-Петербург' }
               - column: { name: status, value: 'ACTIVE' }
               - column: { name: views_count, valueNumeric: 259 }
         - insert:
             tableName: listings
             columns:
               - column: { name: id, value: 'bbbbbbbb-bbbb-bbbb-bbbb-bbbbbbbb0008' }
-              - column: { name: seller_id, value: 'aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaa0010' }
+              - column: { name: seller_id, value: 'aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaa0011' }
               - column: { name: category_id, value: '22222222-2222-2222-2222-222222222222' }
               - column: { name: breed_id, value: '20000000-0000-0000-0000-000000000003' }
               - column: { name: title, value: 'Мейн-кун щенок' }
-              - column: { name: description, value: 'Продаю Мейн-кун. г. Санкт-Петербург.' }
+              - column: { name: description, value: 'Продаю Мейн-кун. г. Казань.' }
               - column: { name: price, valueNumeric: 14872 }
               - column: { name: currency, value: 'RUB' }
               - column: { name: gender, value: 'FEMALE' }
@@ -1176,18 +1176,18 @@ databaseChangeLog:
               - column: { name: has_vaccination, valueBoolean: false }
               - column: { name: has_documents, valueBoolean: false }
               - column: { name: location_country, value: 'Россия' }
-              - column: { name: location_city, value: 'Санкт-Петербург' }
+              - column: { name: location_city, value: 'Казань' }
               - column: { name: status, value: 'ACTIVE' }
               - column: { name: views_count, valueNumeric: 296 }
         - insert:
             tableName: listings
             columns:
               - column: { name: id, value: 'bbbbbbbb-bbbb-bbbb-bbbb-bbbbbbbb0009' }
-              - column: { name: seller_id, value: 'aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaa0011' }
+              - column: { name: seller_id, value: 'aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaa0012' }
               - column: { name: category_id, value: '33333333-3333-3333-3333-333333333333' }
               - column: { name: breed_id, value: '30000000-0000-0000-0000-000000000003' }
               - column: { name: title, value: 'Корелла птенец' }
-              - column: { name: description, value: 'Продаю Корелла. Привит. Есть документы. г. Казань.' }
+              - column: { name: description, value: 'Продаю Корелла. Привит. Есть документы. г. Новосибирск.' }
               - column: { name: price, valueNumeric: 16106 }
               - column: { name: currency, value: 'RUB' }
               - column: { name: gender, value: 'MALE' }
@@ -1196,18 +1196,18 @@ databaseChangeLog:
               - column: { name: has_vaccination, valueBoolean: true }
               - column: { name: has_documents, valueBoolean: true }
               - column: { name: location_country, value: 'Россия' }
-              - column: { name: location_city, value: 'Казань' }
+              - column: { name: location_city, value: 'Новосибирск' }
               - column: { name: status, value: 'ACTIVE' }
               - column: { name: views_count, valueNumeric: 333 }
         - insert:
             tableName: listings
             columns:
               - column: { name: id, value: 'bbbbbbbb-bbbb-bbbb-bbbb-bbbbbbbb0010' }
-              - column: { name: seller_id, value: 'aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaa0012' }
+              - column: { name: seller_id, value: 'aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaa0013' }
               - column: { name: category_id, value: '44444444-4444-4444-4444-444444444444' }
               - column: { name: breed_id, value: '40000000-0000-0000-0000-000000000001' }
               - column: { name: title, value: 'Хомяк щенок' }
-              - column: { name: description, value: 'Продаю Хомяк. г. Новосибирск.' }
+              - column: { name: description, value: 'Продаю Хомяк. г. Екатеринбург.' }
               - column: { name: price, valueNumeric: 17340 }
               - column: { name: currency, value: 'RUB' }
               - column: { name: gender, value: 'FEMALE' }
@@ -1216,18 +1216,18 @@ databaseChangeLog:
               - column: { name: has_vaccination, valueBoolean: false }
               - column: { name: has_documents, valueBoolean: false }
               - column: { name: location_country, value: 'Россия' }
-              - column: { name: location_city, value: 'Новосибирск' }
+              - column: { name: location_city, value: 'Екатеринбург' }
               - column: { name: status, value: 'ACTIVE' }
               - column: { name: views_count, valueNumeric: 370 }
         - insert:
             tableName: listings
             columns:
               - column: { name: id, value: 'bbbbbbbb-bbbb-bbbb-bbbb-bbbbbbbb0011' }
-              - column: { name: seller_id, value: 'aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaa0013' }
+              - column: { name: seller_id, value: 'aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaa0014' }
               - column: { name: category_id, value: '55555555-5555-5555-5555-555555555555' }
               - column: { name: breed_id, value: '55500000-0000-0000-0000-000000000002' }
               - column: { name: title, value: 'Бородатая агама детёныш' }
-              - column: { name: description, value: 'Продаю Бородатая агама. г. Екатеринбург.' }
+              - column: { name: description, value: 'Продаю Бородатая агама. г. Москва.' }
               - column: { name: price, valueNumeric: 18574 }
               - column: { name: currency, value: 'RUB' }
               - column: { name: gender, value: 'MALE' }
@@ -1236,18 +1236,18 @@ databaseChangeLog:
               - column: { name: has_vaccination, valueBoolean: false }
               - column: { name: has_documents, valueBoolean: false }
               - column: { name: location_country, value: 'Россия' }
-              - column: { name: location_city, value: 'Екатеринбург' }
+              - column: { name: location_city, value: 'Москва' }
               - column: { name: status, value: 'ACTIVE' }
               - column: { name: views_count, valueNumeric: 407 }
         - insert:
             tableName: listings
             columns:
               - column: { name: id, value: 'bbbbbbbb-bbbb-bbbb-bbbb-bbbbbbbb0012' }
-              - column: { name: seller_id, value: 'aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaa0014' }
+              - column: { name: seller_id, value: 'aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaa0015' }
               - column: { name: category_id, value: '66666666-6666-6666-6666-666666666666' }
               - column: { name: breed_id, value: '66600000-0000-0000-0000-000000000003' }
               - column: { name: title, value: 'Скалярия детёныш' }
-              - column: { name: description, value: 'Продаю Скалярия. Привит. Есть документы. г. Москва.' }
+              - column: { name: description, value: 'Продаю Скалярия. Привит. Есть документы. г. Санкт-Петербург.' }
               - column: { name: price, valueNumeric: 19808 }
               - column: { name: currency, value: 'RUB' }
               - column: { name: gender, value: 'FEMALE' }
@@ -1256,18 +1256,18 @@ databaseChangeLog:
               - column: { name: has_vaccination, valueBoolean: true }
               - column: { name: has_documents, valueBoolean: true }
               - column: { name: location_country, value: 'Россия' }
-              - column: { name: location_city, value: 'Москва' }
+              - column: { name: location_city, value: 'Санкт-Петербург' }
               - column: { name: status, value: 'ACTIVE' }
               - column: { name: views_count, valueNumeric: 444 }
         - insert:
             tableName: listings
             columns:
               - column: { name: id, value: 'bbbbbbbb-bbbb-bbbb-bbbb-bbbbbbbb0013' }
-              - column: { name: seller_id, value: 'aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaa0015' }
+              - column: { name: seller_id, value: 'aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaa0016' }
               - column: { name: category_id, value: '77777777-7777-7777-7777-777777777777' }
               - column: { name: breed_id, value: '77700000-0000-0000-0000-000000000001' }
               - column: { name: title, value: 'Морская свинка детёныш' }
-              - column: { name: description, value: 'Продаю Морская свинка. г. Санкт-Петербург.' }
+              - column: { name: description, value: 'Продаю Морская свинка. г. Казань.' }
               - column: { name: price, valueNumeric: 21042 }
               - column: { name: currency, value: 'RUB' }
               - column: { name: gender, value: 'MALE' }
@@ -1276,18 +1276,18 @@ databaseChangeLog:
               - column: { name: has_vaccination, valueBoolean: false }
               - column: { name: has_documents, valueBoolean: false }
               - column: { name: location_country, value: 'Россия' }
-              - column: { name: location_city, value: 'Санкт-Петербург' }
+              - column: { name: location_city, value: 'Казань' }
               - column: { name: status, value: 'ACTIVE' }
               - column: { name: views_count, valueNumeric: 481 }
         - insert:
             tableName: listings
             columns:
               - column: { name: id, value: 'bbbbbbbb-bbbb-bbbb-bbbb-bbbbbbbb0014' }
-              - column: { name: seller_id, value: 'aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaa0016' }
+              - column: { name: seller_id, value: 'aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaa0017' }
               - column: { name: category_id, value: '11111111-1111-1111-1111-111111111111' }
               - column: { name: breed_id, value: '10000000-0000-0000-0000-000000000004' }
               - column: { name: title, value: 'Пудель щенок' }
-              - column: { name: description, value: 'Продаю Пудель. г. Казань.' }
+              - column: { name: description, value: 'Продаю Пудель. г. Новосибирск.' }
               - column: { name: price, valueNumeric: 22276 }
               - column: { name: currency, value: 'RUB' }
               - column: { name: gender, value: 'FEMALE' }
@@ -1296,18 +1296,18 @@ databaseChangeLog:
               - column: { name: has_vaccination, valueBoolean: false }
               - column: { name: has_documents, valueBoolean: false }
               - column: { name: location_country, value: 'Россия' }
-              - column: { name: location_city, value: 'Казань' }
+              - column: { name: location_city, value: 'Новосибирск' }
               - column: { name: status, value: 'ACTIVE' }
               - column: { name: views_count, valueNumeric: 18 }
         - insert:
             tableName: listings
             columns:
               - column: { name: id, value: 'bbbbbbbb-bbbb-bbbb-bbbb-bbbbbbbb0015' }
-              - column: { name: seller_id, value: 'aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaa0017' }
+              - column: { name: seller_id, value: 'aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaa0018' }
               - column: { name: category_id, value: '22222222-2222-2222-2222-222222222222' }
               - column: { name: breed_id, value: '20000000-0000-0000-0000-000000000005' }
               - column: { name: title, value: 'Бенгальская кошка щенок' }
-              - column: { name: description, value: 'Продаю Бенгальская кошка. Привит. Есть документы. г. Новосибирск.' }
+              - column: { name: description, value: 'Продаю Бенгальская кошка. Привит. Есть документы. г. Екатеринбург.' }
               - column: { name: price, valueNumeric: 23510 }
               - column: { name: currency, value: 'RUB' }
               - column: { name: gender, value: 'MALE' }
@@ -1316,7 +1316,7 @@ databaseChangeLog:
               - column: { name: has_vaccination, valueBoolean: true }
               - column: { name: has_documents, valueBoolean: true }
               - column: { name: location_country, value: 'Россия' }
-              - column: { name: location_city, value: 'Новосибирск' }
+              - column: { name: location_city, value: 'Екатеринбург' }
               - column: { name: status, value: 'ACTIVE' }
               - column: { name: views_count, valueNumeric: 55 }
         - insert:
@@ -1423,7 +1423,7 @@ databaseChangeLog:
             tableName: listings
             columns:
               - column: { name: id, value: 'bbbbbbbb-bbbb-bbbb-bbbb-bbbbbbbb0021' }
-              - column: { name: seller_id, value: 'aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaa0008' }
+              - column: { name: seller_id, value: 'aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaa0009' }
               - column: { name: category_id, value: '11111111-1111-1111-1111-111111111111' }
               - column: { name: breed_id, value: '10000000-0000-0000-0000-000000000001' }
               - column: { name: title, value: 'Лабрадор-ретривер щенок' }
@@ -1443,11 +1443,11 @@ databaseChangeLog:
             tableName: listings
             columns:
               - column: { name: id, value: 'bbbbbbbb-bbbb-bbbb-bbbb-bbbbbbbb0022' }
-              - column: { name: seller_id, value: 'aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaa0009' }
+              - column: { name: seller_id, value: 'aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaa0010' }
               - column: { name: category_id, value: '22222222-2222-2222-2222-222222222222' }
               - column: { name: breed_id, value: '20000000-0000-0000-0000-000000000002' }
               - column: { name: title, value: 'Персидская кошка щенок' }
-              - column: { name: description, value: 'Продаю Персидская кошка. г. Москва.' }
+              - column: { name: description, value: 'Продаю Персидская кошка. г. Санкт-Петербург.' }
               - column: { name: price, valueNumeric: 32148 }
               - column: { name: currency, value: 'RUB' }
               - column: { name: gender, value: 'FEMALE' }
@@ -1456,18 +1456,18 @@ databaseChangeLog:
               - column: { name: has_vaccination, valueBoolean: false }
               - column: { name: has_documents, valueBoolean: false }
               - column: { name: location_country, value: 'Россия' }
-              - column: { name: location_city, value: 'Москва' }
+              - column: { name: location_city, value: 'Санкт-Петербург' }
               - column: { name: status, value: 'ACTIVE' }
               - column: { name: views_count, valueNumeric: 314 }
         - insert:
             tableName: listings
             columns:
               - column: { name: id, value: 'bbbbbbbb-bbbb-bbbb-bbbb-bbbbbbbb0023' }
-              - column: { name: seller_id, value: 'aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaa0010' }
+              - column: { name: seller_id, value: 'aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaa0011' }
               - column: { name: category_id, value: '33333333-3333-3333-3333-333333333333' }
               - column: { name: breed_id, value: '30000000-0000-0000-0000-000000000002' }
               - column: { name: title, value: 'Канарейка птенец' }
-              - column: { name: description, value: 'Продаю Канарейка. г. Санкт-Петербург.' }
+              - column: { name: description, value: 'Продаю Канарейка. г. Казань.' }
               - column: { name: price, valueNumeric: 33382 }
               - column: { name: currency, value: 'RUB' }
               - column: { name: gender, value: 'MALE' }
@@ -1476,18 +1476,18 @@ databaseChangeLog:
               - column: { name: has_vaccination, valueBoolean: false }
               - column: { name: has_documents, valueBoolean: false }
               - column: { name: location_country, value: 'Россия' }
-              - column: { name: location_city, value: 'Санкт-Петербург' }
+              - column: { name: location_city, value: 'Казань' }
               - column: { name: status, value: 'ACTIVE' }
               - column: { name: views_count, valueNumeric: 351 }
         - insert:
             tableName: listings
             columns:
               - column: { name: id, value: 'bbbbbbbb-bbbb-bbbb-bbbb-bbbbbbbb0024' }
-              - column: { name: seller_id, value: 'aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaa0011' }
+              - column: { name: seller_id, value: 'aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaa0012' }
               - column: { name: category_id, value: '44444444-4444-4444-4444-444444444444' }
               - column: { name: breed_id, value: '40000000-0000-0000-0000-000000000003' }
               - column: { name: title, value: 'Кролик щенок' }
-              - column: { name: description, value: 'Продаю Кролик. Привит. Есть документы. г. Казань.' }
+              - column: { name: description, value: 'Продаю Кролик. Привит. Есть документы. г. Новосибирск.' }
               - column: { name: price, valueNumeric: 34616 }
               - column: { name: currency, value: 'RUB' }
               - column: { name: gender, value: 'FEMALE' }
@@ -1496,18 +1496,18 @@ databaseChangeLog:
               - column: { name: has_vaccination, valueBoolean: true }
               - column: { name: has_documents, valueBoolean: true }
               - column: { name: location_country, value: 'Россия' }
-              - column: { name: location_city, value: 'Казань' }
+              - column: { name: location_city, value: 'Новосибирск' }
               - column: { name: status, value: 'ACTIVE' }
               - column: { name: views_count, valueNumeric: 388 }
         - insert:
             tableName: listings
             columns:
               - column: { name: id, value: 'bbbbbbbb-bbbb-bbbb-bbbb-bbbbbbbb0025' }
-              - column: { name: seller_id, value: 'aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaa0012' }
+              - column: { name: seller_id, value: 'aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaa0013' }
               - column: { name: category_id, value: '55555555-5555-5555-5555-555555555555' }
               - column: { name: breed_id, value: '55500000-0000-0000-0000-000000000001' }
               - column: { name: title, value: 'Кукурузная змея детёныш' }
-              - column: { name: description, value: 'Продаю Кукурузная змея. г. Новосибирск.' }
+              - column: { name: description, value: 'Продаю Кукурузная змея. г. Екатеринбург.' }
               - column: { name: price, valueNumeric: 35850 }
               - column: { name: currency, value: 'RUB' }
               - column: { name: gender, value: 'MALE' }
@@ -1516,18 +1516,18 @@ databaseChangeLog:
               - column: { name: has_vaccination, valueBoolean: false }
               - column: { name: has_documents, valueBoolean: false }
               - column: { name: location_country, value: 'Россия' }
-              - column: { name: location_city, value: 'Новосибирск' }
+              - column: { name: location_city, value: 'Екатеринбург' }
               - column: { name: status, value: 'ACTIVE' }
               - column: { name: views_count, valueNumeric: 425 }
         - insert:
             tableName: listings
             columns:
               - column: { name: id, value: 'bbbbbbbb-bbbb-bbbb-bbbb-bbbbbbbb0026' }
-              - column: { name: seller_id, value: 'aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaa0013' }
+              - column: { name: seller_id, value: 'aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaa0014' }
               - column: { name: category_id, value: '66666666-6666-6666-6666-666666666666' }
               - column: { name: breed_id, value: '66600000-0000-0000-0000-000000000002' }
               - column: { name: title, value: 'Золотая рыбка детёныш' }
-              - column: { name: description, value: 'Продаю Золотая рыбка. г. Екатеринбург.' }
+              - column: { name: description, value: 'Продаю Золотая рыбка. г. Москва.' }
               - column: { name: price, valueNumeric: 37084 }
               - column: { name: currency, value: 'RUB' }
               - column: { name: gender, value: 'FEMALE' }
@@ -1536,18 +1536,18 @@ databaseChangeLog:
               - column: { name: has_vaccination, valueBoolean: false }
               - column: { name: has_documents, valueBoolean: false }
               - column: { name: location_country, value: 'Россия' }
-              - column: { name: location_city, value: 'Екатеринбург' }
+              - column: { name: location_city, value: 'Москва' }
               - column: { name: status, value: 'ACTIVE' }
               - column: { name: views_count, valueNumeric: 462 }
         - insert:
             tableName: listings
             columns:
               - column: { name: id, value: 'bbbbbbbb-bbbb-bbbb-bbbb-bbbbbbbb0027' }
-              - column: { name: seller_id, value: 'aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaa0014' }
+              - column: { name: seller_id, value: 'aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaa0015' }
               - column: { name: category_id, value: '77777777-7777-7777-7777-777777777777' }
               - column: { name: breed_id, value: '77700000-0000-0000-0000-000000000001' }
               - column: { name: title, value: 'Морская свинка детёныш' }
-              - column: { name: description, value: 'Продаю Морская свинка. Привит. Есть документы. г. Москва.' }
+              - column: { name: description, value: 'Продаю Морская свинка. Привит. Есть документы. г. Санкт-Петербург.' }
               - column: { name: price, valueNumeric: 38318 }
               - column: { name: currency, value: 'RUB' }
               - column: { name: gender, value: 'MALE' }
@@ -1556,18 +1556,18 @@ databaseChangeLog:
               - column: { name: has_vaccination, valueBoolean: true }
               - column: { name: has_documents, valueBoolean: true }
               - column: { name: location_country, value: 'Россия' }
-              - column: { name: location_city, value: 'Москва' }
+              - column: { name: location_city, value: 'Санкт-Петербург' }
               - column: { name: status, value: 'ACTIVE' }
               - column: { name: views_count, valueNumeric: 499 }
         - insert:
             tableName: listings
             columns:
               - column: { name: id, value: 'bbbbbbbb-bbbb-bbbb-bbbb-bbbbbbbb0028' }
-              - column: { name: seller_id, value: 'aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaa0015' }
+              - column: { name: seller_id, value: 'aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaa0016' }
               - column: { name: category_id, value: '11111111-1111-1111-1111-111111111111' }
               - column: { name: breed_id, value: '10000000-0000-0000-0000-000000000003' }
               - column: { name: title, value: 'Бульдог щенок' }
-              - column: { name: description, value: 'Продаю Бульдог. г. Санкт-Петербург.' }
+              - column: { name: description, value: 'Продаю Бульдог. г. Казань.' }
               - column: { name: price, valueNumeric: 39552 }
               - column: { name: currency, value: 'RUB' }
               - column: { name: gender, value: 'FEMALE' }
@@ -1576,18 +1576,18 @@ databaseChangeLog:
               - column: { name: has_vaccination, valueBoolean: false }
               - column: { name: has_documents, valueBoolean: false }
               - column: { name: location_country, value: 'Россия' }
-              - column: { name: location_city, value: 'Санкт-Петербург' }
+              - column: { name: location_city, value: 'Казань' }
               - column: { name: status, value: 'ACTIVE' }
               - column: { name: views_count, valueNumeric: 36 }
         - insert:
             tableName: listings
             columns:
               - column: { name: id, value: 'bbbbbbbb-bbbb-bbbb-bbbb-bbbbbbbb0029' }
-              - column: { name: seller_id, value: 'aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaa0016' }
+              - column: { name: seller_id, value: 'aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaa0017' }
               - column: { name: category_id, value: '22222222-2222-2222-2222-222222222222' }
               - column: { name: breed_id, value: '20000000-0000-0000-0000-000000000004' }
               - column: { name: title, value: 'Британская короткошёрстная щенок' }
-              - column: { name: description, value: 'Продаю Британская короткошёрстная. г. Казань.' }
+              - column: { name: description, value: 'Продаю Британская короткошёрстная. г. Новосибирск.' }
               - column: { name: price, valueNumeric: 40786 }
               - column: { name: currency, value: 'RUB' }
               - column: { name: gender, value: 'MALE' }
@@ -1596,18 +1596,18 @@ databaseChangeLog:
               - column: { name: has_vaccination, valueBoolean: false }
               - column: { name: has_documents, valueBoolean: false }
               - column: { name: location_country, value: 'Россия' }
-              - column: { name: location_city, value: 'Казань' }
+              - column: { name: location_city, value: 'Новосибирск' }
               - column: { name: status, value: 'ACTIVE' }
               - column: { name: views_count, valueNumeric: 73 }
         - insert:
             tableName: listings
             columns:
               - column: { name: id, value: 'bbbbbbbb-bbbb-bbbb-bbbb-bbbbbbbb0030' }
-              - column: { name: seller_id, value: 'aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaa0017' }
+              - column: { name: seller_id, value: 'aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaa0018' }
               - column: { name: category_id, value: '33333333-3333-3333-3333-333333333333' }
               - column: { name: breed_id, value: '30000000-0000-0000-0000-000000000003' }
               - column: { name: title, value: 'Корелла птенец' }
-              - column: { name: description, value: 'Продаю Корелла. Привит. Есть документы. г. Новосибирск.' }
+              - column: { name: description, value: 'Продаю Корелла. Привит. Есть документы. г. Екатеринбург.' }
               - column: { name: price, valueNumeric: 42020 }
               - column: { name: currency, value: 'RUB' }
               - column: { name: gender, value: 'FEMALE' }
@@ -1616,7 +1616,7 @@ databaseChangeLog:
               - column: { name: has_vaccination, valueBoolean: true }
               - column: { name: has_documents, valueBoolean: true }
               - column: { name: location_country, value: 'Россия' }
-              - column: { name: location_city, value: 'Новосибирск' }
+              - column: { name: location_city, value: 'Екатеринбург' }
               - column: { name: status, value: 'ACTIVE' }
               - column: { name: views_count, valueNumeric: 110 }
         - insert:
@@ -1723,7 +1723,7 @@ databaseChangeLog:
             tableName: listings
             columns:
               - column: { name: id, value: 'bbbbbbbb-bbbb-bbbb-bbbb-bbbbbbbb0036' }
-              - column: { name: seller_id, value: 'aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaa0008' }
+              - column: { name: seller_id, value: 'aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaa0009' }
               - column: { name: category_id, value: '22222222-2222-2222-2222-222222222222' }
               - column: { name: breed_id, value: '20000000-0000-0000-0000-000000000001' }
               - column: { name: title, value: 'Сиамская кошка щенок' }
@@ -1743,11 +1743,11 @@ databaseChangeLog:
             tableName: listings
             columns:
               - column: { name: id, value: 'bbbbbbbb-bbbb-bbbb-bbbb-bbbbbbbb0037' }
-              - column: { name: seller_id, value: 'aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaa0009' }
+              - column: { name: seller_id, value: 'aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaa0010' }
               - column: { name: category_id, value: '33333333-3333-3333-3333-333333333333' }
               - column: { name: breed_id, value: '30000000-0000-0000-0000-000000000001' }
               - column: { name: title, value: 'Попугай птенец' }
-              - column: { name: description, value: 'Продаю Попугай. г. Москва.' }
+              - column: { name: description, value: 'Продаю Попугай. г. Санкт-Петербург.' }
               - column: { name: price, valueNumeric: 50658 }
               - column: { name: currency, value: 'RUB' }
               - column: { name: gender, value: 'MALE' }
@@ -1756,18 +1756,18 @@ databaseChangeLog:
               - column: { name: has_vaccination, valueBoolean: false }
               - column: { name: has_documents, valueBoolean: false }
               - column: { name: location_country, value: 'Россия' }
-              - column: { name: location_city, value: 'Москва' }
+              - column: { name: location_city, value: 'Санкт-Петербург' }
               - column: { name: status, value: 'ACTIVE' }
               - column: { name: views_count, valueNumeric: 369 }
         - insert:
             tableName: listings
             columns:
               - column: { name: id, value: 'bbbbbbbb-bbbb-bbbb-bbbb-bbbbbbbb0038' }
-              - column: { name: seller_id, value: 'aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaa0010' }
+              - column: { name: seller_id, value: 'aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaa0011' }
               - column: { name: category_id, value: '44444444-4444-4444-4444-444444444444' }
               - column: { name: breed_id, value: '40000000-0000-0000-0000-000000000002' }
               - column: { name: title, value: 'Морская свинка щенок' }
-              - column: { name: description, value: 'Продаю Морская свинка. г. Санкт-Петербург.' }
+              - column: { name: description, value: 'Продаю Морская свинка. г. Казань.' }
               - column: { name: price, valueNumeric: 51892 }
               - column: { name: currency, value: 'RUB' }
               - column: { name: gender, value: 'FEMALE' }
@@ -1776,18 +1776,18 @@ databaseChangeLog:
               - column: { name: has_vaccination, valueBoolean: false }
               - column: { name: has_documents, valueBoolean: false }
               - column: { name: location_country, value: 'Россия' }
-              - column: { name: location_city, value: 'Санкт-Петербург' }
+              - column: { name: location_city, value: 'Казань' }
               - column: { name: status, value: 'ACTIVE' }
               - column: { name: views_count, valueNumeric: 406 }
         - insert:
             tableName: listings
             columns:
               - column: { name: id, value: 'bbbbbbbb-bbbb-bbbb-bbbb-bbbbbbbb0039' }
-              - column: { name: seller_id, value: 'aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaa0011' }
+              - column: { name: seller_id, value: 'aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaa0012' }
               - column: { name: category_id, value: '55555555-5555-5555-5555-555555555555' }
               - column: { name: breed_id, value: '55500000-0000-0000-0000-000000000003' }
               - column: { name: title, value: 'Шаровидный питон детёныш' }
-              - column: { name: description, value: 'Продаю Шаровидный питон. Привит. Есть документы. г. Казань.' }
+              - column: { name: description, value: 'Продаю Шаровидный питон. Привит. Есть документы. г. Новосибирск.' }
               - column: { name: price, valueNumeric: 53126 }
               - column: { name: currency, value: 'RUB' }
               - column: { name: gender, value: 'MALE' }
@@ -1796,18 +1796,18 @@ databaseChangeLog:
               - column: { name: has_vaccination, valueBoolean: true }
               - column: { name: has_documents, valueBoolean: true }
               - column: { name: location_country, value: 'Россия' }
-              - column: { name: location_city, value: 'Казань' }
+              - column: { name: location_city, value: 'Новосибирск' }
               - column: { name: status, value: 'ACTIVE' }
               - column: { name: views_count, valueNumeric: 443 }
         - insert:
             tableName: listings
             columns:
               - column: { name: id, value: 'bbbbbbbb-bbbb-bbbb-bbbb-bbbbbbbb0040' }
-              - column: { name: seller_id, value: 'aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaa0012' }
+              - column: { name: seller_id, value: 'aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaa0013' }
               - column: { name: category_id, value: '66666666-6666-6666-6666-666666666666' }
               - column: { name: breed_id, value: '66600000-0000-0000-0000-000000000001' }
               - column: { name: title, value: 'Гуппи детёныш' }
-              - column: { name: description, value: 'Продаю Гуппи. г. Новосибирск.' }
+              - column: { name: description, value: 'Продаю Гуппи. г. Екатеринбург.' }
               - column: { name: price, valueNumeric: 54360 }
               - column: { name: currency, value: 'RUB' }
               - column: { name: gender, value: 'FEMALE' }
@@ -1816,18 +1816,18 @@ databaseChangeLog:
               - column: { name: has_vaccination, valueBoolean: false }
               - column: { name: has_documents, valueBoolean: false }
               - column: { name: location_country, value: 'Россия' }
-              - column: { name: location_city, value: 'Новосибирск' }
+              - column: { name: location_city, value: 'Екатеринбург' }
               - column: { name: status, value: 'ACTIVE' }
               - column: { name: views_count, valueNumeric: 480 }
         - insert:
             tableName: listings
             columns:
               - column: { name: id, value: 'bbbbbbbb-bbbb-bbbb-bbbb-bbbbbbbb0041' }
-              - column: { name: seller_id, value: 'aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaa0013' }
+              - column: { name: seller_id, value: 'aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaa0014' }
               - column: { name: category_id, value: '77777777-7777-7777-7777-777777777777' }
               - column: { name: breed_id, value: '77700000-0000-0000-0000-000000000001' }
               - column: { name: title, value: 'Морская свинка детёныш' }
-              - column: { name: description, value: 'Продаю Морская свинка. г. Екатеринбург.' }
+              - column: { name: description, value: 'Продаю Морская свинка. г. Москва.' }
               - column: { name: price, valueNumeric: 55594 }
               - column: { name: currency, value: 'RUB' }
               - column: { name: gender, value: 'MALE' }
@@ -1836,18 +1836,18 @@ databaseChangeLog:
               - column: { name: has_vaccination, valueBoolean: false }
               - column: { name: has_documents, valueBoolean: false }
               - column: { name: location_country, value: 'Россия' }
-              - column: { name: location_city, value: 'Екатеринбург' }
+              - column: { name: location_city, value: 'Москва' }
               - column: { name: status, value: 'ACTIVE' }
               - column: { name: views_count, valueNumeric: 17 }
         - insert:
             tableName: listings
             columns:
               - column: { name: id, value: 'bbbbbbbb-bbbb-bbbb-bbbb-bbbbbbbb0042' }
-              - column: { name: seller_id, value: 'aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaa0014' }
+              - column: { name: seller_id, value: 'aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaa0015' }
               - column: { name: category_id, value: '11111111-1111-1111-1111-111111111111' }
               - column: { name: breed_id, value: '10000000-0000-0000-0000-000000000002' }
               - column: { name: title, value: 'Немецкая овчарка щенок' }
-              - column: { name: description, value: 'Продаю Немецкая овчарка. Привит. Есть документы. г. Москва.' }
+              - column: { name: description, value: 'Продаю Немецкая овчарка. Привит. Есть документы. г. Санкт-Петербург.' }
               - column: { name: price, valueNumeric: 56828 }
               - column: { name: currency, value: 'RUB' }
               - column: { name: gender, value: 'FEMALE' }
@@ -1856,18 +1856,18 @@ databaseChangeLog:
               - column: { name: has_vaccination, valueBoolean: true }
               - column: { name: has_documents, valueBoolean: true }
               - column: { name: location_country, value: 'Россия' }
-              - column: { name: location_city, value: 'Москва' }
+              - column: { name: location_city, value: 'Санкт-Петербург' }
               - column: { name: status, value: 'ACTIVE' }
               - column: { name: views_count, valueNumeric: 54 }
         - insert:
             tableName: listings
             columns:
               - column: { name: id, value: 'bbbbbbbb-bbbb-bbbb-bbbb-bbbbbbbb0043' }
-              - column: { name: seller_id, value: 'aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaa0015' }
+              - column: { name: seller_id, value: 'aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaa0016' }
               - column: { name: category_id, value: '22222222-2222-2222-2222-222222222222' }
               - column: { name: breed_id, value: '20000000-0000-0000-0000-000000000003' }
               - column: { name: title, value: 'Мейн-кун щенок' }
-              - column: { name: description, value: 'Продаю Мейн-кун. г. Санкт-Петербург.' }
+              - column: { name: description, value: 'Продаю Мейн-кун. г. Казань.' }
               - column: { name: price, valueNumeric: 58062 }
               - column: { name: currency, value: 'RUB' }
               - column: { name: gender, value: 'MALE' }
@@ -1876,18 +1876,18 @@ databaseChangeLog:
               - column: { name: has_vaccination, valueBoolean: false }
               - column: { name: has_documents, valueBoolean: false }
               - column: { name: location_country, value: 'Россия' }
-              - column: { name: location_city, value: 'Санкт-Петербург' }
+              - column: { name: location_city, value: 'Казань' }
               - column: { name: status, value: 'ACTIVE' }
               - column: { name: views_count, valueNumeric: 91 }
         - insert:
             tableName: listings
             columns:
               - column: { name: id, value: 'bbbbbbbb-bbbb-bbbb-bbbb-bbbbbbbb0044' }
-              - column: { name: seller_id, value: 'aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaa0016' }
+              - column: { name: seller_id, value: 'aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaa0017' }
               - column: { name: category_id, value: '33333333-3333-3333-3333-333333333333' }
               - column: { name: breed_id, value: '30000000-0000-0000-0000-000000000002' }
               - column: { name: title, value: 'Канарейка птенец' }
-              - column: { name: description, value: 'Продаю Канарейка. г. Казань.' }
+              - column: { name: description, value: 'Продаю Канарейка. г. Новосибирск.' }
               - column: { name: price, valueNumeric: 59296 }
               - column: { name: currency, value: 'RUB' }
               - column: { name: gender, value: 'FEMALE' }
@@ -1896,18 +1896,18 @@ databaseChangeLog:
               - column: { name: has_vaccination, valueBoolean: false }
               - column: { name: has_documents, valueBoolean: false }
               - column: { name: location_country, value: 'Россия' }
-              - column: { name: location_city, value: 'Казань' }
+              - column: { name: location_city, value: 'Новосибирск' }
               - column: { name: status, value: 'ACTIVE' }
               - column: { name: views_count, valueNumeric: 128 }
         - insert:
             tableName: listings
             columns:
               - column: { name: id, value: 'bbbbbbbb-bbbb-bbbb-bbbb-bbbbbbbb0045' }
-              - column: { name: seller_id, value: 'aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaa0017' }
+              - column: { name: seller_id, value: 'aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaa0018' }
               - column: { name: category_id, value: '44444444-4444-4444-4444-444444444444' }
               - column: { name: breed_id, value: '40000000-0000-0000-0000-000000000003' }
               - column: { name: title, value: 'Кролик щенок' }
-              - column: { name: description, value: 'Продаю Кролик. Привит. Есть документы. г. Новосибирск.' }
+              - column: { name: description, value: 'Продаю Кролик. Привит. Есть документы. г. Екатеринбург.' }
               - column: { name: price, valueNumeric: 60530 }
               - column: { name: currency, value: 'RUB' }
               - column: { name: gender, value: 'MALE' }
@@ -1916,7 +1916,7 @@ databaseChangeLog:
               - column: { name: has_vaccination, valueBoolean: true }
               - column: { name: has_documents, valueBoolean: true }
               - column: { name: location_country, value: 'Россия' }
-              - column: { name: location_city, value: 'Новосибирск' }
+              - column: { name: location_city, value: 'Екатеринбург' }
               - column: { name: status, value: 'ACTIVE' }
               - column: { name: views_count, valueNumeric: 165 }
         - insert:
@@ -2023,7 +2023,7 @@ databaseChangeLog:
             tableName: listings
             columns:
               - column: { name: id, value: 'bbbbbbbb-bbbb-bbbb-bbbb-bbbbbbbb0051' }
-              - column: { name: seller_id, value: 'aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaa0008' }
+              - column: { name: seller_id, value: 'aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaa0009' }
               - column: { name: category_id, value: '33333333-3333-3333-3333-333333333333' }
               - column: { name: breed_id, value: '30000000-0000-0000-0000-000000000003' }
               - column: { name: title, value: 'Корелла птенец' }
@@ -2043,11 +2043,11 @@ databaseChangeLog:
             tableName: listings
             columns:
               - column: { name: id, value: 'bbbbbbbb-bbbb-bbbb-bbbb-bbbbbbbb0052' }
-              - column: { name: seller_id, value: 'aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaa0009' }
+              - column: { name: seller_id, value: 'aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaa0010' }
               - column: { name: category_id, value: '44444444-4444-4444-4444-444444444444' }
               - column: { name: breed_id, value: '40000000-0000-0000-0000-000000000001' }
               - column: { name: title, value: 'Хомяк щенок' }
-              - column: { name: description, value: 'Продаю Хомяк. г. Москва.' }
+              - column: { name: description, value: 'Продаю Хомяк. г. Санкт-Петербург.' }
               - column: { name: price, valueNumeric: 69168 }
               - column: { name: currency, value: 'RUB' }
               - column: { name: gender, value: 'FEMALE' }
@@ -2056,18 +2056,18 @@ databaseChangeLog:
               - column: { name: has_vaccination, valueBoolean: false }
               - column: { name: has_documents, valueBoolean: false }
               - column: { name: location_country, value: 'Россия' }
-              - column: { name: location_city, value: 'Москва' }
+              - column: { name: location_city, value: 'Санкт-Петербург' }
               - column: { name: status, value: 'ACTIVE' }
               - column: { name: views_count, valueNumeric: 424 }
         - insert:
             tableName: listings
             columns:
               - column: { name: id, value: 'bbbbbbbb-bbbb-bbbb-bbbb-bbbbbbbb0053' }
-              - column: { name: seller_id, value: 'aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaa0010' }
+              - column: { name: seller_id, value: 'aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaa0011' }
               - column: { name: category_id, value: '55555555-5555-5555-5555-555555555555' }
               - column: { name: breed_id, value: '55500000-0000-0000-0000-000000000002' }
               - column: { name: title, value: 'Бородатая агама детёныш' }
-              - column: { name: description, value: 'Продаю Бородатая агама. г. Санкт-Петербург.' }
+              - column: { name: description, value: 'Продаю Бородатая агама. г. Казань.' }
               - column: { name: price, valueNumeric: 70402 }
               - column: { name: currency, value: 'RUB' }
               - column: { name: gender, value: 'MALE' }
@@ -2076,18 +2076,18 @@ databaseChangeLog:
               - column: { name: has_vaccination, valueBoolean: false }
               - column: { name: has_documents, valueBoolean: false }
               - column: { name: location_country, value: 'Россия' }
-              - column: { name: location_city, value: 'Санкт-Петербург' }
+              - column: { name: location_city, value: 'Казань' }
               - column: { name: status, value: 'ACTIVE' }
               - column: { name: views_count, valueNumeric: 461 }
         - insert:
             tableName: listings
             columns:
               - column: { name: id, value: 'bbbbbbbb-bbbb-bbbb-bbbb-bbbbbbbb0054' }
-              - column: { name: seller_id, value: 'aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaa0011' }
+              - column: { name: seller_id, value: 'aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaa0012' }
               - column: { name: category_id, value: '66666666-6666-6666-6666-666666666666' }
               - column: { name: breed_id, value: '66600000-0000-0000-0000-000000000003' }
               - column: { name: title, value: 'Скалярия детёныш' }
-              - column: { name: description, value: 'Продаю Скалярия. Привит. Есть документы. г. Казань.' }
+              - column: { name: description, value: 'Продаю Скалярия. Привит. Есть документы. г. Новосибирск.' }
               - column: { name: price, valueNumeric: 71636 }
               - column: { name: currency, value: 'RUB' }
               - column: { name: gender, value: 'FEMALE' }
@@ -2096,18 +2096,18 @@ databaseChangeLog:
               - column: { name: has_vaccination, valueBoolean: true }
               - column: { name: has_documents, valueBoolean: true }
               - column: { name: location_country, value: 'Россия' }
-              - column: { name: location_city, value: 'Казань' }
+              - column: { name: location_city, value: 'Новосибирск' }
               - column: { name: status, value: 'ACTIVE' }
               - column: { name: views_count, valueNumeric: 498 }
         - insert:
             tableName: listings
             columns:
               - column: { name: id, value: 'bbbbbbbb-bbbb-bbbb-bbbb-bbbbbbbb0055' }
-              - column: { name: seller_id, value: 'aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaa0012' }
+              - column: { name: seller_id, value: 'aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaa0013' }
               - column: { name: category_id, value: '77777777-7777-7777-7777-777777777777' }
               - column: { name: breed_id, value: '77700000-0000-0000-0000-000000000001' }
               - column: { name: title, value: 'Морская свинка детёныш' }
-              - column: { name: description, value: 'Продаю Морская свинка. г. Новосибирск.' }
+              - column: { name: description, value: 'Продаю Морская свинка. г. Екатеринбург.' }
               - column: { name: price, valueNumeric: 72870 }
               - column: { name: currency, value: 'RUB' }
               - column: { name: gender, value: 'MALE' }
@@ -2116,18 +2116,18 @@ databaseChangeLog:
               - column: { name: has_vaccination, valueBoolean: false }
               - column: { name: has_documents, valueBoolean: false }
               - column: { name: location_country, value: 'Россия' }
-              - column: { name: location_city, value: 'Новосибирск' }
+              - column: { name: location_city, value: 'Екатеринбург' }
               - column: { name: status, value: 'ACTIVE' }
               - column: { name: views_count, valueNumeric: 35 }
         - insert:
             tableName: listings
             columns:
               - column: { name: id, value: 'bbbbbbbb-bbbb-bbbb-bbbb-bbbbbbbb0056' }
-              - column: { name: seller_id, value: 'aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaa0013' }
+              - column: { name: seller_id, value: 'aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaa0014' }
               - column: { name: category_id, value: '11111111-1111-1111-1111-111111111111' }
               - column: { name: breed_id, value: '10000000-0000-0000-0000-000000000001' }
               - column: { name: title, value: 'Лабрадор-ретривер щенок' }
-              - column: { name: description, value: 'Продаю Лабрадор-ретривер. г. Екатеринбург.' }
+              - column: { name: description, value: 'Продаю Лабрадор-ретривер. г. Москва.' }
               - column: { name: price, valueNumeric: 74104 }
               - column: { name: currency, value: 'RUB' }
               - column: { name: gender, value: 'FEMALE' }
@@ -2136,18 +2136,18 @@ databaseChangeLog:
               - column: { name: has_vaccination, valueBoolean: false }
               - column: { name: has_documents, valueBoolean: false }
               - column: { name: location_country, value: 'Россия' }
-              - column: { name: location_city, value: 'Екатеринбург' }
+              - column: { name: location_city, value: 'Москва' }
               - column: { name: status, value: 'ACTIVE' }
               - column: { name: views_count, valueNumeric: 72 }
         - insert:
             tableName: listings
             columns:
               - column: { name: id, value: 'bbbbbbbb-bbbb-bbbb-bbbb-bbbbbbbb0057' }
-              - column: { name: seller_id, value: 'aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaa0014' }
+              - column: { name: seller_id, value: 'aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaa0015' }
               - column: { name: category_id, value: '22222222-2222-2222-2222-222222222222' }
               - column: { name: breed_id, value: '20000000-0000-0000-0000-000000000002' }
               - column: { name: title, value: 'Персидская кошка щенок' }
-              - column: { name: description, value: 'Продаю Персидская кошка. Привит. Есть документы. г. Москва.' }
+              - column: { name: description, value: 'Продаю Персидская кошка. Привит. Есть документы. г. Санкт-Петербург.' }
               - column: { name: price, valueNumeric: 75338 }
               - column: { name: currency, value: 'RUB' }
               - column: { name: gender, value: 'MALE' }
@@ -2156,18 +2156,18 @@ databaseChangeLog:
               - column: { name: has_vaccination, valueBoolean: true }
               - column: { name: has_documents, valueBoolean: true }
               - column: { name: location_country, value: 'Россия' }
-              - column: { name: location_city, value: 'Москва' }
+              - column: { name: location_city, value: 'Санкт-Петербург' }
               - column: { name: status, value: 'ACTIVE' }
               - column: { name: views_count, valueNumeric: 109 }
         - insert:
             tableName: listings
             columns:
               - column: { name: id, value: 'bbbbbbbb-bbbb-bbbb-bbbb-bbbbbbbb0058' }
-              - column: { name: seller_id, value: 'aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaa0015' }
+              - column: { name: seller_id, value: 'aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaa0016' }
               - column: { name: category_id, value: '33333333-3333-3333-3333-333333333333' }
               - column: { name: breed_id, value: '30000000-0000-0000-0000-000000000001' }
               - column: { name: title, value: 'Попугай птенец' }
-              - column: { name: description, value: 'Продаю Попугай. г. Санкт-Петербург.' }
+              - column: { name: description, value: 'Продаю Попугай. г. Казань.' }
               - column: { name: price, valueNumeric: 76572 }
               - column: { name: currency, value: 'RUB' }
               - column: { name: gender, value: 'FEMALE' }
@@ -2176,18 +2176,18 @@ databaseChangeLog:
               - column: { name: has_vaccination, valueBoolean: false }
               - column: { name: has_documents, valueBoolean: false }
               - column: { name: location_country, value: 'Россия' }
-              - column: { name: location_city, value: 'Санкт-Петербург' }
+              - column: { name: location_city, value: 'Казань' }
               - column: { name: status, value: 'ACTIVE' }
               - column: { name: views_count, valueNumeric: 146 }
         - insert:
             tableName: listings
             columns:
               - column: { name: id, value: 'bbbbbbbb-bbbb-bbbb-bbbb-bbbbbbbb0059' }
-              - column: { name: seller_id, value: 'aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaa0016' }
+              - column: { name: seller_id, value: 'aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaa0017' }
               - column: { name: category_id, value: '44444444-4444-4444-4444-444444444444' }
               - column: { name: breed_id, value: '40000000-0000-0000-0000-000000000002' }
               - column: { name: title, value: 'Морская свинка щенок' }
-              - column: { name: description, value: 'Продаю Морская свинка. г. Казань.' }
+              - column: { name: description, value: 'Продаю Морская свинка. г. Новосибирск.' }
               - column: { name: price, valueNumeric: 77806 }
               - column: { name: currency, value: 'RUB' }
               - column: { name: gender, value: 'MALE' }
@@ -2196,18 +2196,18 @@ databaseChangeLog:
               - column: { name: has_vaccination, valueBoolean: false }
               - column: { name: has_documents, valueBoolean: false }
               - column: { name: location_country, value: 'Россия' }
-              - column: { name: location_city, value: 'Казань' }
+              - column: { name: location_city, value: 'Новосибирск' }
               - column: { name: status, value: 'ACTIVE' }
               - column: { name: views_count, valueNumeric: 183 }
         - insert:
             tableName: listings
             columns:
               - column: { name: id, value: 'bbbbbbbb-bbbb-bbbb-bbbb-bbbbbbbb0060' }
-              - column: { name: seller_id, value: 'aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaa0017' }
+              - column: { name: seller_id, value: 'aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaa0018' }
               - column: { name: category_id, value: '55555555-5555-5555-5555-555555555555' }
               - column: { name: breed_id, value: '55500000-0000-0000-0000-000000000003' }
               - column: { name: title, value: 'Шаровидный питон детёныш' }
-              - column: { name: description, value: 'Продаю Шаровидный питон. Привит. Есть документы. г. Новосибирск.' }
+              - column: { name: description, value: 'Продаю Шаровидный питон. Привит. Есть документы. г. Екатеринбург.' }
               - column: { name: price, valueNumeric: 79040 }
               - column: { name: currency, value: 'RUB' }
               - column: { name: gender, value: 'FEMALE' }
@@ -2216,7 +2216,7 @@ databaseChangeLog:
               - column: { name: has_vaccination, valueBoolean: true }
               - column: { name: has_documents, valueBoolean: true }
               - column: { name: location_country, value: 'Россия' }
-              - column: { name: location_city, value: 'Новосибирск' }
+              - column: { name: location_city, value: 'Екатеринбург' }
               - column: { name: status, value: 'ACTIVE' }
               - column: { name: views_count, valueNumeric: 220 }
         - insert:
@@ -2323,7 +2323,7 @@ databaseChangeLog:
             tableName: listings
             columns:
               - column: { name: id, value: 'bbbbbbbb-bbbb-bbbb-bbbb-bbbbbbbb0066' }
-              - column: { name: seller_id, value: 'aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaa0008' }
+              - column: { name: seller_id, value: 'aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaa0009' }
               - column: { name: category_id, value: '44444444-4444-4444-4444-444444444444' }
               - column: { name: breed_id, value: '40000000-0000-0000-0000-000000000003' }
               - column: { name: title, value: 'Кролик щенок' }
@@ -2343,11 +2343,11 @@ databaseChangeLog:
             tableName: listings
             columns:
               - column: { name: id, value: 'bbbbbbbb-bbbb-bbbb-bbbb-bbbbbbbb0067' }
-              - column: { name: seller_id, value: 'aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaa0009' }
+              - column: { name: seller_id, value: 'aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaa0010' }
               - column: { name: category_id, value: '55555555-5555-5555-5555-555555555555' }
               - column: { name: breed_id, value: '55500000-0000-0000-0000-000000000001' }
               - column: { name: title, value: 'Кукурузная змея детёныш' }
-              - column: { name: description, value: 'Продаю Кукурузная змея. г. Москва.' }
+              - column: { name: description, value: 'Продаю Кукурузная змея. г. Санкт-Петербург.' }
               - column: { name: price, valueNumeric: 87678 }
               - column: { name: currency, value: 'RUB' }
               - column: { name: gender, value: 'MALE' }
@@ -2356,18 +2356,18 @@ databaseChangeLog:
               - column: { name: has_vaccination, valueBoolean: false }
               - column: { name: has_documents, valueBoolean: false }
               - column: { name: location_country, value: 'Россия' }
-              - column: { name: location_city, value: 'Москва' }
+              - column: { name: location_city, value: 'Санкт-Петербург' }
               - column: { name: status, value: 'RESERVED' }
               - column: { name: views_count, valueNumeric: 479 }
         - insert:
             tableName: listings
             columns:
               - column: { name: id, value: 'bbbbbbbb-bbbb-bbbb-bbbb-bbbbbbbb0068' }
-              - column: { name: seller_id, value: 'aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaa0010' }
+              - column: { name: seller_id, value: 'aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaa0011' }
               - column: { name: category_id, value: '66666666-6666-6666-6666-666666666666' }
               - column: { name: breed_id, value: '66600000-0000-0000-0000-000000000002' }
               - column: { name: title, value: 'Золотая рыбка детёныш' }
-              - column: { name: description, value: 'Продаю Золотая рыбка. г. Санкт-Петербург.' }
+              - column: { name: description, value: 'Продаю Золотая рыбка. г. Казань.' }
               - column: { name: price, valueNumeric: 88912 }
               - column: { name: currency, value: 'RUB' }
               - column: { name: gender, value: 'FEMALE' }
@@ -2376,18 +2376,18 @@ databaseChangeLog:
               - column: { name: has_vaccination, valueBoolean: false }
               - column: { name: has_documents, valueBoolean: false }
               - column: { name: location_country, value: 'Россия' }
-              - column: { name: location_city, value: 'Санкт-Петербург' }
+              - column: { name: location_city, value: 'Казань' }
               - column: { name: status, value: 'RESERVED' }
               - column: { name: views_count, valueNumeric: 16 }
         - insert:
             tableName: listings
             columns:
               - column: { name: id, value: 'bbbbbbbb-bbbb-bbbb-bbbb-bbbbbbbb0069' }
-              - column: { name: seller_id, value: 'aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaa0011' }
+              - column: { name: seller_id, value: 'aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaa0012' }
               - column: { name: category_id, value: '77777777-7777-7777-7777-777777777777' }
               - column: { name: breed_id, value: '77700000-0000-0000-0000-000000000001' }
               - column: { name: title, value: 'Морская свинка детёныш' }
-              - column: { name: description, value: 'Продаю Морская свинка. Привит. Есть документы. г. Казань.' }
+              - column: { name: description, value: 'Продаю Морская свинка. Привит. Есть документы. г. Новосибирск.' }
               - column: { name: price, valueNumeric: 90146 }
               - column: { name: currency, value: 'RUB' }
               - column: { name: gender, value: 'MALE' }
@@ -2396,18 +2396,18 @@ databaseChangeLog:
               - column: { name: has_vaccination, valueBoolean: true }
               - column: { name: has_documents, valueBoolean: true }
               - column: { name: location_country, value: 'Россия' }
-              - column: { name: location_city, value: 'Казань' }
+              - column: { name: location_city, value: 'Новосибирск' }
               - column: { name: status, value: 'RESERVED' }
               - column: { name: views_count, valueNumeric: 53 }
         - insert:
             tableName: listings
             columns:
               - column: { name: id, value: 'bbbbbbbb-bbbb-bbbb-bbbb-bbbbbbbb0070' }
-              - column: { name: seller_id, value: 'aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaa0012' }
+              - column: { name: seller_id, value: 'aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaa0013' }
               - column: { name: category_id, value: '11111111-1111-1111-1111-111111111111' }
               - column: { name: breed_id, value: '10000000-0000-0000-0000-000000000005' }
               - column: { name: title, value: 'Бигль щенок' }
-              - column: { name: description, value: 'Продаю Бигль. г. Новосибирск.' }
+              - column: { name: description, value: 'Продаю Бигль. г. Екатеринбург.' }
               - column: { name: price, valueNumeric: 91380 }
               - column: { name: currency, value: 'RUB' }
               - column: { name: gender, value: 'FEMALE' }
@@ -2416,18 +2416,18 @@ databaseChangeLog:
               - column: { name: has_vaccination, valueBoolean: false }
               - column: { name: has_documents, valueBoolean: false }
               - column: { name: location_country, value: 'Россия' }
-              - column: { name: location_city, value: 'Новосибирск' }
+              - column: { name: location_city, value: 'Екатеринбург' }
               - column: { name: status, value: 'RESERVED' }
               - column: { name: views_count, valueNumeric: 90 }
         - insert:
             tableName: listings
             columns:
               - column: { name: id, value: 'bbbbbbbb-bbbb-bbbb-bbbb-bbbbbbbb0071' }
-              - column: { name: seller_id, value: 'aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaa0013' }
+              - column: { name: seller_id, value: 'aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaa0014' }
               - column: { name: category_id, value: '22222222-2222-2222-2222-222222222222' }
               - column: { name: breed_id, value: '20000000-0000-0000-0000-000000000001' }
               - column: { name: title, value: 'Сиамская кошка щенок' }
-              - column: { name: description, value: 'Продаю Сиамская кошка. г. Екатеринбург.' }
+              - column: { name: description, value: 'Продаю Сиамская кошка. г. Москва.' }
               - column: { name: price, valueNumeric: 92614 }
               - column: { name: currency, value: 'RUB' }
               - column: { name: gender, value: 'MALE' }
@@ -2436,18 +2436,18 @@ databaseChangeLog:
               - column: { name: has_vaccination, valueBoolean: false }
               - column: { name: has_documents, valueBoolean: false }
               - column: { name: location_country, value: 'Россия' }
-              - column: { name: location_city, value: 'Екатеринбург' }
+              - column: { name: location_city, value: 'Москва' }
               - column: { name: status, value: 'SOLD' }
               - column: { name: views_count, valueNumeric: 127 }
         - insert:
             tableName: listings
             columns:
               - column: { name: id, value: 'bbbbbbbb-bbbb-bbbb-bbbb-bbbbbbbb0072' }
-              - column: { name: seller_id, value: 'aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaa0014' }
+              - column: { name: seller_id, value: 'aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaa0015' }
               - column: { name: category_id, value: '33333333-3333-3333-3333-333333333333' }
               - column: { name: breed_id, value: '30000000-0000-0000-0000-000000000003' }
               - column: { name: title, value: 'Корелла птенец' }
-              - column: { name: description, value: 'Продаю Корелла. Привит. Есть документы. г. Москва.' }
+              - column: { name: description, value: 'Продаю Корелла. Привит. Есть документы. г. Санкт-Петербург.' }
               - column: { name: price, valueNumeric: 93848 }
               - column: { name: currency, value: 'RUB' }
               - column: { name: gender, value: 'FEMALE' }
@@ -2456,18 +2456,18 @@ databaseChangeLog:
               - column: { name: has_vaccination, valueBoolean: true }
               - column: { name: has_documents, valueBoolean: true }
               - column: { name: location_country, value: 'Россия' }
-              - column: { name: location_city, value: 'Москва' }
+              - column: { name: location_city, value: 'Санкт-Петербург' }
               - column: { name: status, value: 'SOLD' }
               - column: { name: views_count, valueNumeric: 164 }
         - insert:
             tableName: listings
             columns:
               - column: { name: id, value: 'bbbbbbbb-bbbb-bbbb-bbbb-bbbbbbbb0073' }
-              - column: { name: seller_id, value: 'aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaa0015' }
+              - column: { name: seller_id, value: 'aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaa0016' }
               - column: { name: category_id, value: '44444444-4444-4444-4444-444444444444' }
               - column: { name: breed_id, value: '40000000-0000-0000-0000-000000000001' }
               - column: { name: title, value: 'Хомяк щенок' }
-              - column: { name: description, value: 'Продаю Хомяк. г. Санкт-Петербург.' }
+              - column: { name: description, value: 'Продаю Хомяк. г. Казань.' }
               - column: { name: price, valueNumeric: 95082 }
               - column: { name: currency, value: 'RUB' }
               - column: { name: gender, value: 'MALE' }
@@ -2476,18 +2476,18 @@ databaseChangeLog:
               - column: { name: has_vaccination, valueBoolean: false }
               - column: { name: has_documents, valueBoolean: false }
               - column: { name: location_country, value: 'Россия' }
-              - column: { name: location_city, value: 'Санкт-Петербург' }
+              - column: { name: location_city, value: 'Казань' }
               - column: { name: status, value: 'SOLD' }
               - column: { name: views_count, valueNumeric: 201 }
         - insert:
             tableName: listings
             columns:
               - column: { name: id, value: 'bbbbbbbb-bbbb-bbbb-bbbb-bbbbbbbb0074' }
-              - column: { name: seller_id, value: 'aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaa0016' }
+              - column: { name: seller_id, value: 'aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaa0017' }
               - column: { name: category_id, value: '55555555-5555-5555-5555-555555555555' }
               - column: { name: breed_id, value: '55500000-0000-0000-0000-000000000002' }
               - column: { name: title, value: 'Бородатая агама детёныш' }
-              - column: { name: description, value: 'Продаю Бородатая агама. г. Казань.' }
+              - column: { name: description, value: 'Продаю Бородатая агама. г. Новосибирск.' }
               - column: { name: price, valueNumeric: 96316 }
               - column: { name: currency, value: 'RUB' }
               - column: { name: gender, value: 'FEMALE' }
@@ -2496,18 +2496,18 @@ databaseChangeLog:
               - column: { name: has_vaccination, valueBoolean: false }
               - column: { name: has_documents, valueBoolean: false }
               - column: { name: location_country, value: 'Россия' }
-              - column: { name: location_city, value: 'Казань' }
+              - column: { name: location_city, value: 'Новосибирск' }
               - column: { name: status, value: 'SOLD' }
               - column: { name: views_count, valueNumeric: 238 }
         - insert:
             tableName: listings
             columns:
               - column: { name: id, value: 'bbbbbbbb-bbbb-bbbb-bbbb-bbbbbbbb0075' }
-              - column: { name: seller_id, value: 'aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaa0017' }
+              - column: { name: seller_id, value: 'aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaa0018' }
               - column: { name: category_id, value: '66666666-6666-6666-6666-666666666666' }
               - column: { name: breed_id, value: '66600000-0000-0000-0000-000000000003' }
               - column: { name: title, value: 'Скалярия детёныш' }
-              - column: { name: description, value: 'Продаю Скалярия. Привит. Есть документы. г. Новосибирск.' }
+              - column: { name: description, value: 'Продаю Скалярия. Привит. Есть документы. г. Екатеринбург.' }
               - column: { name: price, valueNumeric: 97550 }
               - column: { name: currency, value: 'RUB' }
               - column: { name: gender, value: 'MALE' }
@@ -2516,7 +2516,7 @@ databaseChangeLog:
               - column: { name: has_vaccination, valueBoolean: true }
               - column: { name: has_documents, valueBoolean: true }
               - column: { name: location_country, value: 'Россия' }
-              - column: { name: location_city, value: 'Новосибирск' }
+              - column: { name: location_city, value: 'Екатеринбург' }
               - column: { name: status, value: 'SOLD' }
               - column: { name: views_count, valueNumeric: 275 }
         - insert:
@@ -2623,7 +2623,7 @@ databaseChangeLog:
             tableName: listings
             columns:
               - column: { name: id, value: 'bbbbbbbb-bbbb-bbbb-bbbb-bbbbbbbb0081' }
-              - column: { name: seller_id, value: 'aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaa0008' }
+              - column: { name: seller_id, value: 'aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaa0009' }
               - column: { name: category_id, value: '55555555-5555-5555-5555-555555555555' }
               - column: { name: breed_id, value: '55500000-0000-0000-0000-000000000003' }
               - column: { name: title, value: 'Шаровидный питон детёныш' }
@@ -2643,11 +2643,11 @@ databaseChangeLog:
             tableName: listings
             columns:
               - column: { name: id, value: 'bbbbbbbb-bbbb-bbbb-bbbb-bbbbbbbb0082' }
-              - column: { name: seller_id, value: 'aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaa0009' }
+              - column: { name: seller_id, value: 'aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaa0010' }
               - column: { name: category_id, value: '66666666-6666-6666-6666-666666666666' }
               - column: { name: breed_id, value: '66600000-0000-0000-0000-000000000001' }
               - column: { name: title, value: 'Гуппи детёныш' }
-              - column: { name: description, value: 'Продаю Гуппи. г. Москва.' }
+              - column: { name: description, value: 'Продаю Гуппи. г. Санкт-Петербург.' }
               - column: { name: price, valueNumeric: 106188 }
               - column: { name: currency, value: 'RUB' }
               - column: { name: gender, value: 'FEMALE' }
@@ -2656,18 +2656,18 @@ databaseChangeLog:
               - column: { name: has_vaccination, valueBoolean: false }
               - column: { name: has_documents, valueBoolean: false }
               - column: { name: location_country, value: 'Россия' }
-              - column: { name: location_city, value: 'Москва' }
+              - column: { name: location_city, value: 'Санкт-Петербург' }
               - column: { name: status, value: 'SOLD' }
               - column: { name: views_count, valueNumeric: 34 }
         - insert:
             tableName: listings
             columns:
               - column: { name: id, value: 'bbbbbbbb-bbbb-bbbb-bbbb-bbbbbbbb0083' }
-              - column: { name: seller_id, value: 'aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaa0010' }
+              - column: { name: seller_id, value: 'aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaa0011' }
               - column: { name: category_id, value: '77777777-7777-7777-7777-777777777777' }
               - column: { name: breed_id, value: '77700000-0000-0000-0000-000000000001' }
               - column: { name: title, value: 'Морская свинка детёныш' }
-              - column: { name: description, value: 'Продаю Морская свинка. г. Санкт-Петербург.' }
+              - column: { name: description, value: 'Продаю Морская свинка. г. Казань.' }
               - column: { name: price, valueNumeric: 107422 }
               - column: { name: currency, value: 'RUB' }
               - column: { name: gender, value: 'MALE' }
@@ -2676,18 +2676,18 @@ databaseChangeLog:
               - column: { name: has_vaccination, valueBoolean: false }
               - column: { name: has_documents, valueBoolean: false }
               - column: { name: location_country, value: 'Россия' }
-              - column: { name: location_city, value: 'Санкт-Петербург' }
+              - column: { name: location_city, value: 'Казань' }
               - column: { name: status, value: 'SOLD' }
               - column: { name: views_count, valueNumeric: 71 }
         - insert:
             tableName: listings
             columns:
               - column: { name: id, value: 'bbbbbbbb-bbbb-bbbb-bbbb-bbbbbbbb0084' }
-              - column: { name: seller_id, value: 'aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaa0011' }
+              - column: { name: seller_id, value: 'aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaa0012' }
               - column: { name: category_id, value: '11111111-1111-1111-1111-111111111111' }
               - column: { name: breed_id, value: '10000000-0000-0000-0000-000000000004' }
               - column: { name: title, value: 'Пудель щенок' }
-              - column: { name: description, value: 'Продаю Пудель. Привит. Есть документы. г. Казань.' }
+              - column: { name: description, value: 'Продаю Пудель. Привит. Есть документы. г. Новосибирск.' }
               - column: { name: price, valueNumeric: 108656 }
               - column: { name: currency, value: 'RUB' }
               - column: { name: gender, value: 'FEMALE' }
@@ -2696,18 +2696,18 @@ databaseChangeLog:
               - column: { name: has_vaccination, valueBoolean: true }
               - column: { name: has_documents, valueBoolean: true }
               - column: { name: location_country, value: 'Россия' }
-              - column: { name: location_city, value: 'Казань' }
+              - column: { name: location_city, value: 'Новосибирск' }
               - column: { name: status, value: 'SOLD' }
               - column: { name: views_count, valueNumeric: 108 }
         - insert:
             tableName: listings
             columns:
               - column: { name: id, value: 'bbbbbbbb-bbbb-bbbb-bbbb-bbbbbbbb0085' }
-              - column: { name: seller_id, value: 'aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaa0012' }
+              - column: { name: seller_id, value: 'aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaa0013' }
               - column: { name: category_id, value: '22222222-2222-2222-2222-222222222222' }
               - column: { name: breed_id, value: '20000000-0000-0000-0000-000000000005' }
               - column: { name: title, value: 'Бенгальская кошка щенок' }
-              - column: { name: description, value: 'Продаю Бенгальская кошка. г. Новосибирск.' }
+              - column: { name: description, value: 'Продаю Бенгальская кошка. г. Екатеринбург.' }
               - column: { name: price, valueNumeric: 109890 }
               - column: { name: currency, value: 'RUB' }
               - column: { name: gender, value: 'MALE' }
@@ -2716,18 +2716,18 @@ databaseChangeLog:
               - column: { name: has_vaccination, valueBoolean: false }
               - column: { name: has_documents, valueBoolean: false }
               - column: { name: location_country, value: 'Россия' }
-              - column: { name: location_city, value: 'Новосибирск' }
+              - column: { name: location_city, value: 'Екатеринбург' }
               - column: { name: status, value: 'SOLD' }
               - column: { name: views_count, valueNumeric: 145 }
         - insert:
             tableName: listings
             columns:
               - column: { name: id, value: 'bbbbbbbb-bbbb-bbbb-bbbb-bbbbbbbb0086' }
-              - column: { name: seller_id, value: 'aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaa0013' }
+              - column: { name: seller_id, value: 'aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaa0014' }
               - column: { name: category_id, value: '33333333-3333-3333-3333-333333333333' }
               - column: { name: breed_id, value: '30000000-0000-0000-0000-000000000002' }
               - column: { name: title, value: 'Канарейка птенец' }
-              - column: { name: description, value: 'Продаю Канарейка. г. Екатеринбург.' }
+              - column: { name: description, value: 'Продаю Канарейка. г. Москва.' }
               - column: { name: price, valueNumeric: 111124 }
               - column: { name: currency, value: 'RUB' }
               - column: { name: gender, value: 'FEMALE' }
@@ -2736,18 +2736,18 @@ databaseChangeLog:
               - column: { name: has_vaccination, valueBoolean: false }
               - column: { name: has_documents, valueBoolean: false }
               - column: { name: location_country, value: 'Россия' }
-              - column: { name: location_city, value: 'Екатеринбург' }
+              - column: { name: location_city, value: 'Москва' }
               - column: { name: status, value: 'SOLD' }
               - column: { name: views_count, valueNumeric: 182 }
         - insert:
             tableName: listings
             columns:
               - column: { name: id, value: 'bbbbbbbb-bbbb-bbbb-bbbb-bbbbbbbb0087' }
-              - column: { name: seller_id, value: 'aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaa0014' }
+              - column: { name: seller_id, value: 'aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaa0015' }
               - column: { name: category_id, value: '44444444-4444-4444-4444-444444444444' }
               - column: { name: breed_id, value: '40000000-0000-0000-0000-000000000003' }
               - column: { name: title, value: 'Кролик щенок' }
-              - column: { name: description, value: 'Продаю Кролик. Привит. Есть документы. г. Москва.' }
+              - column: { name: description, value: 'Продаю Кролик. Привит. Есть документы. г. Санкт-Петербург.' }
               - column: { name: price, valueNumeric: 112358 }
               - column: { name: currency, value: 'RUB' }
               - column: { name: gender, value: 'MALE' }
@@ -2756,18 +2756,18 @@ databaseChangeLog:
               - column: { name: has_vaccination, valueBoolean: true }
               - column: { name: has_documents, valueBoolean: true }
               - column: { name: location_country, value: 'Россия' }
-              - column: { name: location_city, value: 'Москва' }
+              - column: { name: location_city, value: 'Санкт-Петербург' }
               - column: { name: status, value: 'SOLD' }
               - column: { name: views_count, valueNumeric: 219 }
         - insert:
             tableName: listings
             columns:
               - column: { name: id, value: 'bbbbbbbb-bbbb-bbbb-bbbb-bbbbbbbb0088' }
-              - column: { name: seller_id, value: 'aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaa0015' }
+              - column: { name: seller_id, value: 'aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaa0016' }
               - column: { name: category_id, value: '55555555-5555-5555-5555-555555555555' }
               - column: { name: breed_id, value: '55500000-0000-0000-0000-000000000001' }
               - column: { name: title, value: 'Кукурузная змея детёныш' }
-              - column: { name: description, value: 'Продаю Кукурузная змея. г. Санкт-Петербург.' }
+              - column: { name: description, value: 'Продаю Кукурузная змея. г. Казань.' }
               - column: { name: price, valueNumeric: 113592 }
               - column: { name: currency, value: 'RUB' }
               - column: { name: gender, value: 'FEMALE' }
@@ -2776,18 +2776,18 @@ databaseChangeLog:
               - column: { name: has_vaccination, valueBoolean: false }
               - column: { name: has_documents, valueBoolean: false }
               - column: { name: location_country, value: 'Россия' }
-              - column: { name: location_city, value: 'Санкт-Петербург' }
+              - column: { name: location_city, value: 'Казань' }
               - column: { name: status, value: 'SOLD' }
               - column: { name: views_count, valueNumeric: 256 }
         - insert:
             tableName: listings
             columns:
               - column: { name: id, value: 'bbbbbbbb-bbbb-bbbb-bbbb-bbbbbbbb0089' }
-              - column: { name: seller_id, value: 'aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaa0016' }
+              - column: { name: seller_id, value: 'aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaa0017' }
               - column: { name: category_id, value: '66666666-6666-6666-6666-666666666666' }
               - column: { name: breed_id, value: '66600000-0000-0000-0000-000000000002' }
               - column: { name: title, value: 'Золотая рыбка детёныш' }
-              - column: { name: description, value: 'Продаю Золотая рыбка. г. Казань.' }
+              - column: { name: description, value: 'Продаю Золотая рыбка. г. Новосибирск.' }
               - column: { name: price, valueNumeric: 114826 }
               - column: { name: currency, value: 'RUB' }
               - column: { name: gender, value: 'MALE' }
@@ -2796,18 +2796,18 @@ databaseChangeLog:
               - column: { name: has_vaccination, valueBoolean: false }
               - column: { name: has_documents, valueBoolean: false }
               - column: { name: location_country, value: 'Россия' }
-              - column: { name: location_city, value: 'Казань' }
+              - column: { name: location_city, value: 'Новосибирск' }
               - column: { name: status, value: 'SOLD' }
               - column: { name: views_count, valueNumeric: 293 }
         - insert:
             tableName: listings
             columns:
               - column: { name: id, value: 'bbbbbbbb-bbbb-bbbb-bbbb-bbbbbbbb0090' }
-              - column: { name: seller_id, value: 'aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaa0017' }
+              - column: { name: seller_id, value: 'aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaa0018' }
               - column: { name: category_id, value: '77777777-7777-7777-7777-777777777777' }
               - column: { name: breed_id, value: '77700000-0000-0000-0000-000000000002' }
               - column: { name: title, value: 'Феррет детёныш' }
-              - column: { name: description, value: 'Продаю Феррет. Привит. Есть документы. г. Новосибирск.' }
+              - column: { name: description, value: 'Продаю Феррет. Привит. Есть документы. г. Екатеринбург.' }
               - column: { name: price, valueNumeric: 116060 }
               - column: { name: currency, value: 'RUB' }
               - column: { name: gender, value: 'FEMALE' }
@@ -2816,7 +2816,7 @@ databaseChangeLog:
               - column: { name: has_vaccination, valueBoolean: true }
               - column: { name: has_documents, valueBoolean: true }
               - column: { name: location_country, value: 'Россия' }
-              - column: { name: location_city, value: 'Новосибирск' }
+              - column: { name: location_city, value: 'Екатеринбург' }
               - column: { name: status, value: 'SOLD' }
               - column: { name: views_count, valueNumeric: 330 }
         - insert:
@@ -2923,7 +2923,7 @@ databaseChangeLog:
             tableName: listings
             columns:
               - column: { name: id, value: 'bbbbbbbb-bbbb-bbbb-bbbb-bbbbbbbb0096' }
-              - column: { name: seller_id, value: 'aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaa0008' }
+              - column: { name: seller_id, value: 'aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaa0009' }
               - column: { name: category_id, value: '66666666-6666-6666-6666-666666666666' }
               - column: { name: breed_id, value: '66600000-0000-0000-0000-000000000003' }
               - column: { name: title, value: 'Скалярия детёныш' }
@@ -2943,11 +2943,11 @@ databaseChangeLog:
             tableName: listings
             columns:
               - column: { name: id, value: 'bbbbbbbb-bbbb-bbbb-bbbb-bbbbbbbb0097' }
-              - column: { name: seller_id, value: 'aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaa0009' }
+              - column: { name: seller_id, value: 'aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaa0010' }
               - column: { name: category_id, value: '77777777-7777-7777-7777-777777777777' }
               - column: { name: breed_id, value: '77700000-0000-0000-0000-000000000001' }
               - column: { name: title, value: 'Морская свинка детёныш' }
-              - column: { name: description, value: 'Продаю Морская свинка. г. Москва.' }
+              - column: { name: description, value: 'Продаю Морская свинка. г. Санкт-Петербург.' }
               - column: { name: price, valueNumeric: 124698 }
               - column: { name: currency, value: 'RUB' }
               - column: { name: gender, value: 'MALE' }
@@ -2956,18 +2956,18 @@ databaseChangeLog:
               - column: { name: has_vaccination, valueBoolean: false }
               - column: { name: has_documents, valueBoolean: false }
               - column: { name: location_country, value: 'Россия' }
-              - column: { name: location_city, value: 'Москва' }
+              - column: { name: location_city, value: 'Санкт-Петербург' }
               - column: { name: status, value: 'PENDING_MODERATION' }
               - column: { name: views_count, valueNumeric: 89 }
         - insert:
             tableName: listings
             columns:
               - column: { name: id, value: 'bbbbbbbb-bbbb-bbbb-bbbb-bbbbbbbb0098' }
-              - column: { name: seller_id, value: 'aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaa0010' }
+              - column: { name: seller_id, value: 'aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaa0011' }
               - column: { name: category_id, value: '11111111-1111-1111-1111-111111111111' }
               - column: { name: breed_id, value: '10000000-0000-0000-0000-000000000003' }
               - column: { name: title, value: 'Бульдог щенок' }
-              - column: { name: description, value: 'Продаю Бульдог. г. Санкт-Петербург.' }
+              - column: { name: description, value: 'Продаю Бульдог. г. Казань.' }
               - column: { name: price, valueNumeric: 125932 }
               - column: { name: currency, value: 'RUB' }
               - column: { name: gender, value: 'FEMALE' }
@@ -2976,18 +2976,18 @@ databaseChangeLog:
               - column: { name: has_vaccination, valueBoolean: false }
               - column: { name: has_documents, valueBoolean: false }
               - column: { name: location_country, value: 'Россия' }
-              - column: { name: location_city, value: 'Санкт-Петербург' }
+              - column: { name: location_city, value: 'Казань' }
               - column: { name: status, value: 'PENDING_MODERATION' }
               - column: { name: views_count, valueNumeric: 126 }
         - insert:
             tableName: listings
             columns:
               - column: { name: id, value: 'bbbbbbbb-bbbb-bbbb-bbbb-bbbbbbbb0099' }
-              - column: { name: seller_id, value: 'aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaa0011' }
+              - column: { name: seller_id, value: 'aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaa0012' }
               - column: { name: category_id, value: '22222222-2222-2222-2222-222222222222' }
               - column: { name: breed_id, value: '20000000-0000-0000-0000-000000000004' }
               - column: { name: title, value: 'Британская короткошёрстная щенок' }
-              - column: { name: description, value: 'Продаю Британская короткошёрстная. г. Казань.' }
+              - column: { name: description, value: 'Продаю Британская короткошёрстная. г. Новосибирск.' }
               - column: { name: price, valueNumeric: 127166 }
               - column: { name: currency, value: 'RUB' }
               - column: { name: gender, value: 'MALE' }
@@ -2996,18 +2996,18 @@ databaseChangeLog:
               - column: { name: has_vaccination, valueBoolean: false }
               - column: { name: has_documents, valueBoolean: false }
               - column: { name: location_country, value: 'Россия' }
-              - column: { name: location_city, value: 'Казань' }
+              - column: { name: location_city, value: 'Новосибирск' }
               - column: { name: status, value: 'PENDING_MODERATION' }
               - column: { name: views_count, valueNumeric: 163 }
         - insert:
             tableName: listings
             columns:
               - column: { name: id, value: 'bbbbbbbb-bbbb-bbbb-bbbb-bbbbbbbb0100' }
-              - column: { name: seller_id, value: 'aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaa0012' }
+              - column: { name: seller_id, value: 'aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaa0013' }
               - column: { name: category_id, value: '33333333-3333-3333-3333-333333333333' }
               - column: { name: breed_id, value: '30000000-0000-0000-0000-000000000001' }
               - column: { name: title, value: 'Попугай птенец' }
-              - column: { name: description, value: 'Продаю Попугай. г. Новосибирск.' }
+              - column: { name: description, value: 'Продаю Попугай. г. Екатеринбург.' }
               - column: { name: price, valueNumeric: 128400 }
               - column: { name: currency, value: 'RUB' }
               - column: { name: gender, value: 'FEMALE' }
@@ -3016,7 +3016,7 @@ databaseChangeLog:
               - column: { name: has_vaccination, valueBoolean: false }
               - column: { name: has_documents, valueBoolean: false }
               - column: { name: location_country, value: 'Россия' }
-              - column: { name: location_city, value: 'Новосибирск' }
+              - column: { name: location_city, value: 'Екатеринбург' }
               - column: { name: status, value: 'PENDING_MODERATION' }
               - column: { name: views_count, valueNumeric: 200 }
 
