@@ -1,0 +1,84 @@
+databaseChangeLog:
+  - changeSet:
+      id: 018-seed-breeds-reptiles
+      author: seed
+      preConditions:
+        - onFail: MARK_RAN
+        - sqlCheck:
+            expectedResult: 0
+            sql: SELECT count(*) FROM breeds WHERE id = '55500000-0000-0000-0000-000000000001'
+      changes:
+        - insert:
+            tableName: breeds
+            columns:
+              - column: { name: id, value: '55500000-0000-0000-0000-000000000001' }
+              - column: { name: category_id, value: '55555555-5555-5555-5555-555555555555' }
+              - column: { name: name_ru, value: 'Хорнетная змея' }
+              - column: { name: name_en, value: 'Corn Snake' }
+        - insert:
+            tableName: breeds
+            columns:
+              - column: { name: id, value: '55500000-0000-0000-0000-000000000002' }
+              - column: { name: category_id, value: '55555555-5555-5555-5555-555555555555' }
+              - column: { name: name_ru, value: 'Бородатая агама' }
+              - column: { name: name_en, value: 'Bearded Dragon' }
+        - insert:
+            tableName: breeds
+            columns:
+              - column: { name: id, value: '55500000-0000-0000-0000-000000000003' }
+              - column: { name: category_id, value: '55555555-5555-5555-5555-555555555555' }
+              - column: { name: name_ru, value: 'Шаровидный питон' }
+              - column: { name: name_en, value: 'Ball Python' }
+  - changeSet:
+      id: 019-seed-breeds-fish
+      author: seed
+      preConditions:
+        - onFail: MARK_RAN
+        - sqlCheck:
+            expectedResult: 0
+            sql: SELECT count(*) FROM breeds WHERE id = '66600000-0000-0000-0000-000000000001'
+      changes:
+        - insert:
+            tableName: breeds
+            columns:
+              - column: { name: id, value: '66600000-0000-0000-0000-000000000001' }
+              - column: { name: category_id, value: '66666666-6666-6666-6666-666666666666' }
+              - column: { name: name_ru, value: 'Гуппи' }
+              - column: { name: name_en, value: 'Guppy' }
+        - insert:
+            tableName: breeds
+            columns:
+              - column: { name: id, value: '66600000-0000-0000-0000-000000000002' }
+              - column: { name: category_id, value: '66666666-6666-6666-6666-666666666666' }
+              - column: { name: name_ru, value: 'Золотая рыбка' }
+              - column: { name: name_en, value: 'Goldfish' }
+        - insert:
+            tableName: breeds
+            columns:
+              - column: { name: id, value: '66600000-0000-0000-0000-000000000003' }
+              - column: { name: category_id, value: '66666666-6666-6666-6666-666666666666' }
+              - column: { name: name_ru, value: 'Скалярия' }
+              - column: { name: name_en, value: 'Angelfish' }
+  - changeSet:
+      id: 020-seed-breeds-other
+      author: seed
+      preConditions:
+        - onFail: MARK_RAN
+        - sqlCheck:
+            expectedResult: 0
+            sql: SELECT count(*) FROM breeds WHERE id = '77700000-0000-0000-0000-000000000001'
+      changes:
+        - insert:
+            tableName: breeds
+            columns:
+              - column: { name: id, value: '77700000-0000-0000-0000-000000000001' }
+              - column: { name: category_id, value: '77777777-7777-7777-7777-777777777777' }
+              - column: { name: name_ru, value: 'Морская свинка' }
+              - column: { name: name_en, value: 'Guinea Pig' }
+        - insert:
+            tableName: breeds
+            columns:
+              - column: { name: id, value: '77700000-0000-0000-0000-000000000002' }
+              - column: { name: category_id, value: '77777777-7777-7777-7777-777777777777' }
+              - column: { name: name_ru, value: 'Феррет' }
+              - column: { name: name_en, value: 'Ferret' }

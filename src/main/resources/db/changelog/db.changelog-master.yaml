@@ -3,6 +3,9 @@ databaseChangeLog:
       file: changelogs/001-init-schema.yaml
       relativeToChangelogFile: true
   - include:
+      file: changelogs/002-seed-breeds-gap.yaml
+      relativeToChangelogFile: true
+  - include:
       file: changelogs/002-add-profile-audit-columns.yaml
       relativeToChangelogFile: true
   - include:
