@@ -4,7 +4,7 @@
 
 **Goal:** Populate the production demo stack (Docker Compose, `prod` profile) with ~250 rows of realistic, status-consistent marketplace data via two idempotent Liquibase seed changesets, while keeping Testcontainers integration tests on a clean DB.
 
-**Architecture:** Two new Liquibase YAML changesets included from `db.changelog-master.yaml`: `002` fills the reference-data gap (breeds for `reptiles`/`fish`/`other`) and runs in every context; `003` seeds all demo business data (users → profiles → listings → images → bookings → reviews → messages → favorites → subscriptions) under `contextFilter: "prod or dev or stand"` with a `count(users)==0` guard. Profile config files set `liquibase.contexts` so `test` (Testcontainers) skips `003`. One shared BCrypt hash authenticates all demo accounts with password `Demo12345`.
+**Architecture:** Two new Liquibase YAML changesets included from `db.changelog-master.yaml`: `005` fills the reference-data gap (breeds for `reptiles`/`fish`/`other`) and runs in every context; `006` seeds all demo business data (users → profiles → listings → images → bookings → reviews → messages → favorites → subscriptions) under `contextFilter: "prod or dev or stand"` with a `count(users)==0` guard. Profile config files set `liquibase.contexts` so `test` (Testcontainers) skips `006`. One shared BCrypt hash authenticates all demo accounts with password `Demo12345`.
 
 **Tech Stack:** Spring Boot 4.x, Liquibase (YAML changelogs), PostgreSQL 16, BCrypt (`$2b$10$`), JDK 26, Gradle 9, Docker Compose.
 
@@ -28,39 +28,39 @@
 
 | File | Responsibility | New/Modify |
 |---|---|---|
-| `src/main/resources/db/changelog/changelogs/002-seed-breeds-gap.yaml` | Adds missing breeds for reptiles/fish/other; per-row idempotent | Create |
-| `src/main/resources/db/changelog/changelogs/003-seed-demo-data.yaml` | All demo business data, single guarded changeset | Create |
-| `src/main/resources/db/changelog/db.changelog-master.yaml` | Includes `002` and `003` | Modify |
+| `src/main/resources/db/changelog/changelogs/005-seed-breeds-gap.yaml` | Adds missing breeds for reptiles/fish/other; per-row idempotent (renumbered from 002 to avoid collision with pre-existing 002-add-profile-audit-columns) | Create |
+| `src/main/resources/db/changelog/changelogs/006-seed-demo-data.yaml` | All demo business data, single guarded changeset | Create |
+| `src/main/resources/db/changelog/db.changelog-master.yaml` | Includes `005` and `006` (after 004) | Modify |
 | `src/main/resources/application.yml` | `liquibase.contexts: dev` | Modify |
 | `src/main/resources/application-prod.yml` | `liquibase.contexts: prod` | Modify |
 | `src/test/resources/application-stand.yml` | `liquibase.contexts: stand` | Modify |
 | `src/test/resources/application-test.yml` | `liquibase.contexts: test` | Modify |
 | `README.md` | "Demo data" section | Modify |
 
-`003` is built incrementally across Tasks 2–5 (each task appends a block to the same file). The master `include` and context wiring land in Task 6 so `003` only applies once it is complete and wired.
+`006` is built incrementally across Tasks 2–5 (each task appends a block to the same file). The master `include` and context wiring land in Task 6 so `006` only applies once it is complete and wired.
 
 ---
 
-### Task 1: Breeds gap-fill changeset (`002`)
+### Task 1: Breeds gap-fill changeset (`005`)
 
 **Files:**
-- Create: `src/main/resources/db/changelog/changelogs/002-seed-breeds-gap.yaml`
+- Create: `src/main/resources/db/changelog/changelogs/005-seed-breeds-gap.yaml`
 - Modify: `src/main/resources/db/changelog/db.changelog-master.yaml`
 
 **Interfaces:**
-- Produces: breeds rows for reptiles/fish/other, referenced later by `003` listings via `breed_id`.
+- Produces: breeds rows for reptiles/fish/other, referenced later by `006` listings via `breed_id`.
 
 - [ ] **Step 1: Read the existing master changelog**
 
 Run: `sed -n '1,40p' src/main/resources/db/changelog/db.changelog-master.yaml`
 Note the `include:` block pattern and the `databaseChangeLog:` root key.
 
-- [ ] **Step 2: Create `002-seed-breeds-gap.yaml`**
+- [ ] **Step 2: Create `005-seed-breeds-gap.yaml`**
 
 ```yaml
 databaseChangeLog:
   - changeSet:
-      id: 018-seed-breeds-reptiles
+      id: 021-seed-breeds-reptiles
       author: seed
       preConditions:
         - onFail: MARK_RAN
@@ -90,7 +90,7 @@ databaseChangeLog:
               - column: { name: name_ru, value: 'Шаровидный питон' }
               - column: { name: name_en, value: 'Ball Python' }
   - changeSet:
-      id: 019-seed-breeds-fish
+      id: 022-seed-breeds-fish
       author: seed
       preConditions:
         - onFail: MARK_RAN
@@ -120,7 +120,7 @@ databaseChangeLog:
               - column: { name: name_ru, value: 'Скалярия' }
               - column: { name: name_en, value: 'Angelfish' }
   - changeSet:
-      id: 020-seed-breeds-other
+      id: 023-seed-breeds-other
       author: seed
       preConditions:
         - onFail: MARK_RAN
@@ -146,15 +146,15 @@ databaseChangeLog:
 
 - [ ] **Step 3: Validate YAML syntax**
 
-Run: `python3 -c "import yaml; yaml.safe_load(open('src/main/resources/db/changelog/changelogs/002-seed-breeds-gap.yaml'))"`
+Run: `python3 -c "import yaml; yaml.safe_load(open('src/main/resources/db/changelog/changelogs/005-seed-breeds-gap.yaml'))"`
 Expected: no output (valid).
 
-- [ ] **Step 4: Include `002` in the master changelog**
+- [ ] **Step 4: Include `005` in the master changelog**
 
 Add the include lines (matching the existing `001` include pattern) to `db.changelog-master.yaml`:
 ```yaml
   - include:
-      file: changelogs/002-seed-breeds-gap.yaml
+      file: changelogs/005-seed-breeds-gap.yaml
       relativeToChangelogFile: true
 ```
 
@@ -166,7 +166,7 @@ Expected: BUILD SUCCESSFUL.
 - [ ] **Step 6: Commit**
 
 ```bash
-git add src/main/resources/db/changelog/changelogs/002-seed-breeds-gap.yaml src/main/resources/db/changelog/db.changelog-master.yaml
+git add src/main/resources/db/changelog/changelogs/005-seed-breeds-gap.yaml src/main/resources/db/changelog/db.changelog-master.yaml
 git commit -m "feat(seed): fill breeds gap for reptiles/fish/other
 
 Co-Authored-By: Claude <noreply@anthropic.com>"
@@ -174,10 +174,10 @@ Co-Authored-By: Claude <noreply@anthropic.com>"
 
 ---
 
-### Task 2: `003` scaffolding + users + profiles
+### Task 2: `006` scaffolding + users + profiles
 
 **Files:**
-- Create: `src/main/resources/db/changelog/changelogs/003-seed-demo-data.yaml`
+- Create: `src/main/resources/db/changelog/changelogs/006-seed-demo-data.yaml`
 
 **Interfaces:**
 - Produces: `users` rows (UUIDs `aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaa0001`..`0047` scheme — see below) and `profiles` rows (1:1), referenced by later tasks as `seller_id`/`buyer_id`/`author_id`/`recipient_id`/`sender_id`/`receiver_id`.
@@ -186,12 +186,12 @@ Co-Authored-By: Claude <noreply@anthropic.com>"
 
 **Role map:** `0001`=ADMIN, `0002`=MODERATOR, `0003..0018`=SELLER (15 sellers), `0019..0047`=BUYER (29 buyers).
 
-- [ ] **Step 1: Create `003-seed-demo-data.yaml` with header + guard + users + profiles**
+- [ ] **Step 1: Create `006-seed-demo-data.yaml` with header + guard + users + profiles**
 
 ```yaml
 databaseChangeLog:
   - changeSet:
-      id: 021-seed-demo-users
+      id: 024-seed-demo-users
       author: seed
       contextFilter: "prod or dev or stand"
       preConditions:
@@ -248,7 +248,7 @@ databaseChangeLog:
 
 - [ ] **Step 2: Append the profiles block to the same changeset**
 
-Add a second `changeSet` `id: 022-seed-demo-profiles` (same `author: seed`, same `contextFilter`, same `preConditions` `count(users)==0 → MARK_RAN`) containing 47 `insert` blocks into `profiles`, one per user, columns:
+Add a second `changeSet` `id: 025-seed-demo-profiles` (same `author: seed`, same `contextFilter`, same `preConditions` `count(users)==0 → MARK_RAN`) containing 47 `insert` blocks into `profiles`, one per user, columns:
 ```yaml
               - column: { name: user_id, value: '<matching user id>' }
               - column: { name: country, value: 'Россия' }
@@ -261,18 +261,18 @@ For ADMIN/MODERATOR users use bio `'Сотрудник платформы.'`. `r
 
 - [ ] **Step 3: Validate YAML syntax**
 
-Run: `python3 -c "import yaml; yaml.safe_load(open('src/main/resources/db/changelog/changelogs/003-seed-demo-data.yaml'))"`
+Run: `python3 -c "import yaml; yaml.safe_load(open('src/main/resources/db/changelog/changelogs/006-seed-demo-data.yaml'))"`
 Expected: no output.
 
 - [ ] **Step 4: Build**
 
 Run: `gradle build -x test`
-Expected: BUILD SUCCESSFUL (resources compile; `003` not yet included in master so it does not apply).
+Expected: BUILD SUCCESSFUL (resources compile; `006` not yet included in master so it does not apply).
 
 - [ ] **Step 5: Commit**
 
 ```bash
-git add src/main/resources/db/changelog/changelogs/003-seed-demo-data.yaml
+git add src/main/resources/db/changelog/changelogs/006-seed-demo-data.yaml
 git commit -m "feat(seed): demo users and profiles (003 part 1/4)
 
 Co-Authored-By: Claude <noreply@anthropic.com>"
@@ -280,13 +280,13 @@ Co-Authored-By: Claude <noreply@anthropic.com>"
 
 ---
 
-### Task 3: `003` listings + listing_images
+### Task 3: `006` listings + listing_images
 
 **Files:**
-- Modify: `src/main/resources/db/changelog/changelogs/003-seed-demo-data.yaml` (append)
+- Modify: `src/main/resources/db/changelog/changelogs/006-seed-demo-data.yaml` (append)
 
 **Interfaces:**
-- Consumes: `users` (seller_id from IDs `0003..0018`), categories (the 7 fixed UUIDs), breeds (existing 16 + new 8 from `002`).
+- Consumes: `users` (seller_id from IDs `0003..0018`), categories (the 7 fixed UUIDs), breeds (existing 16 + new 8 from `005`).
 - Produces: `listings` rows (UUIDs `bbbbbbbb-bbbb-bbbb-bbbb-bbbbbbbbbbbb0001`..`0100`) and `listing_images`, referenced later by bookings/reviews/messages/favorites.
 
 **Listing UUID scheme:** base `bbbbbbbb-bbbb-bbbb-bbbb-bbbbbbbbbbbb` + 4-digit suffix `0001..0100`.
@@ -304,7 +304,7 @@ Co-Authored-By: Claude <noreply@anthropic.com>"
 
 - [ ] **Step 1: Append the listings changeSet**
 
-`id: 023-seed-demo-listings`, same `author/contextFilter/preConditions`. 100 `insert` blocks into `listings`. Each insert columns:
+`id: 026-seed-demo-listings`, same `author/contextFilter/preConditions`. 100 `insert` blocks into `listings`. Each insert columns:
 ```yaml
               - column: { name: id, value: 'bbbbbbbb-bbbb-bbbb-bbbb-bbbbbbbbbbbb<NNNN>' }
               - column: { name: seller_id, value: 'aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaa<seller>' }
@@ -326,11 +326,11 @@ Co-Authored-By: Claude <noreply@anthropic.com>"
 ```
 For DRAFT listings omit `title`/`price`/`gender` is allowed (they're nullable) — but keep `title` set to `'Черновик объявления'`, leave `price`/`gender`/`age_months`/`color`/`has_vaccination`/`has_documents` as a minimal set (price 0, others default). Actually columns are nullable except `status`, `has_vaccination`, `has_documents` (DB default false), `views_count` (DB default 0). For DRAFT: set only `id, seller_id, category_id, title='Черновик объявления', status='DRAFT', location_country, location_city`; omit the rest (DB defaults fill them).
 
-For `breed_id`: category `other` (`77777777-...`) — use one of `77700000-...001/002`. For fish/reptiles use the new breeds from `002`.
+For `breed_id`: category `other` (`77777777-...`) — use one of `77700000-...001/002`. For fish/reptiles use the new breeds from `005`.
 
 - [ ] **Step 2: Append the listing_images changeSet**
 
-`id: 024-seed-demo-listing-images`, same guard. ~150 inserts (1-2 per listing; 1 image for listings `0001..0050`, 2 images for `0051..0100`). UUID scheme `cccccccc-cccc-cccc-cccc-cccccccccccc0001`..`0150`. Columns:
+`id: 027-seed-demo-listing-images`, same guard. ~150 inserts (1-2 per listing; 1 image for listings `0001..0050`, 2 images for `0051..0100`). UUID scheme `cccccccc-cccc-cccc-cccc-cccccccccccc0001`..`0150`. Columns:
 ```yaml
               - column: { name: id, value: 'cccccccc-cccc-cccc-cccc-cccccccccccc<NNNN>' }
               - column: { name: listing_id, value: 'bbbbbbbb-bbbb-bbbb-bbbb-bbbbbbbbbbbb<listing>' }
@@ -342,13 +342,13 @@ For each listing, the first image has `order_index=0, is_main=true`; a second im
 
 - [ ] **Step 3: Validate YAML + build**
 
-Run: `python3 -c "import yaml; yaml.safe_load(open('src/main/resources/db/changelog/changelogs/003-seed-demo-data.yaml'))"` then `gradle build -x test`
+Run: `python3 -c "import yaml; yaml.safe_load(open('src/main/resources/db/changelog/changelogs/006-seed-demo-data.yaml'))"` then `gradle build -x test`
 Expected: no output, then BUILD SUCCESSFUL.
 
 - [ ] **Step 4: Commit**
 
 ```bash
-git add src/main/resources/db/changelog/changelogs/003-seed-demo-data.yaml
+git add src/main/resources/db/changelog/changelogs/006-seed-demo-data.yaml
 git commit -m "feat(seed): demo listings and images (003 part 2/4)
 
 Co-Authored-By: Claude <noreply@anthropic.com>"
@@ -356,10 +356,10 @@ Co-Authored-By: Claude <noreply@anthropic.com>"
 
 ---
 
-### Task 4: `003` bookings + reviews + profile rating update
+### Task 4: `006` bookings + reviews + profile rating update
 
 **Files:**
-- Modify: `src/main/resources/db/changelog/changelogs/003-seed-demo-data.yaml` (append)
+- Modify: `src/main/resources/db/changelog/changelogs/006-seed-demo-data.yaml` (append)
 
 **Interfaces:**
 - Consumes: listings (status already set per Task 3), users (buyers `0019..0047`, sellers `0003..0018`).
@@ -375,7 +375,7 @@ Co-Authored-By: Claude <noreply@anthropic.com>"
 
 - [ ] **Step 1: Append the bookings changeSet**
 
-`id: 025-seed-demo-bookings`, same guard. 30 `insert` blocks into `bookings`. Columns:
+`id: 028-seed-demo-bookings`, same guard. 30 `insert` blocks into `bookings`. Columns:
 ```yaml
               - column: { name: id, value: 'dddddddd-dddd-dddd-dddd-dddddddddddd<NNNN>' }
               - column: { name: listing_id, value: 'bbbbbbbb-bbbb-bbbb-bbbb-bbbbbbbbbbbb<listing-per-pair>' }
@@ -388,7 +388,7 @@ Map each booking to its paired listing per the table above. Ensure `listing_id` 
 
 - [ ] **Step 2: Append the reviews changeSet**
 
-`id: 026-seed-demo-reviews`, same guard. 20 `insert` blocks into `reviews`, each on a distinct COMPLETED booking (`0019..0025` give 7; need 20 — so expand COMPLETED bookings to 20 by reusing the COMPLETED set is impossible (unique `booking_id`). Resolution: **increase COMPLETED bookings to 20** by reassigning the booking distribution:
+`id: 029-seed-demo-reviews`, same guard. 20 `insert` blocks into `reviews`, each on a distinct COMPLETED booking (`0019..0025` give 7; need 20 — so expand COMPLETED bookings to 20 by reusing the COMPLETED set is impossible (unique `booking_id`). Resolution: **increase COMPLETED bookings to 20** by reassigning the booking distribution:
   - PENDING 7 (`0001..0007` → listings `0001..0007`)
   - CONFIRMED 8 (`0008..0015` → listings `0061..0068`)
   - COMPLETED 20 (`0016..0035` → listings `0071..0090` — extend SOLD listings from 15 to 20; update Task 3 distribution: SOLD = `0071..0090`)
@@ -409,7 +409,7 @@ Reviews `0001..0015` → APPROVED (on completed bookings `0016..0030`), `0016..0
 
 - [ ] **Step 3: Append the profile rating UPDATE**
 
-`id: 027-seed-demo-profile-ratings`, same guard. One `update` per seller that received approved reviews, setting `rating` = average of their approved reviews (rounded to 1 decimal) and `total_reviews` = count. Use `sql` raw blocks:
+`id: 030-seed-demo-profile-ratings`, same guard. One `update` per seller that received approved reviews, setting `rating` = average of their approved reviews (rounded to 1 decimal) and `total_reviews` = count. Use `sql` raw blocks:
 ```yaml
       changes:
         - sql:
@@ -419,13 +419,13 @@ A single update covers all sellers at once (no per-seller hardcoding needed).
 
 - [ ] **Step 4: Validate YAML + build**
 
-Run: `python3 -c "import yaml; yaml.safe_load(open('src/main/resources/db/changelog/changelogs/003-seed-demo-data.yaml'))"` then `gradle build -x test`
+Run: `python3 -c "import yaml; yaml.safe_load(open('src/main/resources/db/changelog/changelogs/006-seed-demo-data.yaml'))"` then `gradle build -x test`
 Expected: no output, then BUILD SUCCESSFUL.
 
 - [ ] **Step 5: Commit**
 
 ```bash
-git add src/main/resources/db/changelog/changelogs/003-seed-demo-data.yaml
+git add src/main/resources/db/changelog/changelogs/006-seed-demo-data.yaml
 git commit -m "feat(seed): demo bookings, reviews, profile ratings (003 part 3/4)
 
 Co-Authored-By: Claude <noreply@anthropic.com>"
@@ -433,17 +433,17 @@ Co-Authored-By: Claude <noreply@anthropic.com>"
 
 ---
 
-### Task 5: `003` messages + favorites + subscriptions
+### Task 5: `006` messages + favorites + subscriptions
 
 **Files:**
-- Modify: `src/main/resources/db/changelog/changelogs/003-seed-demo-data.yaml` (append)
+- Modify: `src/main/resources/db/changelog/changelogs/006-seed-demo-data.yaml` (append)
 
 **Interfaces:**
 - Consumes: users, listings. Produces: `messages` (UUIDs `12121212-1212-1212-1212-121212121201`..`30`), `favorites` (`13131313-...`), `subscriptions` (`14141414-...`).
 
 - [ ] **Step 1: Append messages changeSet**
 
-`id: 028-seed-demo-messages`, same guard. ~30 inserts across 6 chats (each chat = a buyer↔seller pair around one listing). UUID scheme `12121212-1212-1212-1212-1212121212<NN>`. Columns:
+`id: 031-seed-demo-messages`, same guard. ~30 inserts across 6 chats (each chat = a buyer↔seller pair around one listing). UUID scheme `12121212-1212-1212-1212-1212121212<NN>`. Columns:
 ```yaml
               - column: { name: id, value: '12121212-1212-1212-1212-1212121212<NN>' }
               - column: { name: sender_id, value: '<one side>' }
@@ -457,7 +457,7 @@ Co-Authored-By: Claude <noreply@anthropic.com>"
 
 - [ ] **Step 2: Append favorites changeSet**
 
-`id: 029-seed-demo-favorites`, same guard. ~25 inserts. UUID scheme `13131313-1313-1313-1313-1313131313<NN>`. Columns:
+`id: 032-seed-demo-favorites`, same guard. ~25 inserts. UUID scheme `13131313-1313-1313-1313-1313131313<NN>`. Columns:
 ```yaml
               - column: { name: id, value: '13131313-1313-1313-1313-1313131313<NN>' }
               - column: { name: user_id, value: 'aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaa<buyer>' }
@@ -467,7 +467,7 @@ Assign buyers `0019..0043` to ACTIVE listings `0001..0025` (unique pairs — eac
 
 - [ ] **Step 3: Append subscriptions changeSet**
 
-`id: 030-seed-demo-subscriptions`, same guard. ~10 inserts. UUID scheme `14141414-1414-1414-1414-1414141414<NN>`. Columns:
+`id: 033-seed-demo-subscriptions`, same guard. ~10 inserts. UUID scheme `14141414-1414-1414-1414-1414141414<NN>`. Columns:
 ```yaml
               - column: { name: id, value: '14141414-1414-1414-1414-1414141414<NN>' }
               - column: { name: user_id, value: 'aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaa<buyer>' }
@@ -478,13 +478,13 @@ Assign buyers `0019..0028`. Vary `categoryId` across the 7 categories, `city` ac
 
 - [ ] **Step 4: Validate YAML + build**
 
-Run: `python3 -c "import yaml; yaml.safe_load(open('src/main/resources/db/changelog/changelogs/003-seed-demo-data.yaml'))"` then `gradle build -x test`
+Run: `python3 -c "import yaml; yaml.safe_load(open('src/main/resources/db/changelog/changelogs/006-seed-demo-data.yaml'))"` then `gradle build -x test`
 Expected: no output, then BUILD SUCCESSFUL.
 
 - [ ] **Step 5: Commit**
 
 ```bash
-git add src/main/resources/db/changelog/changelogs/003-seed-demo-data.yaml
+git add src/main/resources/db/changelog/changelogs/006-seed-demo-data.yaml
 git commit -m "feat(seed): demo messages, favorites, subscriptions (003 part 4/4)
 
 Co-Authored-By: Claude <noreply@anthropic.com>"
@@ -492,7 +492,7 @@ Co-Authored-By: Claude <noreply@anthropic.com>"
 
 ---
 
-### Task 6: Wire `003` into master + Liquibase contexts
+### Task 6: Wire `006` into master + Liquibase contexts
 
 **Files:**
 - Modify: `src/main/resources/db/changelog/db.changelog-master.yaml`
@@ -501,12 +501,12 @@ Co-Authored-By: Claude <noreply@anthropic.com>"
 - Modify: `src/test/resources/application-stand.yml`
 - Modify: `src/test/resources/application-test.yml`
 
-- [ ] **Step 1: Include `003` in the master changelog**
+- [ ] **Step 1: Include `006` in the master changelog**
 
-Add to `db.changelog-master.yaml` after the `002` include:
+Add to `db.changelog-master.yaml` after the `005` include (i.e. as the last include, after `004-add-subscription-indexes.yaml` and `005-seed-breeds-gap.yaml`):
 ```yaml
   - include:
-      file: changelogs/003-seed-demo-data.yaml
+      file: changelogs/006-seed-demo-data.yaml
       relativeToChangelogFile: true
 ```
 
@@ -561,7 +561,7 @@ Insert after the "Deploy (backend distribution)" section. Content:
 ```markdown
 ## Demo data
 
-After `docker compose -f docker-compose.yml up -d --build` on an empty database, Liquibase seeds demo data automatically (changeset `003-seed-demo-data.yaml`, guarded so it runs only when `users` is empty):
+After `docker compose -f docker-compose.yml up -d --build` on an empty database, Liquibase seeds demo data automatically (changeset `006-seed-demo-data.yaml`, guarded so it runs only when `users` is empty):
 
 - ~47 users, ~100 listings, ~40 bookings, ~20 reviews, ~30 messages, ~25 favorites, ~10 subscriptions.
 - Listing/booking statuses are seeded in consistent pairs (CONFIRMED↔RESERVED, COMPLETED↔SOLD).
@@ -579,7 +579,7 @@ Log in: `POST /api/v1/auth/login` with `{"email":"admin@demo.local","password":"
 
 **Re-seed from scratch:** `docker compose -f docker-compose.yml down -v && docker compose -f docker-compose.yml up -d --build` (the `-v` wipes the volume so the `users-empty` guard re-triggers seeding).
 
-Integration tests (Testcontainers) run under the `test` Liquibase context and skip `003`, so they keep a clean database.
+Integration tests (Testcontainers) run under the `test` Liquibase context and skip `006`, so they keep a clean database.
 ```
 
 - [ ] **Step 2: Commit**
@@ -603,8 +603,8 @@ docker compose -f docker-compose.yml down -v
 docker compose -f docker-compose.yml up -d --build
 ```
 Wait ~60s, then: `curl -fsS http://localhost:8080/api/v1/actuator/health`
-Expected: `{"status":"UP",...}`. Check logs for Liquibase applying `018..030`:
-`docker logs petmarketplace-app 2>&1 | grep -iE "ChangeSet|021-|030-"` — expect `021..030` marked `EXECUTED`.
+Expected: `{"status":"UP",...}`. Check logs for Liquibase applying `021..033`:
+`docker logs petmarketplace-app 2>&1 | grep -iE "ChangeSet|021-|033-"` — expect `021..033` marked `EXECUTED`.
 
 - [ ] **Step 2: Verify row counts**
 
@@ -647,7 +647,7 @@ Expected: HTTP 200 with `accessToken` and `refreshToken` in JSON.
 - [ ] **Step 5: Verify Testcontainers tests stay clean**
 
 Run: `gradle test`
-Expected: existing tests pass (no regressions from `003`, since `test` context skips it). If a test fails because it assumed an empty reference table that `002` now fills (breeds), investigate — `002` is safe but verify.
+Expected: existing tests pass (no regressions from `006`, since `test` context skips it). If a test fails because it assumed an empty reference table that `005` now fills (breeds), investigate — `005` is safe but verify.
 
 - [ ] **Step 6: Verify re-seed survival (down/up without -v)**
 
@@ -657,7 +657,7 @@ docker compose -f docker-compose.yml down
 docker compose -f docker-compose.yml up -d
 docker exec petmarketplace-postgres psql -U petmarketplace -d petmarketplace -c "SELECT count(*) FROM users;"
 ```
-Expected: 47 (data survived in `postgres-data` volume; Liquibase saw `003` already applied → no-op).
+Expected: 47 (data survived in `postgres-data` volume; Liquibase saw `006` already applied → no-op).
 
 - [ ] **Step 7: Final commit (if any verification fixes were needed)**
 
