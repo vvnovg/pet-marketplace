@@ -330,3 +330,25 @@ systemctl enable --now nftables
 The frontend distribution (`pet-marketplace-front` repo) exposes Next.js on `:3000` and is the public entry. Follow its README "Deploy (frontend distribution)" section, then retarget the Keenetic cloud publication to `192.168.1.81:3000` (HTTP) — see the frontend repo.
 
 Swagger UI stays private: `http://localhost:8080/api/v1/swagger-ui.html` (on the host only).
+
+## Demo data
+
+After `docker compose -f docker-compose.yml up -d --build` on an empty database, Liquibase seeds demo data automatically (changeset `006-seed-demo-data.yaml`, guarded so it runs only on an empty database — each changeset checks its own target table is empty):
+
+- ~47 users, ~100 listings, ~40 bookings, ~20 reviews, ~30 messages, ~25 favorites, ~10 subscriptions.
+- Listing/booking statuses are seeded in consistent pairs (CONFIRMED↔RESERVED, COMPLETED↔SOLD).
+
+**Demo accounts** (all share password `Demo12345`, email-verified):
+
+| Email | Role |
+|---|---|
+| admin@demo.local | ADMIN |
+| moderator@demo.local | MODERATOR |
+| seller1@demo.local .. seller5@demo.local | SELLER |
+| buyer@demo.local | BUYER |
+
+Log in: `POST /api/v1/auth/login` with `{"email":"admin@demo.local","password":"Demo12345"}`.
+
+**Re-seed from scratch:** `docker compose -f docker-compose.yml down -v && docker compose -f docker-compose.yml up -d --build` (the `-v` wipes the volume so the empty-table guards re-trigger seeding).
+
+Integration tests (Testcontainers) run under the `test` Liquibase context and skip `006`, so they keep a clean database.
