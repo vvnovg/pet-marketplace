@@ -29,6 +29,7 @@ spring:
   # The stand owns its own schema; the test JVM must not re-run migrations against it.
   liquibase:
     enabled: false
+    contexts: stand
 
 security:
   jwt:

@@ -19,6 +19,9 @@ spring:
   jpa:
     show-sql: false
 
+  liquibase:
+    contexts: prod
+
 storage:
   provider: local
   local:
