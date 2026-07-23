@@ -1,0 +1,1010 @@
+databaseChangeLog:
+
+  - changeSet:
+      id: 024-seed-demo-users
+      author: seed
+      contextFilter: "prod or dev or stand"
+      preConditions:
+        - onFail: MARK_RAN
+        - sqlCheck:
+            expectedResult: 0
+            sql: SELECT count(*) FROM users
+      changes:
+        - insert:
+            tableName: users
+            columns:
+              - column: { name: id, value: 'aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaa0001' }
+              - column: { name: email, value: 'admin@demo.local' }
+              - column: { name: password_hash, value: '$2b$10$dJJWtO4l9OGtmdo74ehD2eVJJWYSKInvhEwWZsWU8BoUvSotrICa.' }
+              - column: { name: role, value: 'ADMIN' }
+              - column: { name: first_name, value: 'Алексей' }
+              - column: { name: last_name, value: 'Админов' }
+              - column: { name: is_verified, valueBoolean: true }
+              - column: { name: is_active, valueBoolean: true }
+        - insert:
+            tableName: users
+            columns:
+              - column: { name: id, value: 'aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaa0002' }
+              - column: { name: email, value: 'moderator@demo.local' }
+              - column: { name: password_hash, value: '$2b$10$dJJWtO4l9OGtmdo74ehD2eVJJWYSKInvhEwWZsWU8BoUvSotrICa.' }
+              - column: { name: role, value: 'MODERATOR' }
+              - column: { name: first_name, value: 'Мария' }
+              - column: { name: last_name, value: 'Модераторова' }
+              - column: { name: is_verified, valueBoolean: true }
+              - column: { name: is_active, valueBoolean: true }
+        - insert:
+            tableName: users
+            columns:
+              - column: { name: id, value: 'aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaa0003' }
+              - column: { name: email, value: 'seller1@demo.local' }
+              - column: { name: password_hash, value: '$2b$10$dJJWtO4l9OGtmdo74ehD2eVJJWYSKInvhEwWZsWU8BoUvSotrICa.' }
+              - column: { name: role, value: 'SELLER' }
+              - column: { name: first_name, value: 'Иван' }
+              - column: { name: last_name, value: 'Иванов' }
+              - column: { name: is_verified, valueBoolean: true }
+              - column: { name: is_active, valueBoolean: true }
+        - insert:
+            tableName: users
+            columns:
+              - column: { name: id, value: 'aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaa0004' }
+              - column: { name: email, value: 'seller2@demo.local' }
+              - column: { name: password_hash, value: '$2b$10$dJJWtO4l9OGtmdo74ehD2eVJJWYSKInvhEwWZsWU8BoUvSotrICa.' }
+              - column: { name: role, value: 'SELLER' }
+              - column: { name: first_name, value: 'Петр' }
+              - column: { name: last_name, value: 'Петров' }
+              - column: { name: is_verified, valueBoolean: true }
+              - column: { name: is_active, valueBoolean: true }
+        - insert:
+            tableName: users
+            columns:
+              - column: { name: id, value: 'aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaa0005' }
+              - column: { name: email, value: 'seller3@demo.local' }
+              - column: { name: password_hash, value: '$2b$10$dJJWtO4l9OGtmdo74ehD2eVJJWYSKInvhEwWZsWU8BoUvSotrICa.' }
+              - column: { name: role, value: 'SELLER' }
+              - column: { name: first_name, value: 'Светлана' }
+              - column: { name: last_name, value: 'Светлова' }
+              - column: { name: is_verified, valueBoolean: true }
+              - column: { name: is_active, valueBoolean: true }
+        - insert:
+            tableName: users
+            columns:
+              - column: { name: id, value: 'aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaa0006' }
+              - column: { name: email, value: 'seller4@demo.local' }
+              - column: { name: password_hash, value: '$2b$10$dJJWtO4l9OGtmdo74ehD2eVJJWYSKInvhEwWZsWU8BoUvSotrICa.' }
+              - column: { name: role, value: 'SELLER' }
+              - column: { name: first_name, value: 'Дмитрий' }
+              - column: { name: last_name, value: 'Дмитриев' }
+              - column: { name: is_verified, valueBoolean: true }
+              - column: { name: is_active, valueBoolean: true }
+        - insert:
+            tableName: users
+            columns:
+              - column: { name: id, value: 'aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaa0007' }
+              - column: { name: email, value: 'seller5@demo.local' }
+              - column: { name: password_hash, value: '$2b$10$dJJWtO4l9OGtmdo74ehD2eVJJWYSKInvhEwWZsWU8BoUvSotrICa.' }
+              - column: { name: role, value: 'SELLER' }
+              - column: { name: first_name, value: 'Елена' }
+              - column: { name: last_name, value: 'Еленова' }
+              - column: { name: is_verified, valueBoolean: true }
+              - column: { name: is_active, valueBoolean: true }
+        - insert:
+            tableName: users
+            columns:
+              - column: { name: id, value: 'aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaa0008' }
+              - column: { name: email, value: 'buyer@demo.local' }
+              - column: { name: password_hash, value: '$2b$10$dJJWtO4l9OGtmdo74ehD2eVJJWYSKInvhEwWZsWU8BoUvSotrICa.' }
+              - column: { name: role, value: 'BUYER' }
+              - column: { name: first_name, value: 'Олег' }
+              - column: { name: last_name, value: 'Олегов' }
+              - column: { name: is_verified, valueBoolean: true }
+              - column: { name: is_active, valueBoolean: true }
+        - insert:
+            tableName: users
+            columns:
+              - column: { name: id, value: 'aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaa0009' }
+              - column: { name: email, value: 'seller6@demo.local' }
+              - column: { name: password_hash, value: '$2b$10$dJJWtO4l9OGtmdo74ehD2eVJJWYSKInvhEwWZsWU8BoUvSotrICa.' }
+              - column: { name: role, value: 'SELLER' }
+              - column: { name: first_name, value: 'Андрей' }
+              - column: { name: last_name, value: 'Андреев' }
+              - column: { name: is_verified, valueBoolean: true }
+              - column: { name: is_active, valueBoolean: true }
+        - insert:
+            tableName: users
+            columns:
+              - column: { name: id, value: 'aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaa0010' }
+              - column: { name: email, value: 'seller7@demo.local' }
+              - column: { name: password_hash, value: '$2b$10$dJJWtO4l9OGtmdo74ehD2eVJJWYSKInvhEwWZsWU8BoUvSotrICa.' }
+              - column: { name: role, value: 'SELLER' }
+              - column: { name: first_name, value: 'Ольга' }
+              - column: { name: last_name, value: 'Ольгина' }
+              - column: { name: is_verified, valueBoolean: true }
+              - column: { name: is_active, valueBoolean: true }
+        - insert:
+            tableName: users
+            columns:
+              - column: { name: id, value: 'aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaa0011' }
+              - column: { name: email, value: 'seller8@demo.local' }
+              - column: { name: password_hash, value: '$2b$10$dJJWtO4l9OGtmdo74ehD2eVJJWYSKInvhEwWZsWU8BoUvSotrICa.' }
+              - column: { name: role, value: 'SELLER' }
+              - column: { name: first_name, value: 'Рустам' }
+              - column: { name: last_name, value: 'Рустамов' }
+              - column: { name: is_verified, valueBoolean: true }
+              - column: { name: is_active, valueBoolean: true }
+        - insert:
+            tableName: users
+            columns:
+              - column: { name: id, value: 'aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaa0012' }
+              - column: { name: email, value: 'seller9@demo.local' }
+              - column: { name: password_hash, value: '$2b$10$dJJWtO4l9OGtmdo74ehD2eVJJWYSKInvhEwWZsWU8BoUvSotrICa.' }
+              - column: { name: role, value: 'SELLER' }
+              - column: { name: first_name, value: 'Наталья' }
+              - column: { name: last_name, value: 'Натальина' }
+              - column: { name: is_verified, valueBoolean: true }
+              - column: { name: is_active, valueBoolean: true }
+        - insert:
+            tableName: users
+            columns:
+              - column: { name: id, value: 'aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaa0013' }
+              - column: { name: email, value: 'seller10@demo.local' }
+              - column: { name: password_hash, value: '$2b$10$dJJWtO4l9OGtmdo74ehD2eVJJWYSKInvhEwWZsWU8BoUvSotrICa.' }
+              - column: { name: role, value: 'SELLER' }
+              - column: { name: first_name, value: 'Сергей' }
+              - column: { name: last_name, value: 'Сергеев' }
+              - column: { name: is_verified, valueBoolean: true }
+              - column: { name: is_active, valueBoolean: true }
+        - insert:
+            tableName: users
+            columns:
+              - column: { name: id, value: 'aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaa0014' }
+              - column: { name: email, value: 'seller11@demo.local' }
+              - column: { name: password_hash, value: '$2b$10$dJJWtO4l9OGtmdo74ehD2eVJJWYSKInvhEwWZsWU8BoUvSotrICa.' }
+              - column: { name: role, value: 'SELLER' }
+              - column: { name: first_name, value: 'Татьяна' }
+              - column: { name: last_name, value: 'Татьянова' }
+              - column: { name: is_verified, valueBoolean: true }
+              - column: { name: is_active, valueBoolean: true }
+        - insert:
+            tableName: users
+            columns:
+              - column: { name: id, value: 'aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaa0015' }
+              - column: { name: email, value: 'seller12@demo.local' }
+              - column: { name: password_hash, value: '$2b$10$dJJWtO4l9OGtmdo74ehD2eVJJWYSKInvhEwWZsWU8BoUvSotrICa.' }
+              - column: { name: role, value: 'SELLER' }
+              - column: { name: first_name, value: 'Павел' }
+              - column: { name: last_name, value: 'Павлов' }
+              - column: { name: is_verified, valueBoolean: true }
+              - column: { name: is_active, valueBoolean: true }
+        - insert:
+            tableName: users
+            columns:
+              - column: { name: id, value: 'aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaa0016' }
+              - column: { name: email, value: 'seller13@demo.local' }
+              - column: { name: password_hash, value: '$2b$10$dJJWtO4l9OGtmdo74ehD2eVJJWYSKInvhEwWZsWU8BoUvSotrICa.' }
+              - column: { name: role, value: 'SELLER' }
+              - column: { name: first_name, value: 'Юлия' }
+              - column: { name: last_name, value: 'Юрьева' }
+              - column: { name: is_verified, valueBoolean: true }
+              - column: { name: is_active, valueBoolean: true }
+        - insert:
+            tableName: users
+            columns:
+              - column: { name: id, value: 'aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaa0017' }
+              - column: { name: email, value: 'seller14@demo.local' }
+              - column: { name: password_hash, value: '$2b$10$dJJWtO4l9OGtmdo74ehD2eVJJWYSKInvhEwWZsWU8BoUvSotrICa.' }
+              - column: { name: role, value: 'SELLER' }
+              - column: { name: first_name, value: 'Виктор' }
+              - column: { name: last_name, value: 'Викторов' }
+              - column: { name: is_verified, valueBoolean: true }
+              - column: { name: is_active, valueBoolean: true }
+        - insert:
+            tableName: users
+            columns:
+              - column: { name: id, value: 'aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaa0018' }
+              - column: { name: email, value: 'seller15@demo.local' }
+              - column: { name: password_hash, value: '$2b$10$dJJWtO4l9OGtmdo74ehD2eVJJWYSKInvhEwWZsWU8BoUvSotrICa.' }
+              - column: { name: role, value: 'SELLER' }
+              - column: { name: first_name, value: 'Ирина' }
+              - column: { name: last_name, value: 'Иринина' }
+              - column: { name: is_verified, valueBoolean: true }
+              - column: { name: is_active, valueBoolean: true }
+        - insert:
+            tableName: users
+            columns:
+              - column: { name: id, value: 'aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaa0019' }
+              - column: { name: email, value: 'buyer1@demo.local' }
+              - column: { name: password_hash, value: '$2b$10$dJJWtO4l9OGtmdo74ehD2eVJJWYSKInvhEwWZsWU8BoUvSotrICa.' }
+              - column: { name: role, value: 'BUYER' }
+              - column: { name: first_name, value: 'Андрей' }
+              - column: { name: last_name, value: 'Андреев' }
+              - column: { name: is_verified, valueBoolean: true }
+              - column: { name: is_active, valueBoolean: true }
+        - insert:
+            tableName: users
+            columns:
+              - column: { name: id, value: 'aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaa0020' }
+              - column: { name: email, value: 'buyer2@demo.local' }
+              - column: { name: password_hash, value: '$2b$10$dJJWtO4l9OGtmdo74ehD2eVJJWYSKInvhEwWZsWU8BoUvSotrICa.' }
+              - column: { name: role, value: 'BUYER' }
+              - column: { name: first_name, value: 'Ольга' }
+              - column: { name: last_name, value: 'Ольгина' }
+              - column: { name: is_verified, valueBoolean: true }
+              - column: { name: is_active, valueBoolean: true }
+        - insert:
+            tableName: users
+            columns:
+              - column: { name: id, value: 'aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaa0021' }
+              - column: { name: email, value: 'buyer3@demo.local' }
+              - column: { name: password_hash, value: '$2b$10$dJJWtO4l9OGtmdo74ehD2eVJJWYSKInvhEwWZsWU8BoUvSotrICa.' }
+              - column: { name: role, value: 'BUYER' }
+              - column: { name: first_name, value: 'Рустам' }
+              - column: { name: last_name, value: 'Рустамов' }
+              - column: { name: is_verified, valueBoolean: true }
+              - column: { name: is_active, valueBoolean: true }
+        - insert:
+            tableName: users
+            columns:
+              - column: { name: id, value: 'aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaa0022' }
+              - column: { name: email, value: 'buyer4@demo.local' }
+              - column: { name: password_hash, value: '$2b$10$dJJWtO4l9OGtmdo74ehD2eVJJWYSKInvhEwWZsWU8BoUvSotrICa.' }
+              - column: { name: role, value: 'BUYER' }
+              - column: { name: first_name, value: 'Наталья' }
+              - column: { name: last_name, value: 'Натальина' }
+              - column: { name: is_verified, valueBoolean: true }
+              - column: { name: is_active, valueBoolean: true }
+        - insert:
+            tableName: users
+            columns:
+              - column: { name: id, value: 'aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaa0023' }
+              - column: { name: email, value: 'buyer5@demo.local' }
+              - column: { name: password_hash, value: '$2b$10$dJJWtO4l9OGtmdo74ehD2eVJJWYSKInvhEwWZsWU8BoUvSotrICa.' }
+              - column: { name: role, value: 'BUYER' }
+              - column: { name: first_name, value: 'Сергей' }
+              - column: { name: last_name, value: 'Сергеев' }
+              - column: { name: is_verified, valueBoolean: true }
+              - column: { name: is_active, valueBoolean: true }
+        - insert:
+            tableName: users
+            columns:
+              - column: { name: id, value: 'aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaa0024' }
+              - column: { name: email, value: 'buyer6@demo.local' }
+              - column: { name: password_hash, value: '$2b$10$dJJWtO4l9OGtmdo74ehD2eVJJWYSKInvhEwWZsWU8BoUvSotrICa.' }
+              - column: { name: role, value: 'BUYER' }
+              - column: { name: first_name, value: 'Татьяна' }
+              - column: { name: last_name, value: 'Татьянова' }
+              - column: { name: is_verified, valueBoolean: true }
+              - column: { name: is_active, valueBoolean: true }
+        - insert:
+            tableName: users
+            columns:
+              - column: { name: id, value: 'aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaa0025' }
+              - column: { name: email, value: 'buyer7@demo.local' }
+              - column: { name: password_hash, value: '$2b$10$dJJWtO4l9OGtmdo74ehD2eVJJWYSKInvhEwWZsWU8BoUvSotrICa.' }
+              - column: { name: role, value: 'BUYER' }
+              - column: { name: first_name, value: 'Павел' }
+              - column: { name: last_name, value: 'Павлов' }
+              - column: { name: is_verified, valueBoolean: true }
+              - column: { name: is_active, valueBoolean: true }
+        - insert:
+            tableName: users
+            columns:
+              - column: { name: id, value: 'aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaa0026' }
+              - column: { name: email, value: 'buyer8@demo.local' }
+              - column: { name: password_hash, value: '$2b$10$dJJWtO4l9OGtmdo74ehD2eVJJWYSKInvhEwWZsWU8BoUvSotrICa.' }
+              - column: { name: role, value: 'BUYER' }
+              - column: { name: first_name, value: 'Юлия' }
+              - column: { name: last_name, value: 'Юрьева' }
+              - column: { name: is_verified, valueBoolean: true }
+              - column: { name: is_active, valueBoolean: true }
+        - insert:
+            tableName: users
+            columns:
+              - column: { name: id, value: 'aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaa0027' }
+              - column: { name: email, value: 'buyer9@demo.local' }
+              - column: { name: password_hash, value: '$2b$10$dJJWtO4l9OGtmdo74ehD2eVJJWYSKInvhEwWZsWU8BoUvSotrICa.' }
+              - column: { name: role, value: 'BUYER' }
+              - column: { name: first_name, value: 'Виктор' }
+              - column: { name: last_name, value: 'Викторов' }
+              - column: { name: is_verified, valueBoolean: true }
+              - column: { name: is_active, valueBoolean: true }
+        - insert:
+            tableName: users
+            columns:
+              - column: { name: id, value: 'aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaa0028' }
+              - column: { name: email, value: 'buyer10@demo.local' }
+              - column: { name: password_hash, value: '$2b$10$dJJWtO4l9OGtmdo74ehD2eVJJWYSKInvhEwWZsWU8BoUvSotrICa.' }
+              - column: { name: role, value: 'BUYER' }
+              - column: { name: first_name, value: 'Ирина' }
+              - column: { name: last_name, value: 'Иринина' }
+              - column: { name: is_verified, valueBoolean: true }
+              - column: { name: is_active, valueBoolean: true }
+        - insert:
+            tableName: users
+            columns:
+              - column: { name: id, value: 'aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaa0029' }
+              - column: { name: email, value: 'buyer11@demo.local' }
+              - column: { name: password_hash, value: '$2b$10$dJJWtO4l9OGtmdo74ehD2eVJJWYSKInvhEwWZsWU8BoUvSotrICa.' }
+              - column: { name: role, value: 'BUYER' }
+              - column: { name: first_name, value: 'Андрей' }
+              - column: { name: last_name, value: 'Андреев' }
+              - column: { name: is_verified, valueBoolean: true }
+              - column: { name: is_active, valueBoolean: true }
+        - insert:
+            tableName: users
+            columns:
+              - column: { name: id, value: 'aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaa0030' }
+              - column: { name: email, value: 'buyer12@demo.local' }
+              - column: { name: password_hash, value: '$2b$10$dJJWtO4l9OGtmdo74ehD2eVJJWYSKInvhEwWZsWU8BoUvSotrICa.' }
+              - column: { name: role, value: 'BUYER' }
+              - column: { name: first_name, value: 'Ольга' }
+              - column: { name: last_name, value: 'Ольгина' }
+              - column: { name: is_verified, valueBoolean: true }
+              - column: { name: is_active, valueBoolean: true }
+        - insert:
+            tableName: users
+            columns:
+              - column: { name: id, value: 'aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaa0031' }
+              - column: { name: email, value: 'buyer13@demo.local' }
+              - column: { name: password_hash, value: '$2b$10$dJJWtO4l9OGtmdo74ehD2eVJJWYSKInvhEwWZsWU8BoUvSotrICa.' }
+              - column: { name: role, value: 'BUYER' }
+              - column: { name: first_name, value: 'Рустам' }
+              - column: { name: last_name, value: 'Рустамов' }
+              - column: { name: is_verified, valueBoolean: true }
+              - column: { name: is_active, valueBoolean: true }
+        - insert:
+            tableName: users
+            columns:
+              - column: { name: id, value: 'aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaa0032' }
+              - column: { name: email, value: 'buyer14@demo.local' }
+              - column: { name: password_hash, value: '$2b$10$dJJWtO4l9OGtmdo74ehD2eVJJWYSKInvhEwWZsWU8BoUvSotrICa.' }
+              - column: { name: role, value: 'BUYER' }
+              - column: { name: first_name, value: 'Наталья' }
+              - column: { name: last_name, value: 'Натальина' }
+              - column: { name: is_verified, valueBoolean: true }
+              - column: { name: is_active, valueBoolean: true }
+        - insert:
+            tableName: users
+            columns:
+              - column: { name: id, value: 'aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaa0033' }
+              - column: { name: email, value: 'buyer15@demo.local' }
+              - column: { name: password_hash, value: '$2b$10$dJJWtO4l9OGtmdo74ehD2eVJJWYSKInvhEwWZsWU8BoUvSotrICa.' }
+              - column: { name: role, value: 'BUYER' }
+              - column: { name: first_name, value: 'Сергей' }
+              - column: { name: last_name, value: 'Сергеев' }
+              - column: { name: is_verified, valueBoolean: true }
+              - column: { name: is_active, valueBoolean: true }
+        - insert:
+            tableName: users
+            columns:
+              - column: { name: id, value: 'aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaa0034' }
+              - column: { name: email, value: 'buyer16@demo.local' }
+              - column: { name: password_hash, value: '$2b$10$dJJWtO4l9OGtmdo74ehD2eVJJWYSKInvhEwWZsWU8BoUvSotrICa.' }
+              - column: { name: role, value: 'BUYER' }
+              - column: { name: first_name, value: 'Татьяна' }
+              - column: { name: last_name, value: 'Татьянова' }
+              - column: { name: is_verified, valueBoolean: true }
+              - column: { name: is_active, valueBoolean: true }
+        - insert:
+            tableName: users
+            columns:
+              - column: { name: id, value: 'aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaa0035' }
+              - column: { name: email, value: 'buyer17@demo.local' }
+              - column: { name: password_hash, value: '$2b$10$dJJWtO4l9OGtmdo74ehD2eVJJWYSKInvhEwWZsWU8BoUvSotrICa.' }
+              - column: { name: role, value: 'BUYER' }
+              - column: { name: first_name, value: 'Павел' }
+              - column: { name: last_name, value: 'Павлов' }
+              - column: { name: is_verified, valueBoolean: true }
+              - column: { name: is_active, valueBoolean: true }
+        - insert:
+            tableName: users
+            columns:
+              - column: { name: id, value: 'aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaa0036' }
+              - column: { name: email, value: 'buyer18@demo.local' }
+              - column: { name: password_hash, value: '$2b$10$dJJWtO4l9OGtmdo74ehD2eVJJWYSKInvhEwWZsWU8BoUvSotrICa.' }
+              - column: { name: role, value: 'BUYER' }
+              - column: { name: first_name, value: 'Юлия' }
+              - column: { name: last_name, value: 'Юрьева' }
+              - column: { name: is_verified, valueBoolean: true }
+              - column: { name: is_active, valueBoolean: true }
+        - insert:
+            tableName: users
+            columns:
+              - column: { name: id, value: 'aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaa0037' }
+              - column: { name: email, value: 'buyer19@demo.local' }
+              - column: { name: password_hash, value: '$2b$10$dJJWtO4l9OGtmdo74ehD2eVJJWYSKInvhEwWZsWU8BoUvSotrICa.' }
+              - column: { name: role, value: 'BUYER' }
+              - column: { name: first_name, value: 'Виктор' }
+              - column: { name: last_name, value: 'Викторов' }
+              - column: { name: is_verified, valueBoolean: true }
+              - column: { name: is_active, valueBoolean: true }
+        - insert:
+            tableName: users
+            columns:
+              - column: { name: id, value: 'aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaa0038' }
+              - column: { name: email, value: 'buyer20@demo.local' }
+              - column: { name: password_hash, value: '$2b$10$dJJWtO4l9OGtmdo74ehD2eVJJWYSKInvhEwWZsWU8BoUvSotrICa.' }
+              - column: { name: role, value: 'BUYER' }
+              - column: { name: first_name, value: 'Ирина' }
+              - column: { name: last_name, value: 'Иринина' }
+              - column: { name: is_verified, valueBoolean: true }
+              - column: { name: is_active, valueBoolean: true }
+        - insert:
+            tableName: users
+            columns:
+              - column: { name: id, value: 'aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaa0039' }
+              - column: { name: email, value: 'buyer21@demo.local' }
+              - column: { name: password_hash, value: '$2b$10$dJJWtO4l9OGtmdo74ehD2eVJJWYSKInvhEwWZsWU8BoUvSotrICa.' }
+              - column: { name: role, value: 'BUYER' }
+              - column: { name: first_name, value: 'Андрей' }
+              - column: { name: last_name, value: 'Андреев' }
+              - column: { name: is_verified, valueBoolean: true }
+              - column: { name: is_active, valueBoolean: true }
+        - insert:
+            tableName: users
+            columns:
+              - column: { name: id, value: 'aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaa0040' }
+              - column: { name: email, value: 'buyer22@demo.local' }
+              - column: { name: password_hash, value: '$2b$10$dJJWtO4l9OGtmdo74ehD2eVJJWYSKInvhEwWZsWU8BoUvSotrICa.' }
+              - column: { name: role, value: 'BUYER' }
+              - column: { name: first_name, value: 'Ольга' }
+              - column: { name: last_name, value: 'Ольгина' }
+              - column: { name: is_verified, valueBoolean: true }
+              - column: { name: is_active, valueBoolean: true }
+        - insert:
+            tableName: users
+            columns:
+              - column: { name: id, value: 'aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaa0041' }
+              - column: { name: email, value: 'buyer23@demo.local' }
+              - column: { name: password_hash, value: '$2b$10$dJJWtO4l9OGtmdo74ehD2eVJJWYSKInvhEwWZsWU8BoUvSotrICa.' }
+              - column: { name: role, value: 'BUYER' }
+              - column: { name: first_name, value: 'Рустам' }
+              - column: { name: last_name, value: 'Рустамов' }
+              - column: { name: is_verified, valueBoolean: true }
+              - column: { name: is_active, valueBoolean: true }
+        - insert:
+            tableName: users
+            columns:
+              - column: { name: id, value: 'aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaa0042' }
+              - column: { name: email, value: 'buyer24@demo.local' }
+              - column: { name: password_hash, value: '$2b$10$dJJWtO4l9OGtmdo74ehD2eVJJWYSKInvhEwWZsWU8BoUvSotrICa.' }
+              - column: { name: role, value: 'BUYER' }
+              - column: { name: first_name, value: 'Наталья' }
+              - column: { name: last_name, value: 'Натальина' }
+              - column: { name: is_verified, valueBoolean: true }
+              - column: { name: is_active, valueBoolean: true }
+        - insert:
+            tableName: users
+            columns:
+              - column: { name: id, value: 'aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaa0043' }
+              - column: { name: email, value: 'buyer25@demo.local' }
+              - column: { name: password_hash, value: '$2b$10$dJJWtO4l9OGtmdo74ehD2eVJJWYSKInvhEwWZsWU8BoUvSotrICa.' }
+              - column: { name: role, value: 'BUYER' }
+              - column: { name: first_name, value: 'Сергей' }
+              - column: { name: last_name, value: 'Сергеев' }
+              - column: { name: is_verified, valueBoolean: true }
+              - column: { name: is_active, valueBoolean: true }
+        - insert:
+            tableName: users
+            columns:
+              - column: { name: id, value: 'aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaa0044' }
+              - column: { name: email, value: 'buyer26@demo.local' }
+              - column: { name: password_hash, value: '$2b$10$dJJWtO4l9OGtmdo74ehD2eVJJWYSKInvhEwWZsWU8BoUvSotrICa.' }
+              - column: { name: role, value: 'BUYER' }
+              - column: { name: first_name, value: 'Татьяна' }
+              - column: { name: last_name, value: 'Татьянова' }
+              - column: { name: is_verified, valueBoolean: true }
+              - column: { name: is_active, valueBoolean: true }
+        - insert:
+            tableName: users
+            columns:
+              - column: { name: id, value: 'aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaa0045' }
+              - column: { name: email, value: 'buyer27@demo.local' }
+              - column: { name: password_hash, value: '$2b$10$dJJWtO4l9OGtmdo74ehD2eVJJWYSKInvhEwWZsWU8BoUvSotrICa.' }
+              - column: { name: role, value: 'BUYER' }
+              - column: { name: first_name, value: 'Павел' }
+              - column: { name: last_name, value: 'Павлов' }
+              - column: { name: is_verified, valueBoolean: true }
+              - column: { name: is_active, valueBoolean: true }
+        - insert:
+            tableName: users
+            columns:
+              - column: { name: id, value: 'aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaa0046' }
+              - column: { name: email, value: 'buyer28@demo.local' }
+              - column: { name: password_hash, value: '$2b$10$dJJWtO4l9OGtmdo74ehD2eVJJWYSKInvhEwWZsWU8BoUvSotrICa.' }
+              - column: { name: role, value: 'BUYER' }
+              - column: { name: first_name, value: 'Юлия' }
+              - column: { name: last_name, value: 'Юрьева' }
+              - column: { name: is_verified, valueBoolean: true }
+              - column: { name: is_active, valueBoolean: true }
+        - insert:
+            tableName: users
+            columns:
+              - column: { name: id, value: 'aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaa0047' }
+              - column: { name: email, value: 'buyer29@demo.local' }
+              - column: { name: password_hash, value: '$2b$10$dJJWtO4l9OGtmdo74ehD2eVJJWYSKInvhEwWZsWU8BoUvSotrICa.' }
+              - column: { name: role, value: 'BUYER' }
+              - column: { name: first_name, value: 'Виктор' }
+              - column: { name: last_name, value: 'Викторов' }
+              - column: { name: is_verified, valueBoolean: true }
+              - column: { name: is_active, valueBoolean: true }
+
+  - changeSet:
+      id: 025-seed-demo-profiles
+      author: seed
+      contextFilter: "prod or dev or stand"
+      preConditions:
+        - onFail: MARK_RAN
+        - sqlCheck:
+            expectedResult: 0
+            sql: SELECT count(*) FROM users
+      changes:
+        - insert:
+            tableName: profiles
+            columns:
+              - column: { name: id, value: 'aabb0000-0000-0000-0000-000000000001' }
+              - column: { name: user_id, value: 'aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaa0001' }
+              - column: { name: country, value: 'Россия' }
+              - column: { name: city, value: 'Москва' }
+              - column: { name: bio, value: 'Сотрудник платформы.' }
+              - column: { name: rating, valueNumeric: 0.0 }
+              - column: { name: total_reviews, valueNumeric: 0 }
+        - insert:
+            tableName: profiles
+            columns:
+              - column: { name: id, value: 'aabb0000-0000-0000-0000-000000000002' }
+              - column: { name: user_id, value: 'aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaa0002' }
+              - column: { name: country, value: 'Россия' }
+              - column: { name: city, value: 'Санкт-Петербург' }
+              - column: { name: bio, value: 'Сотрудник платформы.' }
+              - column: { name: rating, valueNumeric: 0.0 }
+              - column: { name: total_reviews, valueNumeric: 0 }
+        - insert:
+            tableName: profiles
+            columns:
+              - column: { name: id, value: 'aabb0000-0000-0000-0000-000000000003' }
+              - column: { name: user_id, value: 'aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaa0003' }
+              - column: { name: country, value: 'Россия' }
+              - column: { name: city, value: 'Москва' }
+              - column: { name: bio, value: 'Продавец домашних животных с опытом. Звоните и пишите!' }
+              - column: { name: rating, valueNumeric: 0.0 }
+              - column: { name: total_reviews, valueNumeric: 0 }
+        - insert:
+            tableName: profiles
+            columns:
+              - column: { name: id, value: 'aabb0000-0000-0000-0000-000000000004' }
+              - column: { name: user_id, value: 'aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaa0004' }
+              - column: { name: country, value: 'Россия' }
+              - column: { name: city, value: 'Санкт-Петербург' }
+              - column: { name: bio, value: 'Продавец домашних животных с опытом. Звоните и пишите!' }
+              - column: { name: rating, valueNumeric: 0.0 }
+              - column: { name: total_reviews, valueNumeric: 0 }
+        - insert:
+            tableName: profiles
+            columns:
+              - column: { name: id, value: 'aabb0000-0000-0000-0000-000000000005' }
+              - column: { name: user_id, value: 'aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaa0005' }
+              - column: { name: country, value: 'Россия' }
+              - column: { name: city, value: 'Казань' }
+              - column: { name: bio, value: 'Продавец домашних животных с опытом. Звоните и пишите!' }
+              - column: { name: rating, valueNumeric: 0.0 }
+              - column: { name: total_reviews, valueNumeric: 0 }
+        - insert:
+            tableName: profiles
+            columns:
+              - column: { name: id, value: 'aabb0000-0000-0000-0000-000000000006' }
+              - column: { name: user_id, value: 'aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaa0006' }
+              - column: { name: country, value: 'Россия' }
+              - column: { name: city, value: 'Новосибирск' }
+              - column: { name: bio, value: 'Продавец домашних животных с опытом. Звоните и пишите!' }
+              - column: { name: rating, valueNumeric: 0.0 }
+              - column: { name: total_reviews, valueNumeric: 0 }
+        - insert:
+            tableName: profiles
+            columns:
+              - column: { name: id, value: 'aabb0000-0000-0000-0000-000000000007' }
+              - column: { name: user_id, value: 'aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaa0007' }
+              - column: { name: country, value: 'Россия' }
+              - column: { name: city, value: 'Екатеринбург' }
+              - column: { name: bio, value: 'Продавец домашних животных с опытом. Звоните и пишите!' }
+              - column: { name: rating, valueNumeric: 0.0 }
+              - column: { name: total_reviews, valueNumeric: 0 }
+        - insert:
+            tableName: profiles
+            columns:
+              - column: { name: id, value: 'aabb0000-0000-0000-0000-000000000008' }
+              - column: { name: user_id, value: 'aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaa0008' }
+              - column: { name: country, value: 'Россия' }
+              - column: { name: city, value: 'Москва' }
+              - column: { name: bio, value: 'Покупатель, ищу питомца.' }
+              - column: { name: rating, valueNumeric: 0.0 }
+              - column: { name: total_reviews, valueNumeric: 0 }
+        - insert:
+            tableName: profiles
+            columns:
+              - column: { name: id, value: 'aabb0000-0000-0000-0000-000000000009' }
+              - column: { name: user_id, value: 'aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaa0009' }
+              - column: { name: country, value: 'Россия' }
+              - column: { name: city, value: 'Москва' }
+              - column: { name: bio, value: 'Продавец домашних животных с опытом. Звоните и пишите!' }
+              - column: { name: rating, valueNumeric: 0.0 }
+              - column: { name: total_reviews, valueNumeric: 0 }
+        - insert:
+            tableName: profiles
+            columns:
+              - column: { name: id, value: 'aabb0000-0000-0000-0000-000000000010' }
+              - column: { name: user_id, value: 'aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaa0010' }
+              - column: { name: country, value: 'Россия' }
+              - column: { name: city, value: 'Санкт-Петербург' }
+              - column: { name: bio, value: 'Продавец домашних животных с опытом. Звоните и пишите!' }
+              - column: { name: rating, valueNumeric: 0.0 }
+              - column: { name: total_reviews, valueNumeric: 0 }
+        - insert:
+            tableName: profiles
+            columns:
+              - column: { name: id, value: 'aabb0000-0000-0000-0000-000000000011' }
+              - column: { name: user_id, value: 'aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaa0011' }
+              - column: { name: country, value: 'Россия' }
+              - column: { name: city, value: 'Казань' }
+              - column: { name: bio, value: 'Продавец домашних животных с опытом. Звоните и пишите!' }
+              - column: { name: rating, valueNumeric: 0.0 }
+              - column: { name: total_reviews, valueNumeric: 0 }
+        - insert:
+            tableName: profiles
+            columns:
+              - column: { name: id, value: 'aabb0000-0000-0000-0000-000000000012' }
+              - column: { name: user_id, value: 'aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaa0012' }
+              - column: { name: country, value: 'Россия' }
+              - column: { name: city, value: 'Новосибирск' }
+              - column: { name: bio, value: 'Продавец домашних животных с опытом. Звоните и пишите!' }
+              - column: { name: rating, valueNumeric: 0.0 }
+              - column: { name: total_reviews, valueNumeric: 0 }
+        - insert:
+            tableName: profiles
+            columns:
+              - column: { name: id, value: 'aabb0000-0000-0000-0000-000000000013' }
+              - column: { name: user_id, value: 'aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaa0013' }
+              - column: { name: country, value: 'Россия' }
+              - column: { name: city, value: 'Екатеринбург' }
+              - column: { name: bio, value: 'Продавец домашних животных с опытом. Звоните и пишите!' }
+              - column: { name: rating, valueNumeric: 0.0 }
+              - column: { name: total_reviews, valueNumeric: 0 }
+        - insert:
+            tableName: profiles
+            columns:
+              - column: { name: id, value: 'aabb0000-0000-0000-0000-000000000014' }
+              - column: { name: user_id, value: 'aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaa0014' }
+              - column: { name: country, value: 'Россия' }
+              - column: { name: city, value: 'Москва' }
+              - column: { name: bio, value: 'Продавец домашних животных с опытом. Звоните и пишите!' }
+              - column: { name: rating, valueNumeric: 0.0 }
+              - column: { name: total_reviews, valueNumeric: 0 }
+        - insert:
+            tableName: profiles
+            columns:
+              - column: { name: id, value: 'aabb0000-0000-0000-0000-000000000015' }
+              - column: { name: user_id, value: 'aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaa0015' }
+              - column: { name: country, value: 'Россия' }
+              - column: { name: city, value: 'Санкт-Петербург' }
+              - column: { name: bio, value: 'Продавец домашних животных с опытом. Звоните и пишите!' }
+              - column: { name: rating, valueNumeric: 0.0 }
+              - column: { name: total_reviews, valueNumeric: 0 }
+        - insert:
+            tableName: profiles
+            columns:
+              - column: { name: id, value: 'aabb0000-0000-0000-0000-000000000016' }
+              - column: { name: user_id, value: 'aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaa0016' }
+              - column: { name: country, value: 'Россия' }
+              - column: { name: city, value: 'Казань' }
+              - column: { name: bio, value: 'Продавец домашних животных с опытом. Звоните и пишите!' }
+              - column: { name: rating, valueNumeric: 0.0 }
+              - column: { name: total_reviews, valueNumeric: 0 }
+        - insert:
+            tableName: profiles
+            columns:
+              - column: { name: id, value: 'aabb0000-0000-0000-0000-000000000017' }
+              - column: { name: user_id, value: 'aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaa0017' }
+              - column: { name: country, value: 'Россия' }
+              - column: { name: city, value: 'Новосибирск' }
+              - column: { name: bio, value: 'Продавец домашних животных с опытом. Звоните и пишите!' }
+              - column: { name: rating, valueNumeric: 0.0 }
+              - column: { name: total_reviews, valueNumeric: 0 }
+        - insert:
+            tableName: profiles
+            columns:
+              - column: { name: id, value: 'aabb0000-0000-0000-0000-000000000018' }
+              - column: { name: user_id, value: 'aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaa0018' }
+              - column: { name: country, value: 'Россия' }
+              - column: { name: city, value: 'Екатеринбург' }
+              - column: { name: bio, value: 'Продавец домашних животных с опытом. Звоните и пишите!' }
+              - column: { name: rating, valueNumeric: 0.0 }
+              - column: { name: total_reviews, valueNumeric: 0 }
+        - insert:
+            tableName: profiles
+            columns:
+              - column: { name: id, value: 'aabb0000-0000-0000-0000-000000000019' }
+              - column: { name: user_id, value: 'aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaa0019' }
+              - column: { name: country, value: 'Россия' }
+              - column: { name: city, value: 'Москва' }
+              - column: { name: bio, value: 'Покупатель, ищу питомца.' }
+              - column: { name: rating, valueNumeric: 0.0 }
+              - column: { name: total_reviews, valueNumeric: 0 }
+        - insert:
+            tableName: profiles
+            columns:
+              - column: { name: id, value: 'aabb0000-0000-0000-0000-000000000020' }
+              - column: { name: user_id, value: 'aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaa0020' }
+              - column: { name: country, value: 'Россия' }
+              - column: { name: city, value: 'Санкт-Петербург' }
+              - column: { name: bio, value: 'Покупатель, ищу питомца.' }
+              - column: { name: rating, valueNumeric: 0.0 }
+              - column: { name: total_reviews, valueNumeric: 0 }
+        - insert:
+            tableName: profiles
+            columns:
+              - column: { name: id, value: 'aabb0000-0000-0000-0000-000000000021' }
+              - column: { name: user_id, value: 'aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaa0021' }
+              - column: { name: country, value: 'Россия' }
+              - column: { name: city, value: 'Казань' }
+              - column: { name: bio, value: 'Покупатель, ищу питомца.' }
+              - column: { name: rating, valueNumeric: 0.0 }
+              - column: { name: total_reviews, valueNumeric: 0 }
+        - insert:
+            tableName: profiles
+            columns:
+              - column: { name: id, value: 'aabb0000-0000-0000-0000-000000000022' }
+              - column: { name: user_id, value: 'aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaa0022' }
+              - column: { name: country, value: 'Россия' }
+              - column: { name: city, value: 'Новосибирск' }
+              - column: { name: bio, value: 'Покупатель, ищу питомца.' }
+              - column: { name: rating, valueNumeric: 0.0 }
+              - column: { name: total_reviews, valueNumeric: 0 }
+        - insert:
+            tableName: profiles
+            columns:
+              - column: { name: id, value: 'aabb0000-0000-0000-0000-000000000023' }
+              - column: { name: user_id, value: 'aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaa0023' }
+              - column: { name: country, value: 'Россия' }
+              - column: { name: city, value: 'Екатеринбург' }
+              - column: { name: bio, value: 'Покупатель, ищу питомца.' }
+              - column: { name: rating, valueNumeric: 0.0 }
+              - column: { name: total_reviews, valueNumeric: 0 }
+        - insert:
+            tableName: profiles
+            columns:
+              - column: { name: id, value: 'aabb0000-0000-0000-0000-000000000024' }
+              - column: { name: user_id, value: 'aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaa0024' }
+              - column: { name: country, value: 'Россия' }
+              - column: { name: city, value: 'Москва' }
+              - column: { name: bio, value: 'Покупатель, ищу питомца.' }
+              - column: { name: rating, valueNumeric: 0.0 }
+              - column: { name: total_reviews, valueNumeric: 0 }
+        - insert:
+            tableName: profiles
+            columns:
+              - column: { name: id, value: 'aabb0000-0000-0000-0000-000000000025' }
+              - column: { name: user_id, value: 'aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaa0025' }
+              - column: { name: country, value: 'Россия' }
+              - column: { name: city, value: 'Санкт-Петербург' }
+              - column: { name: bio, value: 'Покупатель, ищу питомца.' }
+              - column: { name: rating, valueNumeric: 0.0 }
+              - column: { name: total_reviews, valueNumeric: 0 }
+        - insert:
+            tableName: profiles
+            columns:
+              - column: { name: id, value: 'aabb0000-0000-0000-0000-000000000026' }
+              - column: { name: user_id, value: 'aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaa0026' }
+              - column: { name: country, value: 'Россия' }
+              - column: { name: city, value: 'Казань' }
+              - column: { name: bio, value: 'Покупатель, ищу питомца.' }
+              - column: { name: rating, valueNumeric: 0.0 }
+              - column: { name: total_reviews, valueNumeric: 0 }
+        - insert:
+            tableName: profiles
+            columns:
+              - column: { name: id, value: 'aabb0000-0000-0000-0000-000000000027' }
+              - column: { name: user_id, value: 'aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaa0027' }
+              - column: { name: country, value: 'Россия' }
+              - column: { name: city, value: 'Новосибирск' }
+              - column: { name: bio, value: 'Покупатель, ищу питомца.' }
+              - column: { name: rating, valueNumeric: 0.0 }
+              - column: { name: total_reviews, valueNumeric: 0 }
+        - insert:
+            tableName: profiles
+            columns:
+              - column: { name: id, value: 'aabb0000-0000-0000-0000-000000000028' }
+              - column: { name: user_id, value: 'aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaa0028' }
+              - column: { name: country, value: 'Россия' }
+              - column: { name: city, value: 'Екатеринбург' }
+              - column: { name: bio, value: 'Покупатель, ищу питомца.' }
+              - column: { name: rating, valueNumeric: 0.0 }
+              - column: { name: total_reviews, valueNumeric: 0 }
+        - insert:
+            tableName: profiles
+            columns:
+              - column: { name: id, value: 'aabb0000-0000-0000-0000-000000000029' }
+              - column: { name: user_id, value: 'aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaa0029' }
+              - column: { name: country, value: 'Россия' }
+              - column: { name: city, value: 'Москва' }
+              - column: { name: bio, value: 'Покупатель, ищу питомца.' }
+              - column: { name: rating, valueNumeric: 0.0 }
+              - column: { name: total_reviews, valueNumeric: 0 }
+        - insert:
+            tableName: profiles
+            columns:
+              - column: { name: id, value: 'aabb0000-0000-0000-0000-000000000030' }
+              - column: { name: user_id, value: 'aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaa0030' }
+              - column: { name: country, value: 'Россия' }
+              - column: { name: city, value: 'Санкт-Петербург' }
+              - column: { name: bio, value: 'Покупатель, ищу питомца.' }
+              - column: { name: rating, valueNumeric: 0.0 }
+              - column: { name: total_reviews, valueNumeric: 0 }
+        - insert:
+            tableName: profiles
+            columns:
+              - column: { name: id, value: 'aabb0000-0000-0000-0000-000000000031' }
+              - column: { name: user_id, value: 'aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaa0031' }
+              - column: { name: country, value: 'Россия' }
+              - column: { name: city, value: 'Казань' }
+              - column: { name: bio, value: 'Покупатель, ищу питомца.' }
+              - column: { name: rating, valueNumeric: 0.0 }
+              - column: { name: total_reviews, valueNumeric: 0 }
+        - insert:
+            tableName: profiles
+            columns:
+              - column: { name: id, value: 'aabb0000-0000-0000-0000-000000000032' }
+              - column: { name: user_id, value: 'aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaa0032' }
+              - column: { name: country, value: 'Россия' }
+              - column: { name: city, value: 'Новосибирск' }
+              - column: { name: bio, value: 'Покупатель, ищу питомца.' }
+              - column: { name: rating, valueNumeric: 0.0 }
+              - column: { name: total_reviews, valueNumeric: 0 }
+        - insert:
+            tableName: profiles
+            columns:
+              - column: { name: id, value: 'aabb0000-0000-0000-0000-000000000033' }
+              - column: { name: user_id, value: 'aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaa0033' }
+              - column: { name: country, value: 'Россия' }
+              - column: { name: city, value: 'Екатеринбург' }
+              - column: { name: bio, value: 'Покупатель, ищу питомца.' }
+              - column: { name: rating, valueNumeric: 0.0 }
+              - column: { name: total_reviews, valueNumeric: 0 }
+        - insert:
+            tableName: profiles
+            columns:
+              - column: { name: id, value: 'aabb0000-0000-0000-0000-000000000034' }
+              - column: { name: user_id, value: 'aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaa0034' }
+              - column: { name: country, value: 'Россия' }
+              - column: { name: city, value: 'Москва' }
+              - column: { name: bio, value: 'Покупатель, ищу питомца.' }
+              - column: { name: rating, valueNumeric: 0.0 }
+              - column: { name: total_reviews, valueNumeric: 0 }
+        - insert:
+            tableName: profiles
+            columns:
+              - column: { name: id, value: 'aabb0000-0000-0000-0000-000000000035' }
+              - column: { name: user_id, value: 'aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaa0035' }
+              - column: { name: country, value: 'Россия' }
+              - column: { name: city, value: 'Санкт-Петербург' }
+              - column: { name: bio, value: 'Покупатель, ищу питомца.' }
+              - column: { name: rating, valueNumeric: 0.0 }
+              - column: { name: total_reviews, valueNumeric: 0 }
+        - insert:
+            tableName: profiles
+            columns:
+              - column: { name: id, value: 'aabb0000-0000-0000-0000-000000000036' }
+              - column: { name: user_id, value: 'aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaa0036' }
+              - column: { name: country, value: 'Россия' }
+              - column: { name: city, value: 'Казань' }
+              - column: { name: bio, value: 'Покупатель, ищу питомца.' }
+              - column: { name: rating, valueNumeric: 0.0 }
+              - column: { name: total_reviews, valueNumeric: 0 }
+        - insert:
+            tableName: profiles
+            columns:
+              - column: { name: id, value: 'aabb0000-0000-0000-0000-000000000037' }
+              - column: { name: user_id, value: 'aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaa0037' }
+              - column: { name: country, value: 'Россия' }
+              - column: { name: city, value: 'Новосибирск' }
+              - column: { name: bio, value: 'Покупатель, ищу питомца.' }
+              - column: { name: rating, valueNumeric: 0.0 }
+              - column: { name: total_reviews, valueNumeric: 0 }
+        - insert:
+            tableName: profiles
+            columns:
+              - column: { name: id, value: 'aabb0000-0000-0000-0000-000000000038' }
+              - column: { name: user_id, value: 'aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaa0038' }
+              - column: { name: country, value: 'Россия' }
+              - column: { name: city, value: 'Екатеринбург' }
+              - column: { name: bio, value: 'Покупатель, ищу питомца.' }
+              - column: { name: rating, valueNumeric: 0.0 }
+              - column: { name: total_reviews, valueNumeric: 0 }
+        - insert:
+            tableName: profiles
+            columns:
+              - column: { name: id, value: 'aabb0000-0000-0000-0000-000000000039' }
+              - column: { name: user_id, value: 'aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaa0039' }
+              - column: { name: country, value: 'Россия' }
+              - column: { name: city, value: 'Москва' }
+              - column: { name: bio, value: 'Покупатель, ищу питомца.' }
+              - column: { name: rating, valueNumeric: 0.0 }
+              - column: { name: total_reviews, valueNumeric: 0 }
+        - insert:
+            tableName: profiles
+            columns:
+              - column: { name: id, value: 'aabb0000-0000-0000-0000-000000000040' }
+              - column: { name: user_id, value: 'aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaa0040' }
+              - column: { name: country, value: 'Россия' }
+              - column: { name: city, value: 'Санкт-Петербург' }
+              - column: { name: bio, value: 'Покупатель, ищу питомца.' }
+              - column: { name: rating, valueNumeric: 0.0 }
+              - column: { name: total_reviews, valueNumeric: 0 }
+        - insert:
+            tableName: profiles
+            columns:
+              - column: { name: id, value: 'aabb0000-0000-0000-0000-000000000041' }
+              - column: { name: user_id, value: 'aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaa0041' }
+              - column: { name: country, value: 'Россия' }
+              - column: { name: city, value: 'Казань' }
+              - column: { name: bio, value: 'Покупатель, ищу питомца.' }
+              - column: { name: rating, valueNumeric: 0.0 }
+              - column: { name: total_reviews, valueNumeric: 0 }
+        - insert:
+            tableName: profiles
+            columns:
+              - column: { name: id, value: 'aabb0000-0000-0000-0000-000000000042' }
+              - column: { name: user_id, value: 'aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaa0042' }
+              - column: { name: country, value: 'Россия' }
+              - column: { name: city, value: 'Новосибирск' }
+              - column: { name: bio, value: 'Покупатель, ищу питомца.' }
+              - column: { name: rating, valueNumeric: 0.0 }
+              - column: { name: total_reviews, valueNumeric: 0 }
+        - insert:
+            tableName: profiles
+            columns:
+              - column: { name: id, value: 'aabb0000-0000-0000-0000-000000000043' }
+              - column: { name: user_id, value: 'aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaa0043' }
+              - column: { name: country, value: 'Россия' }
+              - column: { name: city, value: 'Екатеринбург' }
+              - column: { name: bio, value: 'Покупатель, ищу питомца.' }
+              - column: { name: rating, valueNumeric: 0.0 }
+              - column: { name: total_reviews, valueNumeric: 0 }
+        - insert:
+            tableName: profiles
+            columns:
+              - column: { name: id, value: 'aabb0000-0000-0000-0000-000000000044' }
+              - column: { name: user_id, value: 'aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaa0044' }
+              - column: { name: country, value: 'Россия' }
+              - column: { name: city, value: 'Москва' }
+              - column: { name: bio, value: 'Покупатель, ищу питомца.' }
+              - column: { name: rating, valueNumeric: 0.0 }
+              - column: { name: total_reviews, valueNumeric: 0 }
+        - insert:
+            tableName: profiles
+            columns:
+              - column: { name: id, value: 'aabb0000-0000-0000-0000-000000000045' }
+              - column: { name: user_id, value: 'aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaa0045' }
+              - column: { name: country, value: 'Россия' }
+              - column: { name: city, value: 'Санкт-Петербург' }
+              - column: { name: bio, value: 'Покупатель, ищу питомца.' }
+              - column: { name: rating, valueNumeric: 0.0 }
+              - column: { name: total_reviews, valueNumeric: 0 }
+        - insert:
+            tableName: profiles
+            columns:
+              - column: { name: id, value: 'aabb0000-0000-0000-0000-000000000046' }
+              - column: { name: user_id, value: 'aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaa0046' }
+              - column: { name: country, value: 'Россия' }
+              - column: { name: city, value: 'Казань' }
+              - column: { name: bio, value: 'Покупатель, ищу питомца.' }
+              - column: { name: rating, valueNumeric: 0.0 }
+              - column: { name: total_reviews, valueNumeric: 0 }
+        - insert:
+            tableName: profiles
+            columns:
+              - column: { name: id, value: 'aabb0000-0000-0000-0000-000000000047' }
+              - column: { name: user_id, value: 'aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaa0047' }
+              - column: { name: country, value: 'Россия' }
+              - column: { name: city, value: 'Новосибирск' }
+              - column: { name: bio, value: 'Покупатель, ищу питомца.' }
+              - column: { name: rating, valueNumeric: 0.0 }
+              - column: { name: total_reviews, valueNumeric: 0 }
