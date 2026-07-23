@@ -539,7 +539,7 @@ Expected: BUILD SUCCESSFUL.
 
 ```bash
 git add src/main/resources/db/changelog/db.changelog-master.yaml src/main/resources/application.yml src/main/resources/application-prod.yml src/test/resources/application-stand.yml src/test/resources/application-test.yml
-git commit -m "feat(seed): wire 003 into master and set liquibase contexts
+git commit -m "feat(seed): wire 006 into master and set liquibase contexts
 
 Co-Authored-By: Claude <noreply@anthropic.com>"
 ```
