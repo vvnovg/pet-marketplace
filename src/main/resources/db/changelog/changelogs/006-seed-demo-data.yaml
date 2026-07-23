@@ -3035,7 +3035,7 @@ databaseChangeLog:
             columns:
               - column: { name: id, value: 'cccccccc-cccc-cccc-cccc-cccccccc0001' }
               - column: { name: listing_id, value: 'bbbbbbbb-bbbb-bbbb-bbbb-bbbbbbbb0001' }
-              - column: { name: url, value: 'https://picsum.photos/seed/0001-0/600' }
+              - column: { name: url, value: '/animals/siamese.jpg' }
               - column: { name: order_index, valueNumeric: 0 }
               - column: { name: is_main, valueBoolean: true }
         - insert:
@@ -3043,7 +3043,7 @@ databaseChangeLog:
             columns:
               - column: { name: id, value: 'cccccccc-cccc-cccc-cccc-cccccccc0002' }
               - column: { name: listing_id, value: 'bbbbbbbb-bbbb-bbbb-bbbb-bbbbbbbb0002' }
-              - column: { name: url, value: 'https://picsum.photos/seed/0002-0/600' }
+              - column: { name: url, value: '/animals/canary.jpg' }
               - column: { name: order_index, valueNumeric: 0 }
               - column: { name: is_main, valueBoolean: true }
         - insert:
@@ -3051,7 +3051,7 @@ databaseChangeLog:
             columns:
               - column: { name: id, value: 'cccccccc-cccc-cccc-cccc-cccccccc0003' }
               - column: { name: listing_id, value: 'bbbbbbbb-bbbb-bbbb-bbbb-bbbbbbbb0003' }
-              - column: { name: url, value: 'https://picsum.photos/seed/0003-0/600' }
+              - column: { name: url, value: '/animals/rabbit.jpg' }
               - column: { name: order_index, valueNumeric: 0 }
               - column: { name: is_main, valueBoolean: true }
         - insert:
@@ -3059,7 +3059,7 @@ databaseChangeLog:
             columns:
               - column: { name: id, value: 'cccccccc-cccc-cccc-cccc-cccccccc0004' }
               - column: { name: listing_id, value: 'bbbbbbbb-bbbb-bbbb-bbbb-bbbbbbbb0004' }
-              - column: { name: url, value: 'https://picsum.photos/seed/0004-0/600' }
+              - column: { name: url, value: '/animals/corn-snake.jpg' }
               - column: { name: order_index, valueNumeric: 0 }
               - column: { name: is_main, valueBoolean: true }
         - insert:
@@ -3067,7 +3067,7 @@ databaseChangeLog:
             columns:
               - column: { name: id, value: 'cccccccc-cccc-cccc-cccc-cccccccc0005' }
               - column: { name: listing_id, value: 'bbbbbbbb-bbbb-bbbb-bbbb-bbbbbbbb0005' }
-              - column: { name: url, value: 'https://picsum.photos/seed/0005-0/600' }
+              - column: { name: url, value: '/animals/goldfish.jpg' }
               - column: { name: order_index, valueNumeric: 0 }
               - column: { name: is_main, valueBoolean: true }
         - insert:
@@ -3075,7 +3075,7 @@ databaseChangeLog:
             columns:
               - column: { name: id, value: 'cccccccc-cccc-cccc-cccc-cccccccc0006' }
               - column: { name: listing_id, value: 'bbbbbbbb-bbbb-bbbb-bbbb-bbbbbbbb0006' }
-              - column: { name: url, value: 'https://picsum.photos/seed/0006-0/600' }
+              - column: { name: url, value: '/animals/ferret.jpg' }
               - column: { name: order_index, valueNumeric: 0 }
               - column: { name: is_main, valueBoolean: true }
         - insert:
@@ -3083,7 +3083,7 @@ databaseChangeLog:
             columns:
               - column: { name: id, value: 'cccccccc-cccc-cccc-cccc-cccccccc0007' }
               - column: { name: listing_id, value: 'bbbbbbbb-bbbb-bbbb-bbbb-bbbbbbbb0007' }
-              - column: { name: url, value: 'https://picsum.photos/seed/0007-0/600' }
+              - column: { name: url, value: '/animals/german-shepherd.jpg' }
               - column: { name: order_index, valueNumeric: 0 }
               - column: { name: is_main, valueBoolean: true }
         - insert:
@@ -3091,7 +3091,7 @@ databaseChangeLog:
             columns:
               - column: { name: id, value: 'cccccccc-cccc-cccc-cccc-cccccccc0008' }
               - column: { name: listing_id, value: 'bbbbbbbb-bbbb-bbbb-bbbb-bbbbbbbb0008' }
-              - column: { name: url, value: 'https://picsum.photos/seed/0008-0/600' }
+              - column: { name: url, value: '/animals/maine-coon.png' }
               - column: { name: order_index, valueNumeric: 0 }
               - column: { name: is_main, valueBoolean: true }
         - insert:
@@ -3099,7 +3099,7 @@ databaseChangeLog:
             columns:
               - column: { name: id, value: 'cccccccc-cccc-cccc-cccc-cccccccc0009' }
               - column: { name: listing_id, value: 'bbbbbbbb-bbbb-bbbb-bbbb-bbbbbbbb0009' }
-              - column: { name: url, value: 'https://picsum.photos/seed/0009-0/600' }
+              - column: { name: url, value: '/animals/cockatiel.jpg' }
               - column: { name: order_index, valueNumeric: 0 }
               - column: { name: is_main, valueBoolean: true }
         - insert:
@@ -3107,7 +3107,7 @@ databaseChangeLog:
             columns:
               - column: { name: id, value: 'cccccccc-cccc-cccc-cccc-cccccccc0010' }
               - column: { name: listing_id, value: 'bbbbbbbb-bbbb-bbbb-bbbb-bbbbbbbb0010' }
-              - column: { name: url, value: 'https://picsum.photos/seed/0010-0/600' }
+              - column: { name: url, value: '/animals/hamster.jpg' }
               - column: { name: order_index, valueNumeric: 0 }
               - column: { name: is_main, valueBoolean: true }
         - insert:
@@ -3115,7 +3115,7 @@ databaseChangeLog:
             columns:
               - column: { name: id, value: 'cccccccc-cccc-cccc-cccc-cccccccc0011' }
               - column: { name: listing_id, value: 'bbbbbbbb-bbbb-bbbb-bbbb-bbbbbbbb0011' }
-              - column: { name: url, value: 'https://picsum.photos/seed/0011-0/600' }
+              - column: { name: url, value: '/animals/bearded-dragon.jpg' }
               - column: { name: order_index, valueNumeric: 0 }
               - column: { name: is_main, valueBoolean: true }
         - insert:
@@ -3123,7 +3123,7 @@ databaseChangeLog:
             columns:
               - column: { name: id, value: 'cccccccc-cccc-cccc-cccc-cccccccc0012' }
               - column: { name: listing_id, value: 'bbbbbbbb-bbbb-bbbb-bbbb-bbbbbbbb0012' }
-              - column: { name: url, value: 'https://picsum.photos/seed/0012-0/600' }
+              - column: { name: url, value: '/animals/angelfish.jpg' }
               - column: { name: order_index, valueNumeric: 0 }
               - column: { name: is_main, valueBoolean: true }
         - insert:
@@ -3131,7 +3131,7 @@ databaseChangeLog:
             columns:
               - column: { name: id, value: 'cccccccc-cccc-cccc-cccc-cccccccc0013' }
               - column: { name: listing_id, value: 'bbbbbbbb-bbbb-bbbb-bbbb-bbbbbbbb0013' }
-              - column: { name: url, value: 'https://picsum.photos/seed/0013-0/600' }
+              - column: { name: url, value: '/animals/guinea-pig.jpg' }
               - column: { name: order_index, valueNumeric: 0 }
               - column: { name: is_main, valueBoolean: true }
         - insert:
@@ -3139,7 +3139,7 @@ databaseChangeLog:
             columns:
               - column: { name: id, value: 'cccccccc-cccc-cccc-cccc-cccccccc0014' }
               - column: { name: listing_id, value: 'bbbbbbbb-bbbb-bbbb-bbbb-bbbbbbbb0014' }
-              - column: { name: url, value: 'https://picsum.photos/seed/0014-0/600' }
+              - column: { name: url, value: '/animals/poodle.png' }
               - column: { name: order_index, valueNumeric: 0 }
               - column: { name: is_main, valueBoolean: true }
         - insert:
@@ -3147,7 +3147,7 @@ databaseChangeLog:
             columns:
               - column: { name: id, value: 'cccccccc-cccc-cccc-cccc-cccccccc0015' }
               - column: { name: listing_id, value: 'bbbbbbbb-bbbb-bbbb-bbbb-bbbbbbbb0015' }
-              - column: { name: url, value: 'https://picsum.photos/seed/0015-0/600' }
+              - column: { name: url, value: '/animals/bengal.jpg' }
               - column: { name: order_index, valueNumeric: 0 }
               - column: { name: is_main, valueBoolean: true }
         - insert:
@@ -3155,7 +3155,7 @@ databaseChangeLog:
             columns:
               - column: { name: id, value: 'cccccccc-cccc-cccc-cccc-cccccccc0016' }
               - column: { name: listing_id, value: 'bbbbbbbb-bbbb-bbbb-bbbb-bbbbbbbb0016' }
-              - column: { name: url, value: 'https://picsum.photos/seed/0016-0/600' }
+              - column: { name: url, value: '/animals/parrot.jpg' }
               - column: { name: order_index, valueNumeric: 0 }
               - column: { name: is_main, valueBoolean: true }
         - insert:
@@ -3163,7 +3163,7 @@ databaseChangeLog:
             columns:
               - column: { name: id, value: 'cccccccc-cccc-cccc-cccc-cccccccc0017' }
               - column: { name: listing_id, value: 'bbbbbbbb-bbbb-bbbb-bbbb-bbbbbbbb0017' }
-              - column: { name: url, value: 'https://picsum.photos/seed/0017-0/600' }
+              - column: { name: url, value: '/animals/guinea-pig.jpg' }
               - column: { name: order_index, valueNumeric: 0 }
               - column: { name: is_main, valueBoolean: true }
         - insert:
@@ -3171,7 +3171,7 @@ databaseChangeLog:
             columns:
               - column: { name: id, value: 'cccccccc-cccc-cccc-cccc-cccccccc0018' }
               - column: { name: listing_id, value: 'bbbbbbbb-bbbb-bbbb-bbbb-bbbbbbbb0018' }
-              - column: { name: url, value: 'https://picsum.photos/seed/0018-0/600' }
+              - column: { name: url, value: '/animals/ball-python.png' }
               - column: { name: order_index, valueNumeric: 0 }
               - column: { name: is_main, valueBoolean: true }
         - insert:
@@ -3179,7 +3179,7 @@ databaseChangeLog:
             columns:
               - column: { name: id, value: 'cccccccc-cccc-cccc-cccc-cccccccc0019' }
               - column: { name: listing_id, value: 'bbbbbbbb-bbbb-bbbb-bbbb-bbbbbbbb0019' }
-              - column: { name: url, value: 'https://picsum.photos/seed/0019-0/600' }
+              - column: { name: url, value: '/animals/guppy.jpg' }
               - column: { name: order_index, valueNumeric: 0 }
               - column: { name: is_main, valueBoolean: true }
         - insert:
@@ -3187,7 +3187,7 @@ databaseChangeLog:
             columns:
               - column: { name: id, value: 'cccccccc-cccc-cccc-cccc-cccccccc0020' }
               - column: { name: listing_id, value: 'bbbbbbbb-bbbb-bbbb-bbbb-bbbbbbbb0020' }
-              - column: { name: url, value: 'https://picsum.photos/seed/0020-0/600' }
+              - column: { name: url, value: '/animals/ferret.jpg' }
               - column: { name: order_index, valueNumeric: 0 }
               - column: { name: is_main, valueBoolean: true }
         - insert:
@@ -3195,7 +3195,7 @@ databaseChangeLog:
             columns:
               - column: { name: id, value: 'cccccccc-cccc-cccc-cccc-cccccccc0021' }
               - column: { name: listing_id, value: 'bbbbbbbb-bbbb-bbbb-bbbb-bbbbbbbb0021' }
-              - column: { name: url, value: 'https://picsum.photos/seed/0021-0/600' }
+              - column: { name: url, value: '/animals/labrador-retriever.jpg' }
               - column: { name: order_index, valueNumeric: 0 }
               - column: { name: is_main, valueBoolean: true }
         - insert:
@@ -3203,7 +3203,7 @@ databaseChangeLog:
             columns:
               - column: { name: id, value: 'cccccccc-cccc-cccc-cccc-cccccccc0022' }
               - column: { name: listing_id, value: 'bbbbbbbb-bbbb-bbbb-bbbb-bbbbbbbb0022' }
-              - column: { name: url, value: 'https://picsum.photos/seed/0022-0/600' }
+              - column: { name: url, value: '/animals/persian.jpg' }
               - column: { name: order_index, valueNumeric: 0 }
               - column: { name: is_main, valueBoolean: true }
         - insert:
@@ -3211,7 +3211,7 @@ databaseChangeLog:
             columns:
               - column: { name: id, value: 'cccccccc-cccc-cccc-cccc-cccccccc0023' }
               - column: { name: listing_id, value: 'bbbbbbbb-bbbb-bbbb-bbbb-bbbbbbbb0023' }
-              - column: { name: url, value: 'https://picsum.photos/seed/0023-0/600' }
+              - column: { name: url, value: '/animals/canary.jpg' }
               - column: { name: order_index, valueNumeric: 0 }
               - column: { name: is_main, valueBoolean: true }
         - insert:
@@ -3219,7 +3219,7 @@ databaseChangeLog:
             columns:
               - column: { name: id, value: 'cccccccc-cccc-cccc-cccc-cccccccc0024' }
               - column: { name: listing_id, value: 'bbbbbbbb-bbbb-bbbb-bbbb-bbbbbbbb0024' }
-              - column: { name: url, value: 'https://picsum.photos/seed/0024-0/600' }
+              - column: { name: url, value: '/animals/rabbit.jpg' }
               - column: { name: order_index, valueNumeric: 0 }
               - column: { name: is_main, valueBoolean: true }
         - insert:
@@ -3227,7 +3227,7 @@ databaseChangeLog:
             columns:
               - column: { name: id, value: 'cccccccc-cccc-cccc-cccc-cccccccc0025' }
               - column: { name: listing_id, value: 'bbbbbbbb-bbbb-bbbb-bbbb-bbbbbbbb0025' }
-              - column: { name: url, value: 'https://picsum.photos/seed/0025-0/600' }
+              - column: { name: url, value: '/animals/corn-snake.jpg' }
               - column: { name: order_index, valueNumeric: 0 }
               - column: { name: is_main, valueBoolean: true }
         - insert:
@@ -3235,7 +3235,7 @@ databaseChangeLog:
             columns:
               - column: { name: id, value: 'cccccccc-cccc-cccc-cccc-cccccccc0026' }
               - column: { name: listing_id, value: 'bbbbbbbb-bbbb-bbbb-bbbb-bbbbbbbb0026' }
-              - column: { name: url, value: 'https://picsum.photos/seed/0026-0/600' }
+              - column: { name: url, value: '/animals/goldfish.jpg' }
               - column: { name: order_index, valueNumeric: 0 }
               - column: { name: is_main, valueBoolean: true }
         - insert:
@@ -3243,7 +3243,7 @@ databaseChangeLog:
             columns:
               - column: { name: id, value: 'cccccccc-cccc-cccc-cccc-cccccccc0027' }
               - column: { name: listing_id, value: 'bbbbbbbb-bbbb-bbbb-bbbb-bbbbbbbb0027' }
-              - column: { name: url, value: 'https://picsum.photos/seed/0027-0/600' }
+              - column: { name: url, value: '/animals/guinea-pig.jpg' }
               - column: { name: order_index, valueNumeric: 0 }
               - column: { name: is_main, valueBoolean: true }
         - insert:
@@ -3251,7 +3251,7 @@ databaseChangeLog:
             columns:
               - column: { name: id, value: 'cccccccc-cccc-cccc-cccc-cccccccc0028' }
               - column: { name: listing_id, value: 'bbbbbbbb-bbbb-bbbb-bbbb-bbbbbbbb0028' }
-              - column: { name: url, value: 'https://picsum.photos/seed/0028-0/600' }
+              - column: { name: url, value: '/animals/bulldog.jpg' }
               - column: { name: order_index, valueNumeric: 0 }
               - column: { name: is_main, valueBoolean: true }
         - insert:
@@ -3259,7 +3259,7 @@ databaseChangeLog:
             columns:
               - column: { name: id, value: 'cccccccc-cccc-cccc-cccc-cccccccc0029' }
               - column: { name: listing_id, value: 'bbbbbbbb-bbbb-bbbb-bbbb-bbbbbbbb0029' }
-              - column: { name: url, value: 'https://picsum.photos/seed/0029-0/600' }
+              - column: { name: url, value: '/animals/british-shorthair.jpg' }
               - column: { name: order_index, valueNumeric: 0 }
               - column: { name: is_main, valueBoolean: true }
         - insert:
@@ -3267,7 +3267,7 @@ databaseChangeLog:
             columns:
               - column: { name: id, value: 'cccccccc-cccc-cccc-cccc-cccccccc0030' }
               - column: { name: listing_id, value: 'bbbbbbbb-bbbb-bbbb-bbbb-bbbbbbbb0030' }
-              - column: { name: url, value: 'https://picsum.photos/seed/0030-0/600' }
+              - column: { name: url, value: '/animals/cockatiel.jpg' }
               - column: { name: order_index, valueNumeric: 0 }
               - column: { name: is_main, valueBoolean: true }
         - insert:
@@ -3275,7 +3275,7 @@ databaseChangeLog:
             columns:
               - column: { name: id, value: 'cccccccc-cccc-cccc-cccc-cccccccc0031' }
               - column: { name: listing_id, value: 'bbbbbbbb-bbbb-bbbb-bbbb-bbbbbbbb0031' }
-              - column: { name: url, value: 'https://picsum.photos/seed/0031-0/600' }
+              - column: { name: url, value: '/animals/hamster.jpg' }
               - column: { name: order_index, valueNumeric: 0 }
               - column: { name: is_main, valueBoolean: true }
         - insert:
@@ -3283,7 +3283,7 @@ databaseChangeLog:
             columns:
               - column: { name: id, value: 'cccccccc-cccc-cccc-cccc-cccccccc0032' }
               - column: { name: listing_id, value: 'bbbbbbbb-bbbb-bbbb-bbbb-bbbbbbbb0032' }
-              - column: { name: url, value: 'https://picsum.photos/seed/0032-0/600' }
+              - column: { name: url, value: '/animals/bearded-dragon.jpg' }
               - column: { name: order_index, valueNumeric: 0 }
               - column: { name: is_main, valueBoolean: true }
         - insert:
@@ -3291,7 +3291,7 @@ databaseChangeLog:
             columns:
               - column: { name: id, value: 'cccccccc-cccc-cccc-cccc-cccccccc0033' }
               - column: { name: listing_id, value: 'bbbbbbbb-bbbb-bbbb-bbbb-bbbbbbbb0033' }
-              - column: { name: url, value: 'https://picsum.photos/seed/0033-0/600' }
+              - column: { name: url, value: '/animals/angelfish.jpg' }
               - column: { name: order_index, valueNumeric: 0 }
               - column: { name: is_main, valueBoolean: true }
         - insert:
@@ -3299,7 +3299,7 @@ databaseChangeLog:
             columns:
               - column: { name: id, value: 'cccccccc-cccc-cccc-cccc-cccccccc0034' }
               - column: { name: listing_id, value: 'bbbbbbbb-bbbb-bbbb-bbbb-bbbbbbbb0034' }
-              - column: { name: url, value: 'https://picsum.photos/seed/0034-0/600' }
+              - column: { name: url, value: '/animals/ferret.jpg' }
               - column: { name: order_index, valueNumeric: 0 }
               - column: { name: is_main, valueBoolean: true }
         - insert:
@@ -3307,7 +3307,7 @@ databaseChangeLog:
             columns:
               - column: { name: id, value: 'cccccccc-cccc-cccc-cccc-cccccccc0035' }
               - column: { name: listing_id, value: 'bbbbbbbb-bbbb-bbbb-bbbb-bbbbbbbb0035' }
-              - column: { name: url, value: 'https://picsum.photos/seed/0035-0/600' }
+              - column: { name: url, value: '/animals/beagle.jpg' }
               - column: { name: order_index, valueNumeric: 0 }
               - column: { name: is_main, valueBoolean: true }
         - insert:
@@ -3315,7 +3315,7 @@ databaseChangeLog:
             columns:
               - column: { name: id, value: 'cccccccc-cccc-cccc-cccc-cccccccc0036' }
               - column: { name: listing_id, value: 'bbbbbbbb-bbbb-bbbb-bbbb-bbbbbbbb0036' }
-              - column: { name: url, value: 'https://picsum.photos/seed/0036-0/600' }
+              - column: { name: url, value: '/animals/siamese.jpg' }
               - column: { name: order_index, valueNumeric: 0 }
               - column: { name: is_main, valueBoolean: true }
         - insert:
@@ -3323,7 +3323,7 @@ databaseChangeLog:
             columns:
               - column: { name: id, value: 'cccccccc-cccc-cccc-cccc-cccccccc0037' }
               - column: { name: listing_id, value: 'bbbbbbbb-bbbb-bbbb-bbbb-bbbbbbbb0037' }
-              - column: { name: url, value: 'https://picsum.photos/seed/0037-0/600' }
+              - column: { name: url, value: '/animals/parrot.jpg' }
               - column: { name: order_index, valueNumeric: 0 }
               - column: { name: is_main, valueBoolean: true }
         - insert:
@@ -3331,7 +3331,7 @@ databaseChangeLog:
             columns:
               - column: { name: id, value: 'cccccccc-cccc-cccc-cccc-cccccccc0038' }
               - column: { name: listing_id, value: 'bbbbbbbb-bbbb-bbbb-bbbb-bbbbbbbb0038' }
-              - column: { name: url, value: 'https://picsum.photos/seed/0038-0/600' }
+              - column: { name: url, value: '/animals/guinea-pig.jpg' }
               - column: { name: order_index, valueNumeric: 0 }
               - column: { name: is_main, valueBoolean: true }
         - insert:
@@ -3339,7 +3339,7 @@ databaseChangeLog:
             columns:
               - column: { name: id, value: 'cccccccc-cccc-cccc-cccc-cccccccc0039' }
               - column: { name: listing_id, value: 'bbbbbbbb-bbbb-bbbb-bbbb-bbbbbbbb0039' }
-              - column: { name: url, value: 'https://picsum.photos/seed/0039-0/600' }
+              - column: { name: url, value: '/animals/ball-python.png' }
               - column: { name: order_index, valueNumeric: 0 }
               - column: { name: is_main, valueBoolean: true }
         - insert:
@@ -3347,7 +3347,7 @@ databaseChangeLog:
             columns:
               - column: { name: id, value: 'cccccccc-cccc-cccc-cccc-cccccccc0040' }
               - column: { name: listing_id, value: 'bbbbbbbb-bbbb-bbbb-bbbb-bbbbbbbb0040' }
-              - column: { name: url, value: 'https://picsum.photos/seed/0040-0/600' }
+              - column: { name: url, value: '/animals/guppy.jpg' }
               - column: { name: order_index, valueNumeric: 0 }
               - column: { name: is_main, valueBoolean: true }
         - insert:
@@ -3355,7 +3355,7 @@ databaseChangeLog:
             columns:
               - column: { name: id, value: 'cccccccc-cccc-cccc-cccc-cccccccc0041' }
               - column: { name: listing_id, value: 'bbbbbbbb-bbbb-bbbb-bbbb-bbbbbbbb0041' }
-              - column: { name: url, value: 'https://picsum.photos/seed/0041-0/600' }
+              - column: { name: url, value: '/animals/guinea-pig.jpg' }
               - column: { name: order_index, valueNumeric: 0 }
               - column: { name: is_main, valueBoolean: true }
         - insert:
@@ -3363,7 +3363,7 @@ databaseChangeLog:
             columns:
               - column: { name: id, value: 'cccccccc-cccc-cccc-cccc-cccccccc0042' }
               - column: { name: listing_id, value: 'bbbbbbbb-bbbb-bbbb-bbbb-bbbbbbbb0042' }
-              - column: { name: url, value: 'https://picsum.photos/seed/0042-0/600' }
+              - column: { name: url, value: '/animals/german-shepherd.jpg' }
               - column: { name: order_index, valueNumeric: 0 }
               - column: { name: is_main, valueBoolean: true }
         - insert:
@@ -3371,7 +3371,7 @@ databaseChangeLog:
             columns:
               - column: { name: id, value: 'cccccccc-cccc-cccc-cccc-cccccccc0043' }
               - column: { name: listing_id, value: 'bbbbbbbb-bbbb-bbbb-bbbb-bbbbbbbb0043' }
-              - column: { name: url, value: 'https://picsum.photos/seed/0043-0/600' }
+              - column: { name: url, value: '/animals/maine-coon.png' }
               - column: { name: order_index, valueNumeric: 0 }
               - column: { name: is_main, valueBoolean: true }
         - insert:
@@ -3379,7 +3379,7 @@ databaseChangeLog:
             columns:
               - column: { name: id, value: 'cccccccc-cccc-cccc-cccc-cccccccc0044' }
               - column: { name: listing_id, value: 'bbbbbbbb-bbbb-bbbb-bbbb-bbbbbbbb0044' }
-              - column: { name: url, value: 'https://picsum.photos/seed/0044-0/600' }
+              - column: { name: url, value: '/animals/canary.jpg' }
               - column: { name: order_index, valueNumeric: 0 }
               - column: { name: is_main, valueBoolean: true }
         - insert:
@@ -3387,7 +3387,7 @@ databaseChangeLog:
             columns:
               - column: { name: id, value: 'cccccccc-cccc-cccc-cccc-cccccccc0045' }
               - column: { name: listing_id, value: 'bbbbbbbb-bbbb-bbbb-bbbb-bbbbbbbb0045' }
-              - column: { name: url, value: 'https://picsum.photos/seed/0045-0/600' }
+              - column: { name: url, value: '/animals/rabbit.jpg' }
               - column: { name: order_index, valueNumeric: 0 }
               - column: { name: is_main, valueBoolean: true }
         - insert:
@@ -3395,7 +3395,7 @@ databaseChangeLog:
             columns:
               - column: { name: id, value: 'cccccccc-cccc-cccc-cccc-cccccccc0046' }
               - column: { name: listing_id, value: 'bbbbbbbb-bbbb-bbbb-bbbb-bbbbbbbb0046' }
-              - column: { name: url, value: 'https://picsum.photos/seed/0046-0/600' }
+              - column: { name: url, value: '/animals/corn-snake.jpg' }
               - column: { name: order_index, valueNumeric: 0 }
               - column: { name: is_main, valueBoolean: true }
         - insert:
@@ -3403,7 +3403,7 @@ databaseChangeLog:
             columns:
               - column: { name: id, value: 'cccccccc-cccc-cccc-cccc-cccccccc0047' }
               - column: { name: listing_id, value: 'bbbbbbbb-bbbb-bbbb-bbbb-bbbbbbbb0047' }
-              - column: { name: url, value: 'https://picsum.photos/seed/0047-0/600' }
+              - column: { name: url, value: '/animals/goldfish.jpg' }
               - column: { name: order_index, valueNumeric: 0 }
               - column: { name: is_main, valueBoolean: true }
         - insert:
@@ -3411,7 +3411,7 @@ databaseChangeLog:
             columns:
               - column: { name: id, value: 'cccccccc-cccc-cccc-cccc-cccccccc0048' }
               - column: { name: listing_id, value: 'bbbbbbbb-bbbb-bbbb-bbbb-bbbbbbbb0048' }
-              - column: { name: url, value: 'https://picsum.photos/seed/0048-0/600' }
+              - column: { name: url, value: '/animals/ferret.jpg' }
               - column: { name: order_index, valueNumeric: 0 }
               - column: { name: is_main, valueBoolean: true }
         - insert:
@@ -3419,7 +3419,7 @@ databaseChangeLog:
             columns:
               - column: { name: id, value: 'cccccccc-cccc-cccc-cccc-cccccccc0049' }
               - column: { name: listing_id, value: 'bbbbbbbb-bbbb-bbbb-bbbb-bbbbbbbb0049' }
-              - column: { name: url, value: 'https://picsum.photos/seed/0049-0/600' }
+              - column: { name: url, value: '/animals/poodle.png' }
               - column: { name: order_index, valueNumeric: 0 }
               - column: { name: is_main, valueBoolean: true }
         - insert:
@@ -3427,7 +3427,7 @@ databaseChangeLog:
             columns:
               - column: { name: id, value: 'cccccccc-cccc-cccc-cccc-cccccccc0050' }
               - column: { name: listing_id, value: 'bbbbbbbb-bbbb-bbbb-bbbb-bbbbbbbb0050' }
-              - column: { name: url, value: 'https://picsum.photos/seed/0050-0/600' }
+              - column: { name: url, value: '/animals/bengal.jpg' }
               - column: { name: order_index, valueNumeric: 0 }
               - column: { name: is_main, valueBoolean: true }
         - insert:
@@ -3435,801 +3435,402 @@ databaseChangeLog:
             columns:
               - column: { name: id, value: 'cccccccc-cccc-cccc-cccc-cccccccc0051' }
               - column: { name: listing_id, value: 'bbbbbbbb-bbbb-bbbb-bbbb-bbbbbbbb0051' }
-              - column: { name: url, value: 'https://picsum.photos/seed/0051-0/600' }
+              - column: { name: url, value: '/animals/cockatiel.jpg' }
               - column: { name: order_index, valueNumeric: 0 }
               - column: { name: is_main, valueBoolean: true }
         - insert:
             tableName: listing_images
             columns:
               - column: { name: id, value: 'cccccccc-cccc-cccc-cccc-cccccccc0052' }
-              - column: { name: listing_id, value: 'bbbbbbbb-bbbb-bbbb-bbbb-bbbbbbbb0051' }
-              - column: { name: url, value: 'https://picsum.photos/seed/0051-1/600' }
-              - column: { name: order_index, valueNumeric: 1 }
-              - column: { name: is_main, valueBoolean: false }
+              - column: { name: listing_id, value: 'bbbbbbbb-bbbb-bbbb-bbbb-bbbbbbbb0052' }
+              - column: { name: url, value: '/animals/hamster.jpg' }
+              - column: { name: order_index, valueNumeric: 0 }
+              - column: { name: is_main, valueBoolean: true }
         - insert:
             tableName: listing_images
             columns:
               - column: { name: id, value: 'cccccccc-cccc-cccc-cccc-cccccccc0053' }
-              - column: { name: listing_id, value: 'bbbbbbbb-bbbb-bbbb-bbbb-bbbbbbbb0052' }
-              - column: { name: url, value: 'https://picsum.photos/seed/0052-0/600' }
+              - column: { name: listing_id, value: 'bbbbbbbb-bbbb-bbbb-bbbb-bbbbbbbb0053' }
+              - column: { name: url, value: '/animals/bearded-dragon.jpg' }
               - column: { name: order_index, valueNumeric: 0 }
               - column: { name: is_main, valueBoolean: true }
         - insert:
             tableName: listing_images
             columns:
               - column: { name: id, value: 'cccccccc-cccc-cccc-cccc-cccccccc0054' }
-              - column: { name: listing_id, value: 'bbbbbbbb-bbbb-bbbb-bbbb-bbbbbbbb0052' }
-              - column: { name: url, value: 'https://picsum.photos/seed/0052-1/600' }
-              - column: { name: order_index, valueNumeric: 1 }
-              - column: { name: is_main, valueBoolean: false }
+              - column: { name: listing_id, value: 'bbbbbbbb-bbbb-bbbb-bbbb-bbbbbbbb0054' }
+              - column: { name: url, value: '/animals/angelfish.jpg' }
+              - column: { name: order_index, valueNumeric: 0 }
+              - column: { name: is_main, valueBoolean: true }
         - insert:
             tableName: listing_images
             columns:
               - column: { name: id, value: 'cccccccc-cccc-cccc-cccc-cccccccc0055' }
-              - column: { name: listing_id, value: 'bbbbbbbb-bbbb-bbbb-bbbb-bbbbbbbb0053' }
-              - column: { name: url, value: 'https://picsum.photos/seed/0053-0/600' }
+              - column: { name: listing_id, value: 'bbbbbbbb-bbbb-bbbb-bbbb-bbbbbbbb0055' }
+              - column: { name: url, value: '/animals/guinea-pig.jpg' }
               - column: { name: order_index, valueNumeric: 0 }
               - column: { name: is_main, valueBoolean: true }
         - insert:
             tableName: listing_images
             columns:
               - column: { name: id, value: 'cccccccc-cccc-cccc-cccc-cccccccc0056' }
-              - column: { name: listing_id, value: 'bbbbbbbb-bbbb-bbbb-bbbb-bbbbbbbb0053' }
-              - column: { name: url, value: 'https://picsum.photos/seed/0053-1/600' }
-              - column: { name: order_index, valueNumeric: 1 }
-              - column: { name: is_main, valueBoolean: false }
+              - column: { name: listing_id, value: 'bbbbbbbb-bbbb-bbbb-bbbb-bbbbbbbb0056' }
+              - column: { name: url, value: '/animals/labrador-retriever.jpg' }
+              - column: { name: order_index, valueNumeric: 0 }
+              - column: { name: is_main, valueBoolean: true }
         - insert:
             tableName: listing_images
             columns:
               - column: { name: id, value: 'cccccccc-cccc-cccc-cccc-cccccccc0057' }
-              - column: { name: listing_id, value: 'bbbbbbbb-bbbb-bbbb-bbbb-bbbbbbbb0054' }
-              - column: { name: url, value: 'https://picsum.photos/seed/0054-0/600' }
+              - column: { name: listing_id, value: 'bbbbbbbb-bbbb-bbbb-bbbb-bbbbbbbb0057' }
+              - column: { name: url, value: '/animals/persian.jpg' }
               - column: { name: order_index, valueNumeric: 0 }
               - column: { name: is_main, valueBoolean: true }
         - insert:
             tableName: listing_images
             columns:
               - column: { name: id, value: 'cccccccc-cccc-cccc-cccc-cccccccc0058' }
-              - column: { name: listing_id, value: 'bbbbbbbb-bbbb-bbbb-bbbb-bbbbbbbb0054' }
-              - column: { name: url, value: 'https://picsum.photos/seed/0054-1/600' }
-              - column: { name: order_index, valueNumeric: 1 }
-              - column: { name: is_main, valueBoolean: false }
+              - column: { name: listing_id, value: 'bbbbbbbb-bbbb-bbbb-bbbb-bbbbbbbb0058' }
+              - column: { name: url, value: '/animals/parrot.jpg' }
+              - column: { name: order_index, valueNumeric: 0 }
+              - column: { name: is_main, valueBoolean: true }
         - insert:
             tableName: listing_images
             columns:
               - column: { name: id, value: 'cccccccc-cccc-cccc-cccc-cccccccc0059' }
-              - column: { name: listing_id, value: 'bbbbbbbb-bbbb-bbbb-bbbb-bbbbbbbb0055' }
-              - column: { name: url, value: 'https://picsum.photos/seed/0055-0/600' }
+              - column: { name: listing_id, value: 'bbbbbbbb-bbbb-bbbb-bbbb-bbbbbbbb0059' }
+              - column: { name: url, value: '/animals/guinea-pig.jpg' }
               - column: { name: order_index, valueNumeric: 0 }
               - column: { name: is_main, valueBoolean: true }
         - insert:
             tableName: listing_images
             columns:
               - column: { name: id, value: 'cccccccc-cccc-cccc-cccc-cccccccc0060' }
-              - column: { name: listing_id, value: 'bbbbbbbb-bbbb-bbbb-bbbb-bbbbbbbb0055' }
-              - column: { name: url, value: 'https://picsum.photos/seed/0055-1/600' }
-              - column: { name: order_index, valueNumeric: 1 }
-              - column: { name: is_main, valueBoolean: false }
+              - column: { name: listing_id, value: 'bbbbbbbb-bbbb-bbbb-bbbb-bbbbbbbb0060' }
+              - column: { name: url, value: '/animals/ball-python.png' }
+              - column: { name: order_index, valueNumeric: 0 }
+              - column: { name: is_main, valueBoolean: true }
         - insert:
             tableName: listing_images
             columns:
               - column: { name: id, value: 'cccccccc-cccc-cccc-cccc-cccccccc0061' }
-              - column: { name: listing_id, value: 'bbbbbbbb-bbbb-bbbb-bbbb-bbbbbbbb0056' }
-              - column: { name: url, value: 'https://picsum.photos/seed/0056-0/600' }
+              - column: { name: listing_id, value: 'bbbbbbbb-bbbb-bbbb-bbbb-bbbbbbbb0061' }
+              - column: { name: url, value: '/animals/guppy.jpg' }
               - column: { name: order_index, valueNumeric: 0 }
               - column: { name: is_main, valueBoolean: true }
         - insert:
             tableName: listing_images
             columns:
               - column: { name: id, value: 'cccccccc-cccc-cccc-cccc-cccccccc0062' }
-              - column: { name: listing_id, value: 'bbbbbbbb-bbbb-bbbb-bbbb-bbbbbbbb0056' }
-              - column: { name: url, value: 'https://picsum.photos/seed/0056-1/600' }
-              - column: { name: order_index, valueNumeric: 1 }
-              - column: { name: is_main, valueBoolean: false }
+              - column: { name: listing_id, value: 'bbbbbbbb-bbbb-bbbb-bbbb-bbbbbbbb0062' }
+              - column: { name: url, value: '/animals/ferret.jpg' }
+              - column: { name: order_index, valueNumeric: 0 }
+              - column: { name: is_main, valueBoolean: true }
         - insert:
             tableName: listing_images
             columns:
               - column: { name: id, value: 'cccccccc-cccc-cccc-cccc-cccccccc0063' }
-              - column: { name: listing_id, value: 'bbbbbbbb-bbbb-bbbb-bbbb-bbbbbbbb0057' }
-              - column: { name: url, value: 'https://picsum.photos/seed/0057-0/600' }
+              - column: { name: listing_id, value: 'bbbbbbbb-bbbb-bbbb-bbbb-bbbbbbbb0063' }
+              - column: { name: url, value: '/animals/bulldog.jpg' }
               - column: { name: order_index, valueNumeric: 0 }
               - column: { name: is_main, valueBoolean: true }
         - insert:
             tableName: listing_images
             columns:
               - column: { name: id, value: 'cccccccc-cccc-cccc-cccc-cccccccc0064' }
-              - column: { name: listing_id, value: 'bbbbbbbb-bbbb-bbbb-bbbb-bbbbbbbb0057' }
-              - column: { name: url, value: 'https://picsum.photos/seed/0057-1/600' }
-              - column: { name: order_index, valueNumeric: 1 }
-              - column: { name: is_main, valueBoolean: false }
+              - column: { name: listing_id, value: 'bbbbbbbb-bbbb-bbbb-bbbb-bbbbbbbb0064' }
+              - column: { name: url, value: '/animals/british-shorthair.jpg' }
+              - column: { name: order_index, valueNumeric: 0 }
+              - column: { name: is_main, valueBoolean: true }
         - insert:
             tableName: listing_images
             columns:
               - column: { name: id, value: 'cccccccc-cccc-cccc-cccc-cccccccc0065' }
-              - column: { name: listing_id, value: 'bbbbbbbb-bbbb-bbbb-bbbb-bbbbbbbb0058' }
-              - column: { name: url, value: 'https://picsum.photos/seed/0058-0/600' }
+              - column: { name: listing_id, value: 'bbbbbbbb-bbbb-bbbb-bbbb-bbbbbbbb0065' }
+              - column: { name: url, value: '/animals/canary.jpg' }
               - column: { name: order_index, valueNumeric: 0 }
               - column: { name: is_main, valueBoolean: true }
         - insert:
             tableName: listing_images
             columns:
               - column: { name: id, value: 'cccccccc-cccc-cccc-cccc-cccccccc0066' }
-              - column: { name: listing_id, value: 'bbbbbbbb-bbbb-bbbb-bbbb-bbbbbbbb0058' }
-              - column: { name: url, value: 'https://picsum.photos/seed/0058-1/600' }
-              - column: { name: order_index, valueNumeric: 1 }
-              - column: { name: is_main, valueBoolean: false }
+              - column: { name: listing_id, value: 'bbbbbbbb-bbbb-bbbb-bbbb-bbbbbbbb0066' }
+              - column: { name: url, value: '/animals/rabbit.jpg' }
+              - column: { name: order_index, valueNumeric: 0 }
+              - column: { name: is_main, valueBoolean: true }
         - insert:
             tableName: listing_images
             columns:
               - column: { name: id, value: 'cccccccc-cccc-cccc-cccc-cccccccc0067' }
-              - column: { name: listing_id, value: 'bbbbbbbb-bbbb-bbbb-bbbb-bbbbbbbb0059' }
-              - column: { name: url, value: 'https://picsum.photos/seed/0059-0/600' }
+              - column: { name: listing_id, value: 'bbbbbbbb-bbbb-bbbb-bbbb-bbbbbbbb0067' }
+              - column: { name: url, value: '/animals/corn-snake.jpg' }
               - column: { name: order_index, valueNumeric: 0 }
               - column: { name: is_main, valueBoolean: true }
         - insert:
             tableName: listing_images
             columns:
               - column: { name: id, value: 'cccccccc-cccc-cccc-cccc-cccccccc0068' }
-              - column: { name: listing_id, value: 'bbbbbbbb-bbbb-bbbb-bbbb-bbbbbbbb0059' }
-              - column: { name: url, value: 'https://picsum.photos/seed/0059-1/600' }
-              - column: { name: order_index, valueNumeric: 1 }
-              - column: { name: is_main, valueBoolean: false }
+              - column: { name: listing_id, value: 'bbbbbbbb-bbbb-bbbb-bbbb-bbbbbbbb0068' }
+              - column: { name: url, value: '/animals/goldfish.jpg' }
+              - column: { name: order_index, valueNumeric: 0 }
+              - column: { name: is_main, valueBoolean: true }
         - insert:
             tableName: listing_images
             columns:
               - column: { name: id, value: 'cccccccc-cccc-cccc-cccc-cccccccc0069' }
-              - column: { name: listing_id, value: 'bbbbbbbb-bbbb-bbbb-bbbb-bbbbbbbb0060' }
-              - column: { name: url, value: 'https://picsum.photos/seed/0060-0/600' }
+              - column: { name: listing_id, value: 'bbbbbbbb-bbbb-bbbb-bbbb-bbbbbbbb0069' }
+              - column: { name: url, value: '/animals/guinea-pig.jpg' }
               - column: { name: order_index, valueNumeric: 0 }
               - column: { name: is_main, valueBoolean: true }
         - insert:
             tableName: listing_images
             columns:
               - column: { name: id, value: 'cccccccc-cccc-cccc-cccc-cccccccc0070' }
-              - column: { name: listing_id, value: 'bbbbbbbb-bbbb-bbbb-bbbb-bbbbbbbb0060' }
-              - column: { name: url, value: 'https://picsum.photos/seed/0060-1/600' }
-              - column: { name: order_index, valueNumeric: 1 }
-              - column: { name: is_main, valueBoolean: false }
+              - column: { name: listing_id, value: 'bbbbbbbb-bbbb-bbbb-bbbb-bbbbbbbb0070' }
+              - column: { name: url, value: '/animals/beagle.jpg' }
+              - column: { name: order_index, valueNumeric: 0 }
+              - column: { name: is_main, valueBoolean: true }
         - insert:
             tableName: listing_images
             columns:
               - column: { name: id, value: 'cccccccc-cccc-cccc-cccc-cccccccc0071' }
-              - column: { name: listing_id, value: 'bbbbbbbb-bbbb-bbbb-bbbb-bbbbbbbb0061' }
-              - column: { name: url, value: 'https://picsum.photos/seed/0061-0/600' }
+              - column: { name: listing_id, value: 'bbbbbbbb-bbbb-bbbb-bbbb-bbbbbbbb0071' }
+              - column: { name: url, value: '/animals/siamese.jpg' }
               - column: { name: order_index, valueNumeric: 0 }
               - column: { name: is_main, valueBoolean: true }
         - insert:
             tableName: listing_images
             columns:
               - column: { name: id, value: 'cccccccc-cccc-cccc-cccc-cccccccc0072' }
-              - column: { name: listing_id, value: 'bbbbbbbb-bbbb-bbbb-bbbb-bbbbbbbb0061' }
-              - column: { name: url, value: 'https://picsum.photos/seed/0061-1/600' }
-              - column: { name: order_index, valueNumeric: 1 }
-              - column: { name: is_main, valueBoolean: false }
+              - column: { name: listing_id, value: 'bbbbbbbb-bbbb-bbbb-bbbb-bbbbbbbb0072' }
+              - column: { name: url, value: '/animals/cockatiel.jpg' }
+              - column: { name: order_index, valueNumeric: 0 }
+              - column: { name: is_main, valueBoolean: true }
         - insert:
             tableName: listing_images
             columns:
               - column: { name: id, value: 'cccccccc-cccc-cccc-cccc-cccccccc0073' }
-              - column: { name: listing_id, value: 'bbbbbbbb-bbbb-bbbb-bbbb-bbbbbbbb0062' }
-              - column: { name: url, value: 'https://picsum.photos/seed/0062-0/600' }
+              - column: { name: listing_id, value: 'bbbbbbbb-bbbb-bbbb-bbbb-bbbbbbbb0073' }
+              - column: { name: url, value: '/animals/hamster.jpg' }
               - column: { name: order_index, valueNumeric: 0 }
               - column: { name: is_main, valueBoolean: true }
         - insert:
             tableName: listing_images
             columns:
               - column: { name: id, value: 'cccccccc-cccc-cccc-cccc-cccccccc0074' }
-              - column: { name: listing_id, value: 'bbbbbbbb-bbbb-bbbb-bbbb-bbbbbbbb0062' }
-              - column: { name: url, value: 'https://picsum.photos/seed/0062-1/600' }
-              - column: { name: order_index, valueNumeric: 1 }
-              - column: { name: is_main, valueBoolean: false }
+              - column: { name: listing_id, value: 'bbbbbbbb-bbbb-bbbb-bbbb-bbbbbbbb0074' }
+              - column: { name: url, value: '/animals/bearded-dragon.jpg' }
+              - column: { name: order_index, valueNumeric: 0 }
+              - column: { name: is_main, valueBoolean: true }
         - insert:
             tableName: listing_images
             columns:
               - column: { name: id, value: 'cccccccc-cccc-cccc-cccc-cccccccc0075' }
-              - column: { name: listing_id, value: 'bbbbbbbb-bbbb-bbbb-bbbb-bbbbbbbb0063' }
-              - column: { name: url, value: 'https://picsum.photos/seed/0063-0/600' }
+              - column: { name: listing_id, value: 'bbbbbbbb-bbbb-bbbb-bbbb-bbbbbbbb0075' }
+              - column: { name: url, value: '/animals/angelfish.jpg' }
               - column: { name: order_index, valueNumeric: 0 }
               - column: { name: is_main, valueBoolean: true }
         - insert:
             tableName: listing_images
             columns:
               - column: { name: id, value: 'cccccccc-cccc-cccc-cccc-cccccccc0076' }
-              - column: { name: listing_id, value: 'bbbbbbbb-bbbb-bbbb-bbbb-bbbbbbbb0063' }
-              - column: { name: url, value: 'https://picsum.photos/seed/0063-1/600' }
-              - column: { name: order_index, valueNumeric: 1 }
-              - column: { name: is_main, valueBoolean: false }
+              - column: { name: listing_id, value: 'bbbbbbbb-bbbb-bbbb-bbbb-bbbbbbbb0076' }
+              - column: { name: url, value: '/animals/ferret.jpg' }
+              - column: { name: order_index, valueNumeric: 0 }
+              - column: { name: is_main, valueBoolean: true }
         - insert:
             tableName: listing_images
             columns:
               - column: { name: id, value: 'cccccccc-cccc-cccc-cccc-cccccccc0077' }
-              - column: { name: listing_id, value: 'bbbbbbbb-bbbb-bbbb-bbbb-bbbbbbbb0064' }
-              - column: { name: url, value: 'https://picsum.photos/seed/0064-0/600' }
+              - column: { name: listing_id, value: 'bbbbbbbb-bbbb-bbbb-bbbb-bbbbbbbb0077' }
+              - column: { name: url, value: '/animals/german-shepherd.jpg' }
               - column: { name: order_index, valueNumeric: 0 }
               - column: { name: is_main, valueBoolean: true }
         - insert:
             tableName: listing_images
             columns:
               - column: { name: id, value: 'cccccccc-cccc-cccc-cccc-cccccccc0078' }
-              - column: { name: listing_id, value: 'bbbbbbbb-bbbb-bbbb-bbbb-bbbbbbbb0064' }
-              - column: { name: url, value: 'https://picsum.photos/seed/0064-1/600' }
-              - column: { name: order_index, valueNumeric: 1 }
-              - column: { name: is_main, valueBoolean: false }
+              - column: { name: listing_id, value: 'bbbbbbbb-bbbb-bbbb-bbbb-bbbbbbbb0078' }
+              - column: { name: url, value: '/animals/maine-coon.png' }
+              - column: { name: order_index, valueNumeric: 0 }
+              - column: { name: is_main, valueBoolean: true }
         - insert:
             tableName: listing_images
             columns:
               - column: { name: id, value: 'cccccccc-cccc-cccc-cccc-cccccccc0079' }
-              - column: { name: listing_id, value: 'bbbbbbbb-bbbb-bbbb-bbbb-bbbbbbbb0065' }
-              - column: { name: url, value: 'https://picsum.photos/seed/0065-0/600' }
+              - column: { name: listing_id, value: 'bbbbbbbb-bbbb-bbbb-bbbb-bbbbbbbb0079' }
+              - column: { name: url, value: '/animals/parrot.jpg' }
               - column: { name: order_index, valueNumeric: 0 }
               - column: { name: is_main, valueBoolean: true }
         - insert:
             tableName: listing_images
             columns:
               - column: { name: id, value: 'cccccccc-cccc-cccc-cccc-cccccccc0080' }
-              - column: { name: listing_id, value: 'bbbbbbbb-bbbb-bbbb-bbbb-bbbbbbbb0065' }
-              - column: { name: url, value: 'https://picsum.photos/seed/0065-1/600' }
-              - column: { name: order_index, valueNumeric: 1 }
-              - column: { name: is_main, valueBoolean: false }
+              - column: { name: listing_id, value: 'bbbbbbbb-bbbb-bbbb-bbbb-bbbbbbbb0080' }
+              - column: { name: url, value: '/animals/guinea-pig.jpg' }
+              - column: { name: order_index, valueNumeric: 0 }
+              - column: { name: is_main, valueBoolean: true }
         - insert:
             tableName: listing_images
             columns:
               - column: { name: id, value: 'cccccccc-cccc-cccc-cccc-cccccccc0081' }
-              - column: { name: listing_id, value: 'bbbbbbbb-bbbb-bbbb-bbbb-bbbbbbbb0066' }
-              - column: { name: url, value: 'https://picsum.photos/seed/0066-0/600' }
+              - column: { name: listing_id, value: 'bbbbbbbb-bbbb-bbbb-bbbb-bbbbbbbb0081' }
+              - column: { name: url, value: '/animals/ball-python.png' }
               - column: { name: order_index, valueNumeric: 0 }
               - column: { name: is_main, valueBoolean: true }
         - insert:
             tableName: listing_images
             columns:
               - column: { name: id, value: 'cccccccc-cccc-cccc-cccc-cccccccc0082' }
-              - column: { name: listing_id, value: 'bbbbbbbb-bbbb-bbbb-bbbb-bbbbbbbb0066' }
-              - column: { name: url, value: 'https://picsum.photos/seed/0066-1/600' }
-              - column: { name: order_index, valueNumeric: 1 }
-              - column: { name: is_main, valueBoolean: false }
+              - column: { name: listing_id, value: 'bbbbbbbb-bbbb-bbbb-bbbb-bbbbbbbb0082' }
+              - column: { name: url, value: '/animals/guppy.jpg' }
+              - column: { name: order_index, valueNumeric: 0 }
+              - column: { name: is_main, valueBoolean: true }
         - insert:
             tableName: listing_images
             columns:
               - column: { name: id, value: 'cccccccc-cccc-cccc-cccc-cccccccc0083' }
-              - column: { name: listing_id, value: 'bbbbbbbb-bbbb-bbbb-bbbb-bbbbbbbb0067' }
-              - column: { name: url, value: 'https://picsum.photos/seed/0067-0/600' }
+              - column: { name: listing_id, value: 'bbbbbbbb-bbbb-bbbb-bbbb-bbbbbbbb0083' }
+              - column: { name: url, value: '/animals/guinea-pig.jpg' }
               - column: { name: order_index, valueNumeric: 0 }
               - column: { name: is_main, valueBoolean: true }
         - insert:
             tableName: listing_images
             columns:
               - column: { name: id, value: 'cccccccc-cccc-cccc-cccc-cccccccc0084' }
-              - column: { name: listing_id, value: 'bbbbbbbb-bbbb-bbbb-bbbb-bbbbbbbb0067' }
-              - column: { name: url, value: 'https://picsum.photos/seed/0067-1/600' }
-              - column: { name: order_index, valueNumeric: 1 }
-              - column: { name: is_main, valueBoolean: false }
+              - column: { name: listing_id, value: 'bbbbbbbb-bbbb-bbbb-bbbb-bbbbbbbb0084' }
+              - column: { name: url, value: '/animals/poodle.png' }
+              - column: { name: order_index, valueNumeric: 0 }
+              - column: { name: is_main, valueBoolean: true }
         - insert:
             tableName: listing_images
             columns:
               - column: { name: id, value: 'cccccccc-cccc-cccc-cccc-cccccccc0085' }
-              - column: { name: listing_id, value: 'bbbbbbbb-bbbb-bbbb-bbbb-bbbbbbbb0068' }
-              - column: { name: url, value: 'https://picsum.photos/seed/0068-0/600' }
+              - column: { name: listing_id, value: 'bbbbbbbb-bbbb-bbbb-bbbb-bbbbbbbb0085' }
+              - column: { name: url, value: '/animals/bengal.jpg' }
               - column: { name: order_index, valueNumeric: 0 }
               - column: { name: is_main, valueBoolean: true }
         - insert:
             tableName: listing_images
             columns:
               - column: { name: id, value: 'cccccccc-cccc-cccc-cccc-cccccccc0086' }
-              - column: { name: listing_id, value: 'bbbbbbbb-bbbb-bbbb-bbbb-bbbbbbbb0068' }
-              - column: { name: url, value: 'https://picsum.photos/seed/0068-1/600' }
-              - column: { name: order_index, valueNumeric: 1 }
-              - column: { name: is_main, valueBoolean: false }
+              - column: { name: listing_id, value: 'bbbbbbbb-bbbb-bbbb-bbbb-bbbbbbbb0086' }
+              - column: { name: url, value: '/animals/canary.jpg' }
+              - column: { name: order_index, valueNumeric: 0 }
+              - column: { name: is_main, valueBoolean: true }
         - insert:
             tableName: listing_images
             columns:
               - column: { name: id, value: 'cccccccc-cccc-cccc-cccc-cccccccc0087' }
-              - column: { name: listing_id, value: 'bbbbbbbb-bbbb-bbbb-bbbb-bbbbbbbb0069' }
-              - column: { name: url, value: 'https://picsum.photos/seed/0069-0/600' }
+              - column: { name: listing_id, value: 'bbbbbbbb-bbbb-bbbb-bbbb-bbbbbbbb0087' }
+              - column: { name: url, value: '/animals/rabbit.jpg' }
               - column: { name: order_index, valueNumeric: 0 }
               - column: { name: is_main, valueBoolean: true }
         - insert:
             tableName: listing_images
             columns:
               - column: { name: id, value: 'cccccccc-cccc-cccc-cccc-cccccccc0088' }
-              - column: { name: listing_id, value: 'bbbbbbbb-bbbb-bbbb-bbbb-bbbbbbbb0069' }
-              - column: { name: url, value: 'https://picsum.photos/seed/0069-1/600' }
-              - column: { name: order_index, valueNumeric: 1 }
-              - column: { name: is_main, valueBoolean: false }
+              - column: { name: listing_id, value: 'bbbbbbbb-bbbb-bbbb-bbbb-bbbbbbbb0088' }
+              - column: { name: url, value: '/animals/corn-snake.jpg' }
+              - column: { name: order_index, valueNumeric: 0 }
+              - column: { name: is_main, valueBoolean: true }
         - insert:
             tableName: listing_images
             columns:
               - column: { name: id, value: 'cccccccc-cccc-cccc-cccc-cccccccc0089' }
-              - column: { name: listing_id, value: 'bbbbbbbb-bbbb-bbbb-bbbb-bbbbbbbb0070' }
-              - column: { name: url, value: 'https://picsum.photos/seed/0070-0/600' }
+              - column: { name: listing_id, value: 'bbbbbbbb-bbbb-bbbb-bbbb-bbbbbbbb0089' }
+              - column: { name: url, value: '/animals/goldfish.jpg' }
               - column: { name: order_index, valueNumeric: 0 }
               - column: { name: is_main, valueBoolean: true }
         - insert:
             tableName: listing_images
             columns:
               - column: { name: id, value: 'cccccccc-cccc-cccc-cccc-cccccccc0090' }
-              - column: { name: listing_id, value: 'bbbbbbbb-bbbb-bbbb-bbbb-bbbbbbbb0070' }
-              - column: { name: url, value: 'https://picsum.photos/seed/0070-1/600' }
-              - column: { name: order_index, valueNumeric: 1 }
-              - column: { name: is_main, valueBoolean: false }
+              - column: { name: listing_id, value: 'bbbbbbbb-bbbb-bbbb-bbbb-bbbbbbbb0090' }
+              - column: { name: url, value: '/animals/ferret.jpg' }
+              - column: { name: order_index, valueNumeric: 0 }
+              - column: { name: is_main, valueBoolean: true }
         - insert:
             tableName: listing_images
             columns:
               - column: { name: id, value: 'cccccccc-cccc-cccc-cccc-cccccccc0091' }
-              - column: { name: listing_id, value: 'bbbbbbbb-bbbb-bbbb-bbbb-bbbbbbbb0071' }
-              - column: { name: url, value: 'https://picsum.photos/seed/0071-0/600' }
+              - column: { name: listing_id, value: 'bbbbbbbb-bbbb-bbbb-bbbb-bbbbbbbb0091' }
+              - column: { name: url, value: '/animals/labrador-retriever.jpg' }
               - column: { name: order_index, valueNumeric: 0 }
               - column: { name: is_main, valueBoolean: true }
         - insert:
             tableName: listing_images
             columns:
               - column: { name: id, value: 'cccccccc-cccc-cccc-cccc-cccccccc0092' }
-              - column: { name: listing_id, value: 'bbbbbbbb-bbbb-bbbb-bbbb-bbbbbbbb0071' }
-              - column: { name: url, value: 'https://picsum.photos/seed/0071-1/600' }
-              - column: { name: order_index, valueNumeric: 1 }
-              - column: { name: is_main, valueBoolean: false }
+              - column: { name: listing_id, value: 'bbbbbbbb-bbbb-bbbb-bbbb-bbbbbbbb0092' }
+              - column: { name: url, value: '/animals/persian.jpg' }
+              - column: { name: order_index, valueNumeric: 0 }
+              - column: { name: is_main, valueBoolean: true }
         - insert:
             tableName: listing_images
             columns:
               - column: { name: id, value: 'cccccccc-cccc-cccc-cccc-cccccccc0093' }
-              - column: { name: listing_id, value: 'bbbbbbbb-bbbb-bbbb-bbbb-bbbbbbbb0072' }
-              - column: { name: url, value: 'https://picsum.photos/seed/0072-0/600' }
+              - column: { name: listing_id, value: 'bbbbbbbb-bbbb-bbbb-bbbb-bbbbbbbb0093' }
+              - column: { name: url, value: '/animals/cockatiel.jpg' }
               - column: { name: order_index, valueNumeric: 0 }
               - column: { name: is_main, valueBoolean: true }
         - insert:
             tableName: listing_images
             columns:
               - column: { name: id, value: 'cccccccc-cccc-cccc-cccc-cccccccc0094' }
-              - column: { name: listing_id, value: 'bbbbbbbb-bbbb-bbbb-bbbb-bbbbbbbb0072' }
-              - column: { name: url, value: 'https://picsum.photos/seed/0072-1/600' }
-              - column: { name: order_index, valueNumeric: 1 }
-              - column: { name: is_main, valueBoolean: false }
+              - column: { name: listing_id, value: 'bbbbbbbb-bbbb-bbbb-bbbb-bbbbbbbb0094' }
+              - column: { name: url, value: '/animals/hamster.jpg' }
+              - column: { name: order_index, valueNumeric: 0 }
+              - column: { name: is_main, valueBoolean: true }
         - insert:
             tableName: listing_images
             columns:
               - column: { name: id, value: 'cccccccc-cccc-cccc-cccc-cccccccc0095' }
-              - column: { name: listing_id, value: 'bbbbbbbb-bbbb-bbbb-bbbb-bbbbbbbb0073' }
-              - column: { name: url, value: 'https://picsum.photos/seed/0073-0/600' }
+              - column: { name: listing_id, value: 'bbbbbbbb-bbbb-bbbb-bbbb-bbbbbbbb0095' }
+              - column: { name: url, value: '/animals/bearded-dragon.jpg' }
               - column: { name: order_index, valueNumeric: 0 }
               - column: { name: is_main, valueBoolean: true }
         - insert:
             tableName: listing_images
             columns:
               - column: { name: id, value: 'cccccccc-cccc-cccc-cccc-cccccccc0096' }
-              - column: { name: listing_id, value: 'bbbbbbbb-bbbb-bbbb-bbbb-bbbbbbbb0073' }
-              - column: { name: url, value: 'https://picsum.photos/seed/0073-1/600' }
-              - column: { name: order_index, valueNumeric: 1 }
-              - column: { name: is_main, valueBoolean: false }
+              - column: { name: listing_id, value: 'bbbbbbbb-bbbb-bbbb-bbbb-bbbbbbbb0096' }
+              - column: { name: url, value: '/animals/angelfish.jpg' }
+              - column: { name: order_index, valueNumeric: 0 }
+              - column: { name: is_main, valueBoolean: true }
         - insert:
             tableName: listing_images
             columns:
               - column: { name: id, value: 'cccccccc-cccc-cccc-cccc-cccccccc0097' }
-              - column: { name: listing_id, value: 'bbbbbbbb-bbbb-bbbb-bbbb-bbbbbbbb0074' }
-              - column: { name: url, value: 'https://picsum.photos/seed/0074-0/600' }
+              - column: { name: listing_id, value: 'bbbbbbbb-bbbb-bbbb-bbbb-bbbbbbbb0097' }
+              - column: { name: url, value: '/animals/guinea-pig.jpg' }
               - column: { name: order_index, valueNumeric: 0 }
               - column: { name: is_main, valueBoolean: true }
         - insert:
             tableName: listing_images
             columns:
               - column: { name: id, value: 'cccccccc-cccc-cccc-cccc-cccccccc0098' }
-              - column: { name: listing_id, value: 'bbbbbbbb-bbbb-bbbb-bbbb-bbbbbbbb0074' }
-              - column: { name: url, value: 'https://picsum.photos/seed/0074-1/600' }
-              - column: { name: order_index, valueNumeric: 1 }
-              - column: { name: is_main, valueBoolean: false }
+              - column: { name: listing_id, value: 'bbbbbbbb-bbbb-bbbb-bbbb-bbbbbbbb0098' }
+              - column: { name: url, value: '/animals/bulldog.jpg' }
+              - column: { name: order_index, valueNumeric: 0 }
+              - column: { name: is_main, valueBoolean: true }
         - insert:
             tableName: listing_images
             columns:
               - column: { name: id, value: 'cccccccc-cccc-cccc-cccc-cccccccc0099' }
-              - column: { name: listing_id, value: 'bbbbbbbb-bbbb-bbbb-bbbb-bbbbbbbb0075' }
-              - column: { name: url, value: 'https://picsum.photos/seed/0075-0/600' }
+              - column: { name: listing_id, value: 'bbbbbbbb-bbbb-bbbb-bbbb-bbbbbbbb0099' }
+              - column: { name: url, value: '/animals/british-shorthair.jpg' }
               - column: { name: order_index, valueNumeric: 0 }
               - column: { name: is_main, valueBoolean: true }
         - insert:
             tableName: listing_images
             columns:
               - column: { name: id, value: 'cccccccc-cccc-cccc-cccc-cccccccc0100' }
-              - column: { name: listing_id, value: 'bbbbbbbb-bbbb-bbbb-bbbb-bbbbbbbb0075' }
-              - column: { name: url, value: 'https://picsum.photos/seed/0075-1/600' }
-              - column: { name: order_index, valueNumeric: 1 }
-              - column: { name: is_main, valueBoolean: false }
-        - insert:
-            tableName: listing_images
-            columns:
-              - column: { name: id, value: 'cccccccc-cccc-cccc-cccc-cccccccc0101' }
-              - column: { name: listing_id, value: 'bbbbbbbb-bbbb-bbbb-bbbb-bbbbbbbb0076' }
-              - column: { name: url, value: 'https://picsum.photos/seed/0076-0/600' }
-              - column: { name: order_index, valueNumeric: 0 }
-              - column: { name: is_main, valueBoolean: true }
-        - insert:
-            tableName: listing_images
-            columns:
-              - column: { name: id, value: 'cccccccc-cccc-cccc-cccc-cccccccc0102' }
-              - column: { name: listing_id, value: 'bbbbbbbb-bbbb-bbbb-bbbb-bbbbbbbb0076' }
-              - column: { name: url, value: 'https://picsum.photos/seed/0076-1/600' }
-              - column: { name: order_index, valueNumeric: 1 }
-              - column: { name: is_main, valueBoolean: false }
-        - insert:
-            tableName: listing_images
-            columns:
-              - column: { name: id, value: 'cccccccc-cccc-cccc-cccc-cccccccc0103' }
-              - column: { name: listing_id, value: 'bbbbbbbb-bbbb-bbbb-bbbb-bbbbbbbb0077' }
-              - column: { name: url, value: 'https://picsum.photos/seed/0077-0/600' }
-              - column: { name: order_index, valueNumeric: 0 }
-              - column: { name: is_main, valueBoolean: true }
-        - insert:
-            tableName: listing_images
-            columns:
-              - column: { name: id, value: 'cccccccc-cccc-cccc-cccc-cccccccc0104' }
-              - column: { name: listing_id, value: 'bbbbbbbb-bbbb-bbbb-bbbb-bbbbbbbb0077' }
-              - column: { name: url, value: 'https://picsum.photos/seed/0077-1/600' }
-              - column: { name: order_index, valueNumeric: 1 }
-              - column: { name: is_main, valueBoolean: false }
-        - insert:
-            tableName: listing_images
-            columns:
-              - column: { name: id, value: 'cccccccc-cccc-cccc-cccc-cccccccc0105' }
-              - column: { name: listing_id, value: 'bbbbbbbb-bbbb-bbbb-bbbb-bbbbbbbb0078' }
-              - column: { name: url, value: 'https://picsum.photos/seed/0078-0/600' }
-              - column: { name: order_index, valueNumeric: 0 }
-              - column: { name: is_main, valueBoolean: true }
-        - insert:
-            tableName: listing_images
-            columns:
-              - column: { name: id, value: 'cccccccc-cccc-cccc-cccc-cccccccc0106' }
-              - column: { name: listing_id, value: 'bbbbbbbb-bbbb-bbbb-bbbb-bbbbbbbb0078' }
-              - column: { name: url, value: 'https://picsum.photos/seed/0078-1/600' }
-              - column: { name: order_index, valueNumeric: 1 }
-              - column: { name: is_main, valueBoolean: false }
-        - insert:
-            tableName: listing_images
-            columns:
-              - column: { name: id, value: 'cccccccc-cccc-cccc-cccc-cccccccc0107' }
-              - column: { name: listing_id, value: 'bbbbbbbb-bbbb-bbbb-bbbb-bbbbbbbb0079' }
-              - column: { name: url, value: 'https://picsum.photos/seed/0079-0/600' }
-              - column: { name: order_index, valueNumeric: 0 }
-              - column: { name: is_main, valueBoolean: true }
-        - insert:
-            tableName: listing_images
-            columns:
-              - column: { name: id, value: 'cccccccc-cccc-cccc-cccc-cccccccc0108' }
-              - column: { name: listing_id, value: 'bbbbbbbb-bbbb-bbbb-bbbb-bbbbbbbb0079' }
-              - column: { name: url, value: 'https://picsum.photos/seed/0079-1/600' }
-              - column: { name: order_index, valueNumeric: 1 }
-              - column: { name: is_main, valueBoolean: false }
-        - insert:
-            tableName: listing_images
-            columns:
-              - column: { name: id, value: 'cccccccc-cccc-cccc-cccc-cccccccc0109' }
-              - column: { name: listing_id, value: 'bbbbbbbb-bbbb-bbbb-bbbb-bbbbbbbb0080' }
-              - column: { name: url, value: 'https://picsum.photos/seed/0080-0/600' }
-              - column: { name: order_index, valueNumeric: 0 }
-              - column: { name: is_main, valueBoolean: true }
-        - insert:
-            tableName: listing_images
-            columns:
-              - column: { name: id, value: 'cccccccc-cccc-cccc-cccc-cccccccc0110' }
-              - column: { name: listing_id, value: 'bbbbbbbb-bbbb-bbbb-bbbb-bbbbbbbb0080' }
-              - column: { name: url, value: 'https://picsum.photos/seed/0080-1/600' }
-              - column: { name: order_index, valueNumeric: 1 }
-              - column: { name: is_main, valueBoolean: false }
-        - insert:
-            tableName: listing_images
-            columns:
-              - column: { name: id, value: 'cccccccc-cccc-cccc-cccc-cccccccc0111' }
-              - column: { name: listing_id, value: 'bbbbbbbb-bbbb-bbbb-bbbb-bbbbbbbb0081' }
-              - column: { name: url, value: 'https://picsum.photos/seed/0081-0/600' }
-              - column: { name: order_index, valueNumeric: 0 }
-              - column: { name: is_main, valueBoolean: true }
-        - insert:
-            tableName: listing_images
-            columns:
-              - column: { name: id, value: 'cccccccc-cccc-cccc-cccc-cccccccc0112' }
-              - column: { name: listing_id, value: 'bbbbbbbb-bbbb-bbbb-bbbb-bbbbbbbb0081' }
-              - column: { name: url, value: 'https://picsum.photos/seed/0081-1/600' }
-              - column: { name: order_index, valueNumeric: 1 }
-              - column: { name: is_main, valueBoolean: false }
-        - insert:
-            tableName: listing_images
-            columns:
-              - column: { name: id, value: 'cccccccc-cccc-cccc-cccc-cccccccc0113' }
-              - column: { name: listing_id, value: 'bbbbbbbb-bbbb-bbbb-bbbb-bbbbbbbb0082' }
-              - column: { name: url, value: 'https://picsum.photos/seed/0082-0/600' }
-              - column: { name: order_index, valueNumeric: 0 }
-              - column: { name: is_main, valueBoolean: true }
-        - insert:
-            tableName: listing_images
-            columns:
-              - column: { name: id, value: 'cccccccc-cccc-cccc-cccc-cccccccc0114' }
-              - column: { name: listing_id, value: 'bbbbbbbb-bbbb-bbbb-bbbb-bbbbbbbb0082' }
-              - column: { name: url, value: 'https://picsum.photos/seed/0082-1/600' }
-              - column: { name: order_index, valueNumeric: 1 }
-              - column: { name: is_main, valueBoolean: false }
-        - insert:
-            tableName: listing_images
-            columns:
-              - column: { name: id, value: 'cccccccc-cccc-cccc-cccc-cccccccc0115' }
-              - column: { name: listing_id, value: 'bbbbbbbb-bbbb-bbbb-bbbb-bbbbbbbb0083' }
-              - column: { name: url, value: 'https://picsum.photos/seed/0083-0/600' }
-              - column: { name: order_index, valueNumeric: 0 }
-              - column: { name: is_main, valueBoolean: true }
-        - insert:
-            tableName: listing_images
-            columns:
-              - column: { name: id, value: 'cccccccc-cccc-cccc-cccc-cccccccc0116' }
-              - column: { name: listing_id, value: 'bbbbbbbb-bbbb-bbbb-bbbb-bbbbbbbb0083' }
-              - column: { name: url, value: 'https://picsum.photos/seed/0083-1/600' }
-              - column: { name: order_index, valueNumeric: 1 }
-              - column: { name: is_main, valueBoolean: false }
-        - insert:
-            tableName: listing_images
-            columns:
-              - column: { name: id, value: 'cccccccc-cccc-cccc-cccc-cccccccc0117' }
-              - column: { name: listing_id, value: 'bbbbbbbb-bbbb-bbbb-bbbb-bbbbbbbb0084' }
-              - column: { name: url, value: 'https://picsum.photos/seed/0084-0/600' }
-              - column: { name: order_index, valueNumeric: 0 }
-              - column: { name: is_main, valueBoolean: true }
-        - insert:
-            tableName: listing_images
-            columns:
-              - column: { name: id, value: 'cccccccc-cccc-cccc-cccc-cccccccc0118' }
-              - column: { name: listing_id, value: 'bbbbbbbb-bbbb-bbbb-bbbb-bbbbbbbb0084' }
-              - column: { name: url, value: 'https://picsum.photos/seed/0084-1/600' }
-              - column: { name: order_index, valueNumeric: 1 }
-              - column: { name: is_main, valueBoolean: false }
-        - insert:
-            tableName: listing_images
-            columns:
-              - column: { name: id, value: 'cccccccc-cccc-cccc-cccc-cccccccc0119' }
-              - column: { name: listing_id, value: 'bbbbbbbb-bbbb-bbbb-bbbb-bbbbbbbb0085' }
-              - column: { name: url, value: 'https://picsum.photos/seed/0085-0/600' }
-              - column: { name: order_index, valueNumeric: 0 }
-              - column: { name: is_main, valueBoolean: true }
-        - insert:
-            tableName: listing_images
-            columns:
-              - column: { name: id, value: 'cccccccc-cccc-cccc-cccc-cccccccc0120' }
-              - column: { name: listing_id, value: 'bbbbbbbb-bbbb-bbbb-bbbb-bbbbbbbb0085' }
-              - column: { name: url, value: 'https://picsum.photos/seed/0085-1/600' }
-              - column: { name: order_index, valueNumeric: 1 }
-              - column: { name: is_main, valueBoolean: false }
-        - insert:
-            tableName: listing_images
-            columns:
-              - column: { name: id, value: 'cccccccc-cccc-cccc-cccc-cccccccc0121' }
-              - column: { name: listing_id, value: 'bbbbbbbb-bbbb-bbbb-bbbb-bbbbbbbb0086' }
-              - column: { name: url, value: 'https://picsum.photos/seed/0086-0/600' }
-              - column: { name: order_index, valueNumeric: 0 }
-              - column: { name: is_main, valueBoolean: true }
-        - insert:
-            tableName: listing_images
-            columns:
-              - column: { name: id, value: 'cccccccc-cccc-cccc-cccc-cccccccc0122' }
-              - column: { name: listing_id, value: 'bbbbbbbb-bbbb-bbbb-bbbb-bbbbbbbb0086' }
-              - column: { name: url, value: 'https://picsum.photos/seed/0086-1/600' }
-              - column: { name: order_index, valueNumeric: 1 }
-              - column: { name: is_main, valueBoolean: false }
-        - insert:
-            tableName: listing_images
-            columns:
-              - column: { name: id, value: 'cccccccc-cccc-cccc-cccc-cccccccc0123' }
-              - column: { name: listing_id, value: 'bbbbbbbb-bbbb-bbbb-bbbb-bbbbbbbb0087' }
-              - column: { name: url, value: 'https://picsum.photos/seed/0087-0/600' }
-              - column: { name: order_index, valueNumeric: 0 }
-              - column: { name: is_main, valueBoolean: true }
-        - insert:
-            tableName: listing_images
-            columns:
-              - column: { name: id, value: 'cccccccc-cccc-cccc-cccc-cccccccc0124' }
-              - column: { name: listing_id, value: 'bbbbbbbb-bbbb-bbbb-bbbb-bbbbbbbb0087' }
-              - column: { name: url, value: 'https://picsum.photos/seed/0087-1/600' }
-              - column: { name: order_index, valueNumeric: 1 }
-              - column: { name: is_main, valueBoolean: false }
-        - insert:
-            tableName: listing_images
-            columns:
-              - column: { name: id, value: 'cccccccc-cccc-cccc-cccc-cccccccc0125' }
-              - column: { name: listing_id, value: 'bbbbbbbb-bbbb-bbbb-bbbb-bbbbbbbb0088' }
-              - column: { name: url, value: 'https://picsum.photos/seed/0088-0/600' }
-              - column: { name: order_index, valueNumeric: 0 }
-              - column: { name: is_main, valueBoolean: true }
-        - insert:
-            tableName: listing_images
-            columns:
-              - column: { name: id, value: 'cccccccc-cccc-cccc-cccc-cccccccc0126' }
-              - column: { name: listing_id, value: 'bbbbbbbb-bbbb-bbbb-bbbb-bbbbbbbb0088' }
-              - column: { name: url, value: 'https://picsum.photos/seed/0088-1/600' }
-              - column: { name: order_index, valueNumeric: 1 }
-              - column: { name: is_main, valueBoolean: false }
-        - insert:
-            tableName: listing_images
-            columns:
-              - column: { name: id, value: 'cccccccc-cccc-cccc-cccc-cccccccc0127' }
-              - column: { name: listing_id, value: 'bbbbbbbb-bbbb-bbbb-bbbb-bbbbbbbb0089' }
-              - column: { name: url, value: 'https://picsum.photos/seed/0089-0/600' }
-              - column: { name: order_index, valueNumeric: 0 }
-              - column: { name: is_main, valueBoolean: true }
-        - insert:
-            tableName: listing_images
-            columns:
-              - column: { name: id, value: 'cccccccc-cccc-cccc-cccc-cccccccc0128' }
-              - column: { name: listing_id, value: 'bbbbbbbb-bbbb-bbbb-bbbb-bbbbbbbb0089' }
-              - column: { name: url, value: 'https://picsum.photos/seed/0089-1/600' }
-              - column: { name: order_index, valueNumeric: 1 }
-              - column: { name: is_main, valueBoolean: false }
-        - insert:
-            tableName: listing_images
-            columns:
-              - column: { name: id, value: 'cccccccc-cccc-cccc-cccc-cccccccc0129' }
-              - column: { name: listing_id, value: 'bbbbbbbb-bbbb-bbbb-bbbb-bbbbbbbb0090' }
-              - column: { name: url, value: 'https://picsum.photos/seed/0090-0/600' }
-              - column: { name: order_index, valueNumeric: 0 }
-              - column: { name: is_main, valueBoolean: true }
-        - insert:
-            tableName: listing_images
-            columns:
-              - column: { name: id, value: 'cccccccc-cccc-cccc-cccc-cccccccc0130' }
-              - column: { name: listing_id, value: 'bbbbbbbb-bbbb-bbbb-bbbb-bbbbbbbb0090' }
-              - column: { name: url, value: 'https://picsum.photos/seed/0090-1/600' }
-              - column: { name: order_index, valueNumeric: 1 }
-              - column: { name: is_main, valueBoolean: false }
-        - insert:
-            tableName: listing_images
-            columns:
-              - column: { name: id, value: 'cccccccc-cccc-cccc-cccc-cccccccc0131' }
-              - column: { name: listing_id, value: 'bbbbbbbb-bbbb-bbbb-bbbb-bbbbbbbb0091' }
-              - column: { name: url, value: 'https://picsum.photos/seed/0091-0/600' }
-              - column: { name: order_index, valueNumeric: 0 }
-              - column: { name: is_main, valueBoolean: true }
-        - insert:
-            tableName: listing_images
-            columns:
-              - column: { name: id, value: 'cccccccc-cccc-cccc-cccc-cccccccc0132' }
-              - column: { name: listing_id, value: 'bbbbbbbb-bbbb-bbbb-bbbb-bbbbbbbb0091' }
-              - column: { name: url, value: 'https://picsum.photos/seed/0091-1/600' }
-              - column: { name: order_index, valueNumeric: 1 }
-              - column: { name: is_main, valueBoolean: false }
-        - insert:
-            tableName: listing_images
-            columns:
-              - column: { name: id, value: 'cccccccc-cccc-cccc-cccc-cccccccc0133' }
-              - column: { name: listing_id, value: 'bbbbbbbb-bbbb-bbbb-bbbb-bbbbbbbb0092' }
-              - column: { name: url, value: 'https://picsum.photos/seed/0092-0/600' }
-              - column: { name: order_index, valueNumeric: 0 }
-              - column: { name: is_main, valueBoolean: true }
-        - insert:
-            tableName: listing_images
-            columns:
-              - column: { name: id, value: 'cccccccc-cccc-cccc-cccc-cccccccc0134' }
-              - column: { name: listing_id, value: 'bbbbbbbb-bbbb-bbbb-bbbb-bbbbbbbb0092' }
-              - column: { name: url, value: 'https://picsum.photos/seed/0092-1/600' }
-              - column: { name: order_index, valueNumeric: 1 }
-              - column: { name: is_main, valueBoolean: false }
-        - insert:
-            tableName: listing_images
-            columns:
-              - column: { name: id, value: 'cccccccc-cccc-cccc-cccc-cccccccc0135' }
-              - column: { name: listing_id, value: 'bbbbbbbb-bbbb-bbbb-bbbb-bbbbbbbb0093' }
-              - column: { name: url, value: 'https://picsum.photos/seed/0093-0/600' }
-              - column: { name: order_index, valueNumeric: 0 }
-              - column: { name: is_main, valueBoolean: true }
-        - insert:
-            tableName: listing_images
-            columns:
-              - column: { name: id, value: 'cccccccc-cccc-cccc-cccc-cccccccc0136' }
-              - column: { name: listing_id, value: 'bbbbbbbb-bbbb-bbbb-bbbb-bbbbbbbb0093' }
-              - column: { name: url, value: 'https://picsum.photos/seed/0093-1/600' }
-              - column: { name: order_index, valueNumeric: 1 }
-              - column: { name: is_main, valueBoolean: false }
-        - insert:
-            tableName: listing_images
-            columns:
-              - column: { name: id, value: 'cccccccc-cccc-cccc-cccc-cccccccc0137' }
-              - column: { name: listing_id, value: 'bbbbbbbb-bbbb-bbbb-bbbb-bbbbbbbb0094' }
-              - column: { name: url, value: 'https://picsum.photos/seed/0094-0/600' }
-              - column: { name: order_index, valueNumeric: 0 }
-              - column: { name: is_main, valueBoolean: true }
-        - insert:
-            tableName: listing_images
-            columns:
-              - column: { name: id, value: 'cccccccc-cccc-cccc-cccc-cccccccc0138' }
-              - column: { name: listing_id, value: 'bbbbbbbb-bbbb-bbbb-bbbb-bbbbbbbb0094' }
-              - column: { name: url, value: 'https://picsum.photos/seed/0094-1/600' }
-              - column: { name: order_index, valueNumeric: 1 }
-              - column: { name: is_main, valueBoolean: false }
-        - insert:
-            tableName: listing_images
-            columns:
-              - column: { name: id, value: 'cccccccc-cccc-cccc-cccc-cccccccc0139' }
-              - column: { name: listing_id, value: 'bbbbbbbb-bbbb-bbbb-bbbb-bbbbbbbb0095' }
-              - column: { name: url, value: 'https://picsum.photos/seed/0095-0/600' }
-              - column: { name: order_index, valueNumeric: 0 }
-              - column: { name: is_main, valueBoolean: true }
-        - insert:
-            tableName: listing_images
-            columns:
-              - column: { name: id, value: 'cccccccc-cccc-cccc-cccc-cccccccc0140' }
-              - column: { name: listing_id, value: 'bbbbbbbb-bbbb-bbbb-bbbb-bbbbbbbb0095' }
-              - column: { name: url, value: 'https://picsum.photos/seed/0095-1/600' }
-              - column: { name: order_index, valueNumeric: 1 }
-              - column: { name: is_main, valueBoolean: false }
-        - insert:
-            tableName: listing_images
-            columns:
-              - column: { name: id, value: 'cccccccc-cccc-cccc-cccc-cccccccc0141' }
-              - column: { name: listing_id, value: 'bbbbbbbb-bbbb-bbbb-bbbb-bbbbbbbb0096' }
-              - column: { name: url, value: 'https://picsum.photos/seed/0096-0/600' }
-              - column: { name: order_index, valueNumeric: 0 }
-              - column: { name: is_main, valueBoolean: true }
-        - insert:
-            tableName: listing_images
-            columns:
-              - column: { name: id, value: 'cccccccc-cccc-cccc-cccc-cccccccc0142' }
-              - column: { name: listing_id, value: 'bbbbbbbb-bbbb-bbbb-bbbb-bbbbbbbb0096' }
-              - column: { name: url, value: 'https://picsum.photos/seed/0096-1/600' }
-              - column: { name: order_index, valueNumeric: 1 }
-              - column: { name: is_main, valueBoolean: false }
-        - insert:
-            tableName: listing_images
-            columns:
-              - column: { name: id, value: 'cccccccc-cccc-cccc-cccc-cccccccc0143' }
-              - column: { name: listing_id, value: 'bbbbbbbb-bbbb-bbbb-bbbb-bbbbbbbb0097' }
-              - column: { name: url, value: 'https://picsum.photos/seed/0097-0/600' }
-              - column: { name: order_index, valueNumeric: 0 }
-              - column: { name: is_main, valueBoolean: true }
-        - insert:
-            tableName: listing_images
-            columns:
-              - column: { name: id, value: 'cccccccc-cccc-cccc-cccc-cccccccc0144' }
-              - column: { name: listing_id, value: 'bbbbbbbb-bbbb-bbbb-bbbb-bbbbbbbb0097' }
-              - column: { name: url, value: 'https://picsum.photos/seed/0097-1/600' }
-              - column: { name: order_index, valueNumeric: 1 }
-              - column: { name: is_main, valueBoolean: false }
-        - insert:
-            tableName: listing_images
-            columns:
-              - column: { name: id, value: 'cccccccc-cccc-cccc-cccc-cccccccc0145' }
-              - column: { name: listing_id, value: 'bbbbbbbb-bbbb-bbbb-bbbb-bbbbbbbb0098' }
-              - column: { name: url, value: 'https://picsum.photos/seed/0098-0/600' }
-              - column: { name: order_index, valueNumeric: 0 }
-              - column: { name: is_main, valueBoolean: true }
-        - insert:
-            tableName: listing_images
-            columns:
-              - column: { name: id, value: 'cccccccc-cccc-cccc-cccc-cccccccc0146' }
-              - column: { name: listing_id, value: 'bbbbbbbb-bbbb-bbbb-bbbb-bbbbbbbb0098' }
-              - column: { name: url, value: 'https://picsum.photos/seed/0098-1/600' }
-              - column: { name: order_index, valueNumeric: 1 }
-              - column: { name: is_main, valueBoolean: false }
-        - insert:
-            tableName: listing_images
-            columns:
-              - column: { name: id, value: 'cccccccc-cccc-cccc-cccc-cccccccc0147' }
-              - column: { name: listing_id, value: 'bbbbbbbb-bbbb-bbbb-bbbb-bbbbbbbb0099' }
-              - column: { name: url, value: 'https://picsum.photos/seed/0099-0/600' }
-              - column: { name: order_index, valueNumeric: 0 }
-              - column: { name: is_main, valueBoolean: true }
-        - insert:
-            tableName: listing_images
-            columns:
-              - column: { name: id, value: 'cccccccc-cccc-cccc-cccc-cccccccc0148' }
-              - column: { name: listing_id, value: 'bbbbbbbb-bbbb-bbbb-bbbb-bbbbbbbb0099' }
-              - column: { name: url, value: 'https://picsum.photos/seed/0099-1/600' }
-              - column: { name: order_index, valueNumeric: 1 }
-              - column: { name: is_main, valueBoolean: false }
-        - insert:
-            tableName: listing_images
-            columns:
-              - column: { name: id, value: 'cccccccc-cccc-cccc-cccc-cccccccc0149' }
               - column: { name: listing_id, value: 'bbbbbbbb-bbbb-bbbb-bbbb-bbbbbbbb0100' }
-              - column: { name: url, value: 'https://picsum.photos/seed/0100-0/600' }
+              - column: { name: url, value: '/animals/parrot.jpg' }
               - column: { name: order_index, valueNumeric: 0 }
               - column: { name: is_main, valueBoolean: true }
-        - insert:
-            tableName: listing_images
-            columns:
-              - column: { name: id, value: 'cccccccc-cccc-cccc-cccc-cccccccc0150' }
-              - column: { name: listing_id, value: 'bbbbbbbb-bbbb-bbbb-bbbb-bbbbbbbb0100' }
-              - column: { name: url, value: 'https://picsum.photos/seed/0100-1/600' }
-              - column: { name: order_index, valueNumeric: 1 }
-              - column: { name: is_main, valueBoolean: false }
+
 
   - changeSet:
       id: 028-seed-demo-bookings

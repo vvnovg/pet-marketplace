@@ -336,6 +336,7 @@ Swagger UI stays private: `http://localhost:8080/api/v1/swagger-ui.html` (on the
 After `docker compose -f docker-compose.yml up -d --build` on an empty database, Liquibase seeds demo data automatically (changeset `006-seed-demo-data.yaml`, guarded so it runs only on an empty database — each changeset checks its own target table is empty):
 
 - ~47 users, ~100 listings, ~40 bookings, ~20 reviews, ~30 messages, ~25 favorites, ~10 subscriptions.
+- ~100 listing images, one per listing, each a real breed photo (CC0/PD/CC-BY from Wikimedia Commons) bundled with the frontend at `/animals/<breed-slug>.<ext>`. The seeded `listing_images.url` is a root-relative path (e.g. `/animals/labrador-retriever.jpg`) resolved by the public frontend on `:3000`; the backend `:8080` stays firewall-closed. Attributions are in the frontend repo at `public/animals/ATTRIBUTIONS.md`.
 - Listing/booking statuses are seeded in consistent pairs (CONFIRMED↔RESERVED, COMPLETED↔SOLD).
 
 **Demo accounts** (all share password `Demo12345`, email-verified):

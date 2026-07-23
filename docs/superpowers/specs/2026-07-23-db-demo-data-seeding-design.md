@@ -8,7 +8,7 @@
 | Decision | Value |
 |---|---|
 | Target environment | Prod demo (Docker Compose) |
-| Volume | Medium (~250 rows: ~47 users, ~100 listings, ~30 bookings, ~20 reviews, ~30 messages, ~25 favorites, ~10 subscriptions, ~150 listing images) |
+| Volume | Medium (~250 rows: ~47 users, ~100 listings, ~30 bookings, ~20 reviews, ~30 messages, ~25 favorites, ~10 subscriptions, ~100 listing images) |
 | Approach | A — Liquibase seed changesets (declarative, idempotent, survives restarts) |
 | Demo logins | Explicit accounts with known email/password `Demo12345` (one shared BCrypt hash), `is_verified=true` |
 | Reference data | Fill missing breeds for `reptiles`/`fish`/`other` categories |
@@ -31,7 +31,7 @@ Insertion order follows the FK graph (NOT NULL FKs first):
 1. **users** (~47 rows): `admin@demo.local`, `moderator@demo.local`, `seller1..5@demo.local`, `buyer@demo.local` (explicit demo accounts), then `seller6..15@demo.local`, `buyer1..29@demo.local`. Domain is `@demo.local` — **not** `@example.com` (the stand tests delete `LIKE '%@example.com'`, so no collision). Columns: `email`, `password_hash` (one shared BCrypt hash of `Demo12345`, YAML literal), `role` (BUYER/SELLER/ADMIN/MODERATOR enum-string), `first_name`, `last_name`, `is_verified=true`, `is_active=true`.
 2. **profiles** (~47 rows, 1:1): `user_id`, `country`/`city` (spread across ~6 RU cities), `bio`, `rating=0.0`, `total_reviews=0` (updated for sellers with approved reviews via a trailing `UPDATE`).
 3. **listings** (~100 rows): `seller_id` ∈ sellers, `category_id`/`breed_id` ∈ reference (incl. new breeds), `status` distribution ~60 ACTIVE / ~10 RESERVED / ~15 SOLD / ~10 PENDING_MODERATION / ~5 DRAFT, `price`, `gender`, `age_months`, `location_country/city`, `views_count` (random-ish literal), `has_vaccination`/`has_documents`.
-4. **listing_images** (~150 rows, 1-2 per listing): `url` placeholder `https://picsum.photos/seed/<listing-slug>/600`, `order_index`, `is_main`.
+4. **listing_images** (~100 rows, one per listing): `url` is a root-relative path `/animals/<breed-slug>.<ext>` pointing at a real breed photo (CC0/PD/CC-BY, sourced from Wikimedia Commons) bundled with the frontend distribution at `public/animals/`. Root-relative so it resolves through the public frontend `:3000` (the backend `:8080` is firewall-closed in production); `order_index=0`, `is_main=true`. Attributions live in the frontend repo at `public/animals/ATTRIBUTIONS.md`.
 5. **bookings** (~30 rows): `buyer_id`/`seller_id`/`listing_id`, `status` ~10 PENDING / ~8 CONFIRMED / ~7 COMPLETED / ~5 CANCELLED. Status is paired with listing status (see Invariants).
 6. **reviews** (~20 rows): only on COMPLETED bookings (unique `booking_id`), `author_id`/`recipient_id`/`rating` (1-5, CHECK), `comment`, `status` ~15 APPROVED / ~5 PENDING.
 7. **messages** (~30 rows, 5-6 chats): `sender_id`/`receiver_id`/`listing_id`/`content`/`is_read`, `created_at` incremental.
