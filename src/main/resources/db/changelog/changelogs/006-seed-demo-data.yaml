@@ -536,7 +536,7 @@ databaseChangeLog:
         - onFail: MARK_RAN
         - sqlCheck:
             expectedResult: 0
-            sql: SELECT count(*) FROM users
+            sql: SELECT count(*) FROM profiles
       changes:
         - insert:
             tableName: profiles
@@ -1017,7 +1017,7 @@ databaseChangeLog:
         - onFail: MARK_RAN
         - sqlCheck:
             expectedResult: 0
-            sql: SELECT count(*) FROM users
+            sql: SELECT count(*) FROM listings
       changes:
         - insert:
             tableName: listings
@@ -3028,7 +3028,7 @@ databaseChangeLog:
         - onFail: MARK_RAN
         - sqlCheck:
             expectedResult: 0
-            sql: SELECT count(*) FROM users
+            sql: SELECT count(*) FROM listing_images
       changes:
         - insert:
             tableName: listing_images
@@ -4230,3 +4230,593 @@ databaseChangeLog:
               - column: { name: url, value: 'https://picsum.photos/seed/0100-1/600' }
               - column: { name: order_index, valueNumeric: 1 }
               - column: { name: is_main, valueBoolean: false }
+
+  - changeSet:
+      id: 028-seed-demo-bookings
+      author: seed
+      contextFilter: "prod or dev or stand"
+      preConditions:
+        - onFail: MARK_RAN
+          sqlCheck:
+            expectedResult: 0
+            sql: SELECT count(*) FROM bookings
+      changes:
+        - insert:
+            tableName: bookings
+            columns:
+              - column: { name: id, value: 'dddddddd-dddd-dddd-dddd-dddddddd0001' }
+              - column: { name: listing_id, value: 'bbbbbbbb-bbbb-bbbb-bbbb-bbbbbbbb0001' }
+              - column: { name: buyer_id, value: 'aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaa0019' }
+              - column: { name: seller_id, value: 'aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaa0003' }
+              - column: { name: status, value: 'PENDING' }
+              - column: { name: message, value: 'Здравствуйте, хочу купить. Звоните.' }
+        - insert:
+            tableName: bookings
+            columns:
+              - column: { name: id, value: 'dddddddd-dddd-dddd-dddd-dddddddd0002' }
+              - column: { name: listing_id, value: 'bbbbbbbb-bbbb-bbbb-bbbb-bbbbbbbb0002' }
+              - column: { name: buyer_id, value: 'aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaa0020' }
+              - column: { name: seller_id, value: 'aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaa0004' }
+              - column: { name: status, value: 'PENDING' }
+              - column: { name: message, value: 'Здравствуйте, хочу купить. Звоните.' }
+        - insert:
+            tableName: bookings
+            columns:
+              - column: { name: id, value: 'dddddddd-dddd-dddd-dddd-dddddddd0003' }
+              - column: { name: listing_id, value: 'bbbbbbbb-bbbb-bbbb-bbbb-bbbbbbbb0003' }
+              - column: { name: buyer_id, value: 'aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaa0021' }
+              - column: { name: seller_id, value: 'aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaa0005' }
+              - column: { name: status, value: 'PENDING' }
+              - column: { name: message, value: 'Здравствуйте, хочу купить. Звоните.' }
+        - insert:
+            tableName: bookings
+            columns:
+              - column: { name: id, value: 'dddddddd-dddd-dddd-dddd-dddddddd0004' }
+              - column: { name: listing_id, value: 'bbbbbbbb-bbbb-bbbb-bbbb-bbbbbbbb0004' }
+              - column: { name: buyer_id, value: 'aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaa0022' }
+              - column: { name: seller_id, value: 'aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaa0006' }
+              - column: { name: status, value: 'PENDING' }
+              - column: { name: message, value: 'Здравствуйте, хочу купить. Звоните.' }
+        - insert:
+            tableName: bookings
+            columns:
+              - column: { name: id, value: 'dddddddd-dddd-dddd-dddd-dddddddd0005' }
+              - column: { name: listing_id, value: 'bbbbbbbb-bbbb-bbbb-bbbb-bbbbbbbb0005' }
+              - column: { name: buyer_id, value: 'aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaa0023' }
+              - column: { name: seller_id, value: 'aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaa0007' }
+              - column: { name: status, value: 'PENDING' }
+              - column: { name: message, value: 'Здравствуйте, хочу купить. Звоните.' }
+        - insert:
+            tableName: bookings
+            columns:
+              - column: { name: id, value: 'dddddddd-dddd-dddd-dddd-dddddddd0006' }
+              - column: { name: listing_id, value: 'bbbbbbbb-bbbb-bbbb-bbbb-bbbbbbbb0006' }
+              - column: { name: buyer_id, value: 'aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaa0024' }
+              - column: { name: seller_id, value: 'aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaa0009' }
+              - column: { name: status, value: 'PENDING' }
+              - column: { name: message, value: 'Здравствуйте, хочу купить. Звоните.' }
+        - insert:
+            tableName: bookings
+            columns:
+              - column: { name: id, value: 'dddddddd-dddd-dddd-dddd-dddddddd0007' }
+              - column: { name: listing_id, value: 'bbbbbbbb-bbbb-bbbb-bbbb-bbbbbbbb0007' }
+              - column: { name: buyer_id, value: 'aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaa0025' }
+              - column: { name: seller_id, value: 'aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaa0010' }
+              - column: { name: status, value: 'PENDING' }
+              - column: { name: message, value: 'Здравствуйте, хочу купить. Звоните.' }
+        - insert:
+            tableName: bookings
+            columns:
+              - column: { name: id, value: 'dddddddd-dddd-dddd-dddd-dddddddd0008' }
+              - column: { name: listing_id, value: 'bbbbbbbb-bbbb-bbbb-bbbb-bbbbbbbb0063' }
+              - column: { name: buyer_id, value: 'aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaa0026' }
+              - column: { name: seller_id, value: 'aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaa0005' }
+              - column: { name: status, value: 'CONFIRMED' }
+              - column: { name: message, value: 'Здравствуйте, хочу купить. Звоните.' }
+        - insert:
+            tableName: bookings
+            columns:
+              - column: { name: id, value: 'dddddddd-dddd-dddd-dddd-dddddddd0009' }
+              - column: { name: listing_id, value: 'bbbbbbbb-bbbb-bbbb-bbbb-bbbbbbbb0064' }
+              - column: { name: buyer_id, value: 'aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaa0027' }
+              - column: { name: seller_id, value: 'aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaa0006' }
+              - column: { name: status, value: 'CONFIRMED' }
+              - column: { name: message, value: 'Здравствуйте, хочу купить. Звоните.' }
+        - insert:
+            tableName: bookings
+            columns:
+              - column: { name: id, value: 'dddddddd-dddd-dddd-dddd-dddddddd0010' }
+              - column: { name: listing_id, value: 'bbbbbbbb-bbbb-bbbb-bbbb-bbbbbbbb0065' }
+              - column: { name: buyer_id, value: 'aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaa0028' }
+              - column: { name: seller_id, value: 'aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaa0007' }
+              - column: { name: status, value: 'CONFIRMED' }
+              - column: { name: message, value: 'Здравствуйте, хочу купить. Звоните.' }
+        - insert:
+            tableName: bookings
+            columns:
+              - column: { name: id, value: 'dddddddd-dddd-dddd-dddd-dddddddd0011' }
+              - column: { name: listing_id, value: 'bbbbbbbb-bbbb-bbbb-bbbb-bbbbbbbb0066' }
+              - column: { name: buyer_id, value: 'aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaa0029' }
+              - column: { name: seller_id, value: 'aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaa0009' }
+              - column: { name: status, value: 'CONFIRMED' }
+              - column: { name: message, value: 'Здравствуйте, хочу купить. Звоните.' }
+        - insert:
+            tableName: bookings
+            columns:
+              - column: { name: id, value: 'dddddddd-dddd-dddd-dddd-dddddddd0012' }
+              - column: { name: listing_id, value: 'bbbbbbbb-bbbb-bbbb-bbbb-bbbbbbbb0067' }
+              - column: { name: buyer_id, value: 'aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaa0030' }
+              - column: { name: seller_id, value: 'aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaa0010' }
+              - column: { name: status, value: 'CONFIRMED' }
+              - column: { name: message, value: 'Здравствуйте, хочу купить. Звоните.' }
+        - insert:
+            tableName: bookings
+            columns:
+              - column: { name: id, value: 'dddddddd-dddd-dddd-dddd-dddddddd0013' }
+              - column: { name: listing_id, value: 'bbbbbbbb-bbbb-bbbb-bbbb-bbbbbbbb0068' }
+              - column: { name: buyer_id, value: 'aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaa0031' }
+              - column: { name: seller_id, value: 'aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaa0011' }
+              - column: { name: status, value: 'CONFIRMED' }
+              - column: { name: message, value: 'Здравствуйте, хочу купить. Звоните.' }
+        - insert:
+            tableName: bookings
+            columns:
+              - column: { name: id, value: 'dddddddd-dddd-dddd-dddd-dddddddd0014' }
+              - column: { name: listing_id, value: 'bbbbbbbb-bbbb-bbbb-bbbb-bbbbbbbb0069' }
+              - column: { name: buyer_id, value: 'aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaa0032' }
+              - column: { name: seller_id, value: 'aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaa0012' }
+              - column: { name: status, value: 'CONFIRMED' }
+              - column: { name: message, value: 'Здравствуйте, хочу купить. Звоните.' }
+        - insert:
+            tableName: bookings
+            columns:
+              - column: { name: id, value: 'dddddddd-dddd-dddd-dddd-dddddddd0015' }
+              - column: { name: listing_id, value: 'bbbbbbbb-bbbb-bbbb-bbbb-bbbbbbbb0070' }
+              - column: { name: buyer_id, value: 'aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaa0033' }
+              - column: { name: seller_id, value: 'aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaa0013' }
+              - column: { name: status, value: 'CONFIRMED' }
+              - column: { name: message, value: 'Здравствуйте, хочу купить. Звоните.' }
+        - insert:
+            tableName: bookings
+            columns:
+              - column: { name: id, value: 'dddddddd-dddd-dddd-dddd-dddddddd0016' }
+              - column: { name: listing_id, value: 'bbbbbbbb-bbbb-bbbb-bbbb-bbbbbbbb0071' }
+              - column: { name: buyer_id, value: 'aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaa0034' }
+              - column: { name: seller_id, value: 'aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaa0014' }
+              - column: { name: status, value: 'COMPLETED' }
+              - column: { name: message, value: 'Здравствуйте, хочу купить. Звоните.' }
+        - insert:
+            tableName: bookings
+            columns:
+              - column: { name: id, value: 'dddddddd-dddd-dddd-dddd-dddddddd0017' }
+              - column: { name: listing_id, value: 'bbbbbbbb-bbbb-bbbb-bbbb-bbbbbbbb0072' }
+              - column: { name: buyer_id, value: 'aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaa0035' }
+              - column: { name: seller_id, value: 'aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaa0015' }
+              - column: { name: status, value: 'COMPLETED' }
+              - column: { name: message, value: 'Здравствуйте, хочу купить. Звоните.' }
+        - insert:
+            tableName: bookings
+            columns:
+              - column: { name: id, value: 'dddddddd-dddd-dddd-dddd-dddddddd0018' }
+              - column: { name: listing_id, value: 'bbbbbbbb-bbbb-bbbb-bbbb-bbbbbbbb0073' }
+              - column: { name: buyer_id, value: 'aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaa0036' }
+              - column: { name: seller_id, value: 'aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaa0016' }
+              - column: { name: status, value: 'COMPLETED' }
+              - column: { name: message, value: 'Здравствуйте, хочу купить. Звоните.' }
+        - insert:
+            tableName: bookings
+            columns:
+              - column: { name: id, value: 'dddddddd-dddd-dddd-dddd-dddddddd0019' }
+              - column: { name: listing_id, value: 'bbbbbbbb-bbbb-bbbb-bbbb-bbbbbbbb0074' }
+              - column: { name: buyer_id, value: 'aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaa0037' }
+              - column: { name: seller_id, value: 'aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaa0017' }
+              - column: { name: status, value: 'COMPLETED' }
+              - column: { name: message, value: 'Здравствуйте, хочу купить. Звоните.' }
+        - insert:
+            tableName: bookings
+            columns:
+              - column: { name: id, value: 'dddddddd-dddd-dddd-dddd-dddddddd0020' }
+              - column: { name: listing_id, value: 'bbbbbbbb-bbbb-bbbb-bbbb-bbbbbbbb0075' }
+              - column: { name: buyer_id, value: 'aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaa0038' }
+              - column: { name: seller_id, value: 'aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaa0018' }
+              - column: { name: status, value: 'COMPLETED' }
+              - column: { name: message, value: 'Здравствуйте, хочу купить. Звоните.' }
+        - insert:
+            tableName: bookings
+            columns:
+              - column: { name: id, value: 'dddddddd-dddd-dddd-dddd-dddddddd0021' }
+              - column: { name: listing_id, value: 'bbbbbbbb-bbbb-bbbb-bbbb-bbbbbbbb0076' }
+              - column: { name: buyer_id, value: 'aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaa0039' }
+              - column: { name: seller_id, value: 'aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaa0003' }
+              - column: { name: status, value: 'COMPLETED' }
+              - column: { name: message, value: 'Здравствуйте, хочу купить. Звоните.' }
+        - insert:
+            tableName: bookings
+            columns:
+              - column: { name: id, value: 'dddddddd-dddd-dddd-dddd-dddddddd0022' }
+              - column: { name: listing_id, value: 'bbbbbbbb-bbbb-bbbb-bbbb-bbbbbbbb0077' }
+              - column: { name: buyer_id, value: 'aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaa0040' }
+              - column: { name: seller_id, value: 'aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaa0004' }
+              - column: { name: status, value: 'COMPLETED' }
+              - column: { name: message, value: 'Здравствуйте, хочу купить. Звоните.' }
+        - insert:
+            tableName: bookings
+            columns:
+              - column: { name: id, value: 'dddddddd-dddd-dddd-dddd-dddddddd0023' }
+              - column: { name: listing_id, value: 'bbbbbbbb-bbbb-bbbb-bbbb-bbbbbbbb0078' }
+              - column: { name: buyer_id, value: 'aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaa0041' }
+              - column: { name: seller_id, value: 'aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaa0005' }
+              - column: { name: status, value: 'COMPLETED' }
+              - column: { name: message, value: 'Здравствуйте, хочу купить. Звоните.' }
+        - insert:
+            tableName: bookings
+            columns:
+              - column: { name: id, value: 'dddddddd-dddd-dddd-dddd-dddddddd0024' }
+              - column: { name: listing_id, value: 'bbbbbbbb-bbbb-bbbb-bbbb-bbbbbbbb0079' }
+              - column: { name: buyer_id, value: 'aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaa0042' }
+              - column: { name: seller_id, value: 'aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaa0006' }
+              - column: { name: status, value: 'COMPLETED' }
+              - column: { name: message, value: 'Здравствуйте, хочу купить. Звоните.' }
+        - insert:
+            tableName: bookings
+            columns:
+              - column: { name: id, value: 'dddddddd-dddd-dddd-dddd-dddddddd0025' }
+              - column: { name: listing_id, value: 'bbbbbbbb-bbbb-bbbb-bbbb-bbbbbbbb0080' }
+              - column: { name: buyer_id, value: 'aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaa0043' }
+              - column: { name: seller_id, value: 'aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaa0007' }
+              - column: { name: status, value: 'COMPLETED' }
+              - column: { name: message, value: 'Здравствуйте, хочу купить. Звоните.' }
+        - insert:
+            tableName: bookings
+            columns:
+              - column: { name: id, value: 'dddddddd-dddd-dddd-dddd-dddddddd0026' }
+              - column: { name: listing_id, value: 'bbbbbbbb-bbbb-bbbb-bbbb-bbbbbbbb0081' }
+              - column: { name: buyer_id, value: 'aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaa0044' }
+              - column: { name: seller_id, value: 'aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaa0009' }
+              - column: { name: status, value: 'COMPLETED' }
+              - column: { name: message, value: 'Здравствуйте, хочу купить. Звоните.' }
+        - insert:
+            tableName: bookings
+            columns:
+              - column: { name: id, value: 'dddddddd-dddd-dddd-dddd-dddddddd0027' }
+              - column: { name: listing_id, value: 'bbbbbbbb-bbbb-bbbb-bbbb-bbbbbbbb0082' }
+              - column: { name: buyer_id, value: 'aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaa0045' }
+              - column: { name: seller_id, value: 'aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaa0010' }
+              - column: { name: status, value: 'COMPLETED' }
+              - column: { name: message, value: 'Здравствуйте, хочу купить. Звоните.' }
+        - insert:
+            tableName: bookings
+            columns:
+              - column: { name: id, value: 'dddddddd-dddd-dddd-dddd-dddddddd0028' }
+              - column: { name: listing_id, value: 'bbbbbbbb-bbbb-bbbb-bbbb-bbbbbbbb0083' }
+              - column: { name: buyer_id, value: 'aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaa0046' }
+              - column: { name: seller_id, value: 'aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaa0011' }
+              - column: { name: status, value: 'COMPLETED' }
+              - column: { name: message, value: 'Здравствуйте, хочу купить. Звоните.' }
+        - insert:
+            tableName: bookings
+            columns:
+              - column: { name: id, value: 'dddddddd-dddd-dddd-dddd-dddddddd0029' }
+              - column: { name: listing_id, value: 'bbbbbbbb-bbbb-bbbb-bbbb-bbbbbbbb0084' }
+              - column: { name: buyer_id, value: 'aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaa0047' }
+              - column: { name: seller_id, value: 'aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaa0012' }
+              - column: { name: status, value: 'COMPLETED' }
+              - column: { name: message, value: 'Здравствуйте, хочу купить. Звоните.' }
+        - insert:
+            tableName: bookings
+            columns:
+              - column: { name: id, value: 'dddddddd-dddd-dddd-dddd-dddddddd0030' }
+              - column: { name: listing_id, value: 'bbbbbbbb-bbbb-bbbb-bbbb-bbbbbbbb0085' }
+              - column: { name: buyer_id, value: 'aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaa0019' }
+              - column: { name: seller_id, value: 'aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaa0013' }
+              - column: { name: status, value: 'COMPLETED' }
+              - column: { name: message, value: 'Здравствуйте, хочу купить. Звоните.' }
+        - insert:
+            tableName: bookings
+            columns:
+              - column: { name: id, value: 'dddddddd-dddd-dddd-dddd-dddddddd0031' }
+              - column: { name: listing_id, value: 'bbbbbbbb-bbbb-bbbb-bbbb-bbbbbbbb0086' }
+              - column: { name: buyer_id, value: 'aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaa0020' }
+              - column: { name: seller_id, value: 'aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaa0014' }
+              - column: { name: status, value: 'COMPLETED' }
+              - column: { name: message, value: 'Здравствуйте, хочу купить. Звоните.' }
+        - insert:
+            tableName: bookings
+            columns:
+              - column: { name: id, value: 'dddddddd-dddd-dddd-dddd-dddddddd0032' }
+              - column: { name: listing_id, value: 'bbbbbbbb-bbbb-bbbb-bbbb-bbbbbbbb0087' }
+              - column: { name: buyer_id, value: 'aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaa0021' }
+              - column: { name: seller_id, value: 'aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaa0015' }
+              - column: { name: status, value: 'COMPLETED' }
+              - column: { name: message, value: 'Здравствуйте, хочу купить. Звоните.' }
+        - insert:
+            tableName: bookings
+            columns:
+              - column: { name: id, value: 'dddddddd-dddd-dddd-dddd-dddddddd0033' }
+              - column: { name: listing_id, value: 'bbbbbbbb-bbbb-bbbb-bbbb-bbbbbbbb0088' }
+              - column: { name: buyer_id, value: 'aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaa0022' }
+              - column: { name: seller_id, value: 'aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaa0016' }
+              - column: { name: status, value: 'COMPLETED' }
+              - column: { name: message, value: 'Здравствуйте, хочу купить. Звоните.' }
+        - insert:
+            tableName: bookings
+            columns:
+              - column: { name: id, value: 'dddddddd-dddd-dddd-dddd-dddddddd0034' }
+              - column: { name: listing_id, value: 'bbbbbbbb-bbbb-bbbb-bbbb-bbbbbbbb0089' }
+              - column: { name: buyer_id, value: 'aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaa0023' }
+              - column: { name: seller_id, value: 'aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaa0017' }
+              - column: { name: status, value: 'COMPLETED' }
+              - column: { name: message, value: 'Здравствуйте, хочу купить. Звоните.' }
+        - insert:
+            tableName: bookings
+            columns:
+              - column: { name: id, value: 'dddddddd-dddd-dddd-dddd-dddddddd0035' }
+              - column: { name: listing_id, value: 'bbbbbbbb-bbbb-bbbb-bbbb-bbbbbbbb0090' }
+              - column: { name: buyer_id, value: 'aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaa0024' }
+              - column: { name: seller_id, value: 'aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaa0018' }
+              - column: { name: status, value: 'COMPLETED' }
+              - column: { name: message, value: 'Здравствуйте, хочу купить. Звоните.' }
+        - insert:
+            tableName: bookings
+            columns:
+              - column: { name: id, value: 'dddddddd-dddd-dddd-dddd-dddddddd0036' }
+              - column: { name: listing_id, value: 'bbbbbbbb-bbbb-bbbb-bbbb-bbbbbbbb0008' }
+              - column: { name: buyer_id, value: 'aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaa0025' }
+              - column: { name: seller_id, value: 'aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaa0011' }
+              - column: { name: status, value: 'CANCELLED' }
+              - column: { name: message, value: 'Здравствуйте, хочу купить. Звоните.' }
+        - insert:
+            tableName: bookings
+            columns:
+              - column: { name: id, value: 'dddddddd-dddd-dddd-dddd-dddddddd0037' }
+              - column: { name: listing_id, value: 'bbbbbbbb-bbbb-bbbb-bbbb-bbbbbbbb0009' }
+              - column: { name: buyer_id, value: 'aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaa0026' }
+              - column: { name: seller_id, value: 'aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaa0012' }
+              - column: { name: status, value: 'CANCELLED' }
+              - column: { name: message, value: 'Здравствуйте, хочу купить. Звоните.' }
+        - insert:
+            tableName: bookings
+            columns:
+              - column: { name: id, value: 'dddddddd-dddd-dddd-dddd-dddddddd0038' }
+              - column: { name: listing_id, value: 'bbbbbbbb-bbbb-bbbb-bbbb-bbbbbbbb0010' }
+              - column: { name: buyer_id, value: 'aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaa0027' }
+              - column: { name: seller_id, value: 'aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaa0013' }
+              - column: { name: status, value: 'CANCELLED' }
+              - column: { name: message, value: 'Здравствуйте, хочу купить. Звоните.' }
+        - insert:
+            tableName: bookings
+            columns:
+              - column: { name: id, value: 'dddddddd-dddd-dddd-dddd-dddddddd0039' }
+              - column: { name: listing_id, value: 'bbbbbbbb-bbbb-bbbb-bbbb-bbbbbbbb0011' }
+              - column: { name: buyer_id, value: 'aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaa0028' }
+              - column: { name: seller_id, value: 'aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaa0014' }
+              - column: { name: status, value: 'CANCELLED' }
+              - column: { name: message, value: 'Здравствуйте, хочу купить. Звоните.' }
+        - insert:
+            tableName: bookings
+            columns:
+              - column: { name: id, value: 'dddddddd-dddd-dddd-dddd-dddddddd0040' }
+              - column: { name: listing_id, value: 'bbbbbbbb-bbbb-bbbb-bbbb-bbbbbbbb0012' }
+              - column: { name: buyer_id, value: 'aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaa0029' }
+              - column: { name: seller_id, value: 'aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaa0015' }
+              - column: { name: status, value: 'CANCELLED' }
+              - column: { name: message, value: 'Здравствуйте, хочу купить. Звоните.' }
+
+  - changeSet:
+      id: 029-seed-demo-reviews
+      author: seed
+      contextFilter: "prod or dev or stand"
+      preConditions:
+        - onFail: MARK_RAN
+          sqlCheck:
+            expectedResult: 0
+            sql: SELECT count(*) FROM reviews
+      changes:
+        - insert:
+            tableName: reviews
+            columns:
+              - column: { name: id, value: 'eeeeeeee-eeee-eeee-eeee-eeeeeeee0001' }
+              - column: { name: author_id, value: 'aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaa0034' }
+              - column: { name: recipient_id, value: 'aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaa0014' }
+              - column: { name: booking_id, value: 'dddddddd-dddd-dddd-dddd-dddddddd0016' }
+              - column: { name: rating, valueNumeric: 5 }
+              - column: { name: comment, value: 'Отличный продавец, всем довольны.' }
+              - column: { name: status, value: 'APPROVED' }
+        - insert:
+            tableName: reviews
+            columns:
+              - column: { name: id, value: 'eeeeeeee-eeee-eeee-eeee-eeeeeeee0002' }
+              - column: { name: author_id, value: 'aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaa0035' }
+              - column: { name: recipient_id, value: 'aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaa0015' }
+              - column: { name: booking_id, value: 'dddddddd-dddd-dddd-dddd-dddddddd0017' }
+              - column: { name: rating, valueNumeric: 5 }
+              - column: { name: comment, value: 'Очень довольны покупкой, спасибо!' }
+              - column: { name: status, value: 'APPROVED' }
+        - insert:
+            tableName: reviews
+            columns:
+              - column: { name: id, value: 'eeeeeeee-eeee-eeee-eeee-eeeeeeee0003' }
+              - column: { name: author_id, value: 'aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaa0036' }
+              - column: { name: recipient_id, value: 'aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaa0016' }
+              - column: { name: booking_id, value: 'dddddddd-dddd-dddd-dddd-dddddddd0018' }
+              - column: { name: rating, valueNumeric: 5 }
+              - column: { name: comment, value: 'Всё прошло отлично, рекомендую продавца.' }
+              - column: { name: status, value: 'APPROVED' }
+        - insert:
+            tableName: reviews
+            columns:
+              - column: { name: id, value: 'eeeeeeee-eeee-eeee-eeee-eeeeeeee0004' }
+              - column: { name: author_id, value: 'aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaa0037' }
+              - column: { name: recipient_id, value: 'aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaa0017' }
+              - column: { name: booking_id, value: 'dddddddd-dddd-dddd-dddd-dddddddd0019' }
+              - column: { name: rating, valueNumeric: 4 }
+              - column: { name: comment, value: 'Хорошо, но были небольшие задержки.' }
+              - column: { name: status, value: 'APPROVED' }
+        - insert:
+            tableName: reviews
+            columns:
+              - column: { name: id, value: 'eeeeeeee-eeee-eeee-eeee-eeeeeeee0005' }
+              - column: { name: author_id, value: 'aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaa0038' }
+              - column: { name: recipient_id, value: 'aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaa0018' }
+              - column: { name: booking_id, value: 'dddddddd-dddd-dddd-dddd-dddddddd0020' }
+              - column: { name: rating, valueNumeric: 5 }
+              - column: { name: comment, value: 'Хороший продавец, животное здоровое.' }
+              - column: { name: status, value: 'APPROVED' }
+        - insert:
+            tableName: reviews
+            columns:
+              - column: { name: id, value: 'eeeeeeee-eeee-eeee-eeee-eeeeeeee0006' }
+              - column: { name: author_id, value: 'aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaa0039' }
+              - column: { name: recipient_id, value: 'aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaa0003' }
+              - column: { name: booking_id, value: 'dddddddd-dddd-dddd-dddd-dddddddd0021' }
+              - column: { name: rating, valueNumeric: 5 }
+              - column: { name: comment, value: 'Спасибо за честность и помощь с доставкой.' }
+              - column: { name: status, value: 'APPROVED' }
+        - insert:
+            tableName: reviews
+            columns:
+              - column: { name: id, value: 'eeeeeeee-eeee-eeee-eeee-eeeeeeee0007' }
+              - column: { name: author_id, value: 'aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaa0040' }
+              - column: { name: recipient_id, value: 'aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaa0004' }
+              - column: { name: booking_id, value: 'dddddddd-dddd-dddd-dddd-dddddddd0022' }
+              - column: { name: rating, valueNumeric: 5 }
+              - column: { name: comment, value: 'Отличный продавец, всем довольны.' }
+              - column: { name: status, value: 'APPROVED' }
+        - insert:
+            tableName: reviews
+            columns:
+              - column: { name: id, value: 'eeeeeeee-eeee-eeee-eeee-eeeeeeee0008' }
+              - column: { name: author_id, value: 'aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaa0041' }
+              - column: { name: recipient_id, value: 'aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaa0005' }
+              - column: { name: booking_id, value: 'dddddddd-dddd-dddd-dddd-dddddddd0023' }
+              - column: { name: rating, valueNumeric: 5 }
+              - column: { name: comment, value: 'Очень довольны покупкой, спасибо!' }
+              - column: { name: status, value: 'APPROVED' }
+        - insert:
+            tableName: reviews
+            columns:
+              - column: { name: id, value: 'eeeeeeee-eeee-eeee-eeee-eeeeeeee0009' }
+              - column: { name: author_id, value: 'aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaa0042' }
+              - column: { name: recipient_id, value: 'aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaa0006' }
+              - column: { name: booking_id, value: 'dddddddd-dddd-dddd-dddd-dddddddd0024' }
+              - column: { name: rating, valueNumeric: 4 }
+              - column: { name: comment, value: 'В целом неплохо, общение могло быть быстрее.' }
+              - column: { name: status, value: 'APPROVED' }
+        - insert:
+            tableName: reviews
+            columns:
+              - column: { name: id, value: 'eeeeeeee-eeee-eeee-eeee-eeeeeeee0010' }
+              - column: { name: author_id, value: 'aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaa0043' }
+              - column: { name: recipient_id, value: 'aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaa0007' }
+              - column: { name: booking_id, value: 'dddddddd-dddd-dddd-dddd-dddddddd0025' }
+              - column: { name: rating, valueNumeric: 5 }
+              - column: { name: comment, value: 'Всё прошло отлично, рекомендую продавца.' }
+              - column: { name: status, value: 'APPROVED' }
+        - insert:
+            tableName: reviews
+            columns:
+              - column: { name: id, value: 'eeeeeeee-eeee-eeee-eeee-eeeeeeee0011' }
+              - column: { name: author_id, value: 'aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaa0044' }
+              - column: { name: recipient_id, value: 'aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaa0009' }
+              - column: { name: booking_id, value: 'dddddddd-dddd-dddd-dddd-dddddddd0026' }
+              - column: { name: rating, valueNumeric: 5 }
+              - column: { name: comment, value: 'Хороший продавец, животное здоровое.' }
+              - column: { name: status, value: 'APPROVED' }
+        - insert:
+            tableName: reviews
+            columns:
+              - column: { name: id, value: 'eeeeeeee-eeee-eeee-eeee-eeeeeeee0012' }
+              - column: { name: author_id, value: 'aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaa0045' }
+              - column: { name: recipient_id, value: 'aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaa0010' }
+              - column: { name: booking_id, value: 'dddddddd-dddd-dddd-dddd-dddddddd0027' }
+              - column: { name: rating, valueNumeric: 5 }
+              - column: { name: comment, value: 'Спасибо за честность и помощь с доставкой.' }
+              - column: { name: status, value: 'APPROVED' }
+        - insert:
+            tableName: reviews
+            columns:
+              - column: { name: id, value: 'eeeeeeee-eeee-eeee-eeee-eeeeeeee0013' }
+              - column: { name: author_id, value: 'aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaa0046' }
+              - column: { name: recipient_id, value: 'aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaa0011' }
+              - column: { name: booking_id, value: 'dddddddd-dddd-dddd-dddd-dddddddd0028' }
+              - column: { name: rating, valueNumeric: 4 }
+              - column: { name: comment, value: 'Животное хорошее, но оформление затянулось.' }
+              - column: { name: status, value: 'APPROVED' }
+        - insert:
+            tableName: reviews
+            columns:
+              - column: { name: id, value: 'eeeeeeee-eeee-eeee-eeee-eeeeeeee0014' }
+              - column: { name: author_id, value: 'aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaa0047' }
+              - column: { name: recipient_id, value: 'aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaa0012' }
+              - column: { name: booking_id, value: 'dddddddd-dddd-dddd-dddd-dddddddd0029' }
+              - column: { name: rating, valueNumeric: 5 }
+              - column: { name: comment, value: 'Отличный продавец, всем довольны.' }
+              - column: { name: status, value: 'APPROVED' }
+        - insert:
+            tableName: reviews
+            columns:
+              - column: { name: id, value: 'eeeeeeee-eeee-eeee-eeee-eeeeeeee0015' }
+              - column: { name: author_id, value: 'aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaa0019' }
+              - column: { name: recipient_id, value: 'aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaa0013' }
+              - column: { name: booking_id, value: 'dddddddd-dddd-dddd-dddd-dddddddd0030' }
+              - column: { name: rating, valueNumeric: 5 }
+              - column: { name: comment, value: 'Очень довольны покупкой, спасибо!' }
+              - column: { name: status, value: 'APPROVED' }
+        - insert:
+            tableName: reviews
+            columns:
+              - column: { name: id, value: 'eeeeeeee-eeee-eeee-eeee-eeeeeeee0016' }
+              - column: { name: author_id, value: 'aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaa0020' }
+              - column: { name: recipient_id, value: 'aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaa0014' }
+              - column: { name: booking_id, value: 'dddddddd-dddd-dddd-dddd-dddddddd0031' }
+              - column: { name: rating, valueNumeric: 5 }
+              - column: { name: comment, value: 'Всё прошло отлично, рекомендую продавца.' }
+              - column: { name: status, value: 'PENDING' }
+        - insert:
+            tableName: reviews
+            columns:
+              - column: { name: id, value: 'eeeeeeee-eeee-eeee-eeee-eeeeeeee0017' }
+              - column: { name: author_id, value: 'aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaa0021' }
+              - column: { name: recipient_id, value: 'aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaa0015' }
+              - column: { name: booking_id, value: 'dddddddd-dddd-dddd-dddd-dddddddd0032' }
+              - column: { name: rating, valueNumeric: 5 }
+              - column: { name: comment, value: 'Хороший продавец, животное здоровое.' }
+              - column: { name: status, value: 'PENDING' }
+        - insert:
+            tableName: reviews
+            columns:
+              - column: { name: id, value: 'eeeeeeee-eeee-eeee-eeee-eeeeeeee0018' }
+              - column: { name: author_id, value: 'aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaa0022' }
+              - column: { name: recipient_id, value: 'aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaa0016' }
+              - column: { name: booking_id, value: 'dddddddd-dddd-dddd-dddd-dddddddd0033' }
+              - column: { name: rating, valueNumeric: 5 }
+              - column: { name: comment, value: 'Спасибо за честность и помощь с доставкой.' }
+              - column: { name: status, value: 'PENDING' }
+        - insert:
+            tableName: reviews
+            columns:
+              - column: { name: id, value: 'eeeeeeee-eeee-eeee-eeee-eeeeeeee0019' }
+              - column: { name: author_id, value: 'aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaa0023' }
+              - column: { name: recipient_id, value: 'aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaa0017' }
+              - column: { name: booking_id, value: 'dddddddd-dddd-dddd-dddd-dddddddd0034' }
+              - column: { name: rating, valueNumeric: 5 }
+              - column: { name: comment, value: 'Отличный продавец, всем довольны.' }
+              - column: { name: status, value: 'PENDING' }
+        - insert:
+            tableName: reviews
+            columns:
+              - column: { name: id, value: 'eeeeeeee-eeee-eeee-eeee-eeeeeeee0020' }
+              - column: { name: author_id, value: 'aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaa0024' }
+              - column: { name: recipient_id, value: 'aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaa0018' }
+              - column: { name: booking_id, value: 'dddddddd-dddd-dddd-dddd-dddddddd0035' }
+              - column: { name: rating, valueNumeric: 5 }
+              - column: { name: comment, value: 'Очень довольны покупкой, спасибо!' }
+              - column: { name: status, value: 'PENDING' }
+
+  - changeSet:
+      id: 030-seed-demo-profile-ratings
+      author: seed
+      contextFilter: "prod or dev or stand"
+      changes:
+        - sql:
+            sql: UPDATE profiles p SET rating = COALESCE((SELECT ROUND(AVG(r.rating)::numeric, 1) FROM reviews r WHERE r.recipient_id = p.user_id AND r.status = 'APPROVED'), 0.0), total_reviews = COALESCE((SELECT count(*) FROM reviews r WHERE r.recipient_id = p.user_id AND r.status = 'APPROVED'), 0)
