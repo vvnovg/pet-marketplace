@@ -98,6 +98,8 @@ services:
     build: .
     image: pet-marketplace:local
     container_name: petmarketplace-app
+    ports:
+      - "8080:8080"
     environment:
       SPRING_PROFILES_ACTIVE: prod
       SPRING_DATASOURCE_URL: jdbc:postgresql://postgres:5432/${POSTGRES_DB:-petmarketplace}
@@ -123,20 +125,6 @@ services:
       timeout: 5s
       retries: 12
       start_period: 50s
-    networks:
-      - petmarketplace-network
-
-  caddy:
-    image: caddy:2-alpine
-    container_name: petmarketplace-caddy
-    ports:
-      - "8080:80"
-    volumes:
-      - ./Caddyfile:/etc/caddy/Caddyfile:ro
-      - ./static:/srv/static:ro
-    depends_on:
-      app:
-        condition: service_healthy
     networks:
       - petmarketplace-network
 
