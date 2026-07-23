@@ -258,33 +258,44 @@ For non-compose deployments, the operator runs the equivalent `kafka-topics` (or
 These variables can be exported or placed in an `application-local.yml` / `.env` file and referenced via Spring configuration.
 
 
-## Deploy (public demo)
+## Deploy (backend distribution)
 
-Run the full stack in Docker Compose on the host and publish it through the Keenetic cloud domain.
+This is the **backend** distribution. It runs the API stack in Docker Compose and exposes the app on host `:8080` — **private** (firewall-closed externally). The public site is the separate **frontend distribution** (the `pet-marketplace-front` repo, Next.js) on `:3000`; the frontend reaches this backend over the Docker host gateway. Deploy them in order: backend first, then frontend.
 
-### 1. Prerequisites on the host (Debian)
+### 1. Prepare the Debian host (once)
 
 ```bash
-# Docker Engine + Compose plugin
-sudo apt-get update
-sudo apt-get install -y ca-certificates curl
-sudo install -m 0755 -d /etc/apt/keyrings
-curl -fsSL https://download.docker.com/linux/debian/gpg | sudo gpg --dearmor -o /etc/apt/keyrings/docker.gpg
-echo "deb [arch=amd64 signed-by=/etc/apt/keyrings/docker.gpg] https://download.docker.com/linux/debian bookworm stable" \
-  | sudo tee /etc/apt/sources.list.d/docker.list
-sudo apt-get update
-sudo apt-get install -y docker-ce docker-ce-cli containerd.io docker-buildx-plugin docker-compose-plugin
+# base
+apt update && apt -y upgrade
+apt install -y ca-certificates curl gnupg git ufw
+
+# Docker Engine + Compose plugin (official repo)
+install -m 0755 -d /etc/apt/keyrings
+curl -fsSL https://download.docker.com/linux/debian/gpg -o /etc/apt/keyrings/docker.asc
+chmod a+r /etc/apt/keyrings/docker.asc
+echo "deb [arch=$(dpkg --print-architecture) signed-by=/etc/apt/keyrings/docker.asc] https://download.docker.com/linux/debian $(. /etc/os-release && echo "$VERSION_CODENAME") stable" \
+  > /etc/apt/sources.list.d/docker.list
+apt update
+apt install -y docker-ce docker-ce-cli containerd.io docker-buildx-plugin docker-compose-plugin
+
+# non-root access to Docker
+usermod -aG docker <your-user>   # then re-login
+
+# swap for next build (skip if free RAM already >= ~2 GB)
+fallocate -l 2G /swapfile && chmod 600 /swapfile && mkswap /swapfile && swapon /swapfile
+echo '/swapfile none swap sw 0 0' >> /etc/fstab
 ```
 
-### 2. Configure and start the stack
+### 2. Configure and start the backend stack
 
 ```bash
+git clone <backend-repo-url> pet-marketplace && cd pet-marketplace
 cp .env.example .env
 # edit .env: set POSTGRES_PASSWORD and JWT_SECRET (>= 256 bits, e.g. `openssl rand -base64 48`)
 docker compose -f docker-compose.yml up -d --build
 ```
 
-> Uses `-f docker-compose.yml` so the dev-only `docker-compose.override.yml` (which publishes Postgres/Redis/MinIO/Mailpit ports to the host) is NOT loaded on the public deployment.
+> Uses `-f docker-compose.yml` so the dev-only `docker-compose.override.yml` (which publishes Postgres/Redis/MinIO/Mailpit ports to the host) is NOT loaded on the deployment.
 
 Create the Kafka topics (the broker has `KAFKA_AUTO_CREATE_TOPICS_ENABLE=false`):
 
@@ -299,39 +310,23 @@ Verify locally on the host:
 
 ```bash
 curl -fsS http://localhost:8080/api/v1/actuator/health   # {"status":"UP",...}
-curl -fsS http://localhost:8080/                          # demo front HTML
 ```
 
-### 3. Open the firewall port
+### 3. Firewall — keep the backend private, open the frontend port
 
-The host's nftables `input` chain has `policy drop` and only allows SSH (and a couple of other ports). Allow the router to reach the app on `8080` and persist the rule:
+The host's nftables `input` chain has `policy drop`. The backend must stay reachable from the frontend container (LAN/internal) but NOT from the internet. Open the **frontend** port `3000` and make sure `8080` is NOT accepted on `enp1s0`:
 
 ```bash
-sudo nft insert rule inet filter input iifname "enp1s0" tcp dport 8080 accept
-sudo sh -c 'nft -s list ruleset > /etc/nftables.conf'
+nft add rule inet filter input iifname "enp1s0" tcp dport 3000 accept
+nft delete rule inet filter input iifname "enp1s0" tcp dport 8080 accept 2>/dev/null || true
+nft -s list ruleset > /etc/nftables.conf
+systemctl enable --now nftables
 ```
 
-(If the host loads rules from a different file, save to that file instead; verify with `sudo nft list chain inet filter input`.)
+(If the host loads rules from a different file, save to that file instead; verify with `nft list chain inet filter input`.)
 
-### 4. Publish via the Keenetic cloud (recommended — keeps the existing domain)
+### 4. Next: deploy the frontend distribution
 
-`netcraze.link` is a KeenDNS domain: the Keenetic cloud (front `78.47.125.180`) terminates HTTPS (Let's Encrypt cert `novgorodtsev.netcraze.link`) and tunnels to the Keenetic router, which forwards to an internal `IP:port`.
+The frontend distribution (`pet-marketplace-front` repo) exposes Next.js on `:3000` and is the public entry. Follow its README "Deploy (frontend distribution)" section, then retarget the Keenetic cloud publication to `192.168.1.81:3000` (HTTP) — see the frontend repo.
 
-In the Keenetic web GUI (KeenDNS / "Доступ из интернета"), retarget the `www.novgorodtsev.netcraze.link` cloud publication to:
-
-- internal host: `192.168.1.81`
-- port: `8080`
-- protocol: HTTP (TLS is handled by the cloud)
-
-Then verify publicly:
-
-```bash
-curl -fsS https://www.novgorodtsev.netcraze.link/api/v1/actuator/health
-```
-
-### 5. Alternative last-mile options
-
-If the Keenetic publication cannot target an arbitrary `IP:port`:
-
-- **Cloudflare Tunnel (no router/domain changes):** install `cloudflared` on the host and run `cloudflared tunnel --url http://localhost:8080` for an instant `https://<random>.trycloudflare.com`.
-- **Direct router port-forward:** forward `80/443` on the Keenetic to `192.168.1.81`, repoint the netcraze A-record to the router's WAN IP `185.155.18.14`, and switch the `Caddyfile` to `:80` + `:443` with automatic HTTPS (Caddy obtains its own Let's Encrypt cert). Note: a dynamic home WAN IP requires a dynDNS A-record.
+Swagger UI stays private: `http://localhost:8080/api/v1/swagger-ui.html` (on the host only).
