@@ -180,9 +180,9 @@ Co-Authored-By: Claude <noreply@anthropic.com>"
 - Create: `src/main/resources/db/changelog/changelogs/006-seed-demo-data.yaml`
 
 **Interfaces:**
-- Produces: `users` rows (UUIDs `aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaa0001`..`0047` scheme — see below) and `profiles` rows (1:1), referenced by later tasks as `seller_id`/`buyer_id`/`author_id`/`recipient_id`/`sender_id`/`receiver_id`.
+- Produces: `users` rows (UUIDs `aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaa0001`..`0047` scheme — see below) and `profiles` rows (1:1), referenced by later tasks as `seller_id`/`buyer_id`/`author_id`/`recipient_id`/`sender_id`/`receiver_id`.
 
-**UUID scheme for users:** base `aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaa` + 4-digit suffix `0001..0047` (e.g. `aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaa0001`). Map: `0001`=admin, `0002`=moderator, `0003..0007`=seller1..5, `0008`=buyer (explicit demo), `0009..0018`=seller6..15, `0019..0047`=buyer1..29.
+**UUID scheme for users:** base `aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaa` + 4-digit suffix `0001..0047` (e.g. `aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaa0001`). Map: `0001`=admin, `0002`=moderator, `0003..0007`=seller1..5, `0008`=buyer (explicit demo), `0009..0018`=seller6..15, `0019..0047`=buyer1..29.
 
 **Role map:** `0001`=ADMIN, `0002`=MODERATOR, `0003..0018`=SELLER (15 sellers), `0019..0047`=BUYER (29 buyers).
 
@@ -204,7 +204,7 @@ databaseChangeLog:
         - insert:
             tableName: users
             columns:
-              - column: { name: id, value: 'aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaa0001' }
+              - column: { name: id, value: 'aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaa0001' }
               - column: { name: email, value: 'admin@demo.local' }
               - column: { name: password_hash, value: '$2b$10$dJJWtO4l9OGtmdo74ehD2eVJJWYSKInvhEwWZsWU8BoUvSotrICa.' }
               - column: { name: role, value: 'ADMIN' }
@@ -216,7 +216,7 @@ databaseChangeLog:
         - insert:
             tableName: users
             columns:
-              - column: { name: id, value: 'aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaa0002' }
+              - column: { name: id, value: 'aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaa0002' }
               - column: { name: email, value: 'moderator@demo.local' }
               - column: { name: password_hash, value: '$2b$10$dJJWtO4l9OGtmdo74ehD2eVJJWYSKInvhEwWZsWU8BoUvSotrICa.' }
               - column: { name: role, value: 'MODERATOR' }
@@ -287,16 +287,16 @@ Co-Authored-By: Claude <noreply@anthropic.com>"
 
 **Interfaces:**
 - Consumes: `users` (seller_id from IDs `0003..0018`), categories (the 7 fixed UUIDs), breeds (existing 16 + new 8 from `005`).
-- Produces: `listings` rows (UUIDs `bbbbbbbb-bbbb-bbbb-bbbb-bbbbbbbbbbbb0001`..`0100`) and `listing_images`, referenced later by bookings/reviews/messages/favorites.
+- Produces: `listings` rows (UUIDs `bbbbbbbb-bbbb-bbbb-bbbb-bbbbbbbb0001`..`0100`) and `listing_images`, referenced later by bookings/reviews/messages/favorites.
 
-**Listing UUID scheme:** base `bbbbbbbb-bbbb-bbbb-bbbb-bbbbbbbbbbbb` + 4-digit suffix `0001..0100`.
+**Listing UUID scheme:** base `bbbbbbbb-bbbb-bbbb-bbbb-bbbbbbbb` + 4-digit suffix `0001..0100`.
 
-**Status distribution (100 listings total):**
-- `0001..0060`: ACTIVE (60)
-- `0061..0070`: RESERVED (10) — paired with CONFIRMED bookings in Task 4
-- `0071..0085`: SOLD (15) — paired with COMPLETED bookings in Task 4
-- `0086..0095`: PENDING_MODERATION (10) — no bookings
-- `0096..0100`: DRAFT (5) — no bookings
+**Status distribution (100 listings total — gap-free, consistent with Task 4 booking pairs):**
+- `0001..0062`: ACTIVE (62) — PENDING and CANCELLED bookings attach here
+- `0063..0070`: RESERVED (8) — paired 1:1 with CONFIRMED bookings in Task 4
+- `0071..0090`: SOLD (20) — paired 1:1 with COMPLETED bookings in Task 4
+- `0091..0100`: PENDING_MODERATION (10) — no bookings
+- (no DRAFT — dropped so the listing/booking/review arithmetic is exact)
 
 **Seller assignment:** listings `0001..0100` cycle through seller IDs `0003..0018` (15 sellers) round-robin.
 
@@ -306,8 +306,8 @@ Co-Authored-By: Claude <noreply@anthropic.com>"
 
 `id: 026-seed-demo-listings`, same `author/contextFilter/preConditions`. 100 `insert` blocks into `listings`. Each insert columns:
 ```yaml
-              - column: { name: id, value: 'bbbbbbbb-bbbb-bbbb-bbbb-bbbbbbbbbbbb<NNNN>' }
-              - column: { name: seller_id, value: 'aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaa<seller>' }
+              - column: { name: id, value: 'bbbbbbbb-bbbb-bbbb-bbbb-bbbbbbbb<NNNN>' }
+              - column: { name: seller_id, value: 'aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaa<seller>' }
               - column: { name: category_id, value: '<one of 7 category UUIDs>' }
               - column: { name: breed_id, value: '<breed UUID in that category, or null>' }
               - column: { name: title, value: '<e.g. Лабрадор-ретривер щенок' }
@@ -321,19 +321,19 @@ Co-Authored-By: Claude <noreply@anthropic.com>"
               - column: { name: has_documents, valueBoolean: <true|false> }
               - column: { name: location_country, value: 'Россия' }
               - column: { name: location_city, value: '<seller city>' }
-              - column: { name: status, value: '<ACTIVE|RESERVED|SOLD|PENDING_MODERATION|DRAFT per distribution>' }
+              - column: { name: status, value: '<ACTIVE|RESERVED|SOLD|PENDING_MODERATION per distribution>' }
               - column: { name: views_count, valueNumeric: <0..500> }
 ```
-For DRAFT listings omit `title`/`price`/`gender` is allowed (they're nullable) — but keep `title` set to `'Черновик объявления'`, leave `price`/`gender`/`age_months`/`color`/`has_vaccination`/`has_documents` as a minimal set (price 0, others default). Actually columns are nullable except `status`, `has_vaccination`, `has_documents` (DB default false), `views_count` (DB default 0). For DRAFT: set only `id, seller_id, category_id, title='Черновик объявления', status='DRAFT', location_country, location_city`; omit the rest (DB defaults fill them).
+Columns are nullable except `seller_id`, `category_id`, `status`, `has_vaccination` (DB default false), `has_documents` (DB default false), `views_count` (DB default 0). Supply all of: `id, seller_id, category_id, breed_id` (nullable — pass null for `other` category if desired, but new `other` breeds from `005` exist so prefer using a breed), `title, description, price, currency, gender, age_months, color, has_vaccination, has_documents, location_country, location_city, status, views_count` for ACTIVE/RESERVED/SOLD; for PENDING_MODERATION you may omit `price`/`gender`/`age_months`/`color` (DB defaults/nullable) but keep `title`/`description` so moderation has something to show.
 
 For `breed_id`: category `other` (`77777777-...`) — use one of `77700000-...001/002`. For fish/reptiles use the new breeds from `005`.
 
 - [ ] **Step 2: Append the listing_images changeSet**
 
-`id: 027-seed-demo-listing-images`, same guard. ~150 inserts (1-2 per listing; 1 image for listings `0001..0050`, 2 images for `0051..0100`). UUID scheme `cccccccc-cccc-cccc-cccc-cccccccccccc0001`..`0150`. Columns:
+`id: 027-seed-demo-listing-images`, same guard. ~150 inserts (1-2 per listing; 1 image for listings `0001..0050`, 2 images for `0051..0100`). UUID scheme `cccccccc-cccc-cccc-cccc-cccccccc0001`..`0150`. Columns:
 ```yaml
-              - column: { name: id, value: 'cccccccc-cccc-cccc-cccc-cccccccccccc<NNNN>' }
-              - column: { name: listing_id, value: 'bbbbbbbb-bbbb-bbbb-bbbb-bbbbbbbbbbbb<listing>' }
+              - column: { name: id, value: 'cccccccc-cccc-cccc-cccc-cccccccc<NNNN>' }
+              - column: { name: listing_id, value: 'bbbbbbbb-bbbb-bbbb-bbbb-bbbbbbbb<listing>' }
               - column: { name: url, value: 'https://picsum.photos/seed/<listing-id-suffix>/600' }
               - column: { name: order_index, valueNumeric: 0 }   # 1 for second image
               - column: { name: is_main, valueBoolean: true }   # false for second image
@@ -363,24 +363,24 @@ Co-Authored-By: Claude <noreply@anthropic.com>"
 
 **Interfaces:**
 - Consumes: listings (status already set per Task 3), users (buyers `0019..0047`, sellers `0003..0018`).
-- Produces: `bookings` (UUIDs `dddddddd-dddd-dddd-dddd-dddddddddddd0001`..`0030`), `reviews` (UUIDs `eeeeeeee-eeee-eeee-eeee-eeeeeeeeeeee0001`..`0020`).
+- Produces: `bookings` (UUIDs `dddddddd-dddd-dddd-dddd-dddddddd0001`..`0040`), `reviews` (UUIDs `eeeeeeee-eeee-eeee-eeee-eeeeeeee0001`..`0020`).
 
-**Booking ↔ listing status pairs (MUST match Task 3 listing statuses):**
-- `0001..0010`: PENDING → listing ACTIVE (use listings `0001..0010`)
-- `0011..0018`: CONFIRMED → listing RESERVED (use listings `0061..0068`)
-- `0019..0025`: COMPLETED → listing SOLD (use listings `0071..0077`)
-- `0026..0030`: CANCELLED → listing ACTIVE (use listings `0011..0015`)
+**Booking ↔ listing status pairs (40 bookings total, MUST match Task 3 listing statuses):**
+- bookings `0001..0007` (7): PENDING → listings `0001..0007` (ACTIVE)
+- bookings `0008..0015` (8): CONFIRMED → listings `0063..0070` (RESERVED)
+- bookings `0016..0035` (20): COMPLETED → listings `0071..0090` (SOLD)
+- bookings `0036..0040` (5): CANCELLED → listings `0008..0012` (ACTIVE)
 
 **Buyer assignment:** cycle buyers `0019..0047`. `seller_id` = the listing's seller (look up from Task 3 assignment). `buyer_id != seller_id`.
 
 - [ ] **Step 1: Append the bookings changeSet**
 
-`id: 028-seed-demo-bookings`, same guard. 30 `insert` blocks into `bookings`. Columns:
+`id: 028-seed-demo-bookings`, same guard. 40 `insert` blocks into `bookings`. Columns:
 ```yaml
-              - column: { name: id, value: 'dddddddd-dddd-dddd-dddd-dddddddddddd<NNNN>' }
-              - column: { name: listing_id, value: 'bbbbbbbb-bbbb-bbbb-bbbb-bbbbbbbbbbbb<listing-per-pair>' }
-              - column: { name: buyer_id, value: 'aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaa<buyer>' }
-              - column: { name: seller_id, value: 'aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaa<seller-of-listing>' }
+              - column: { name: id, value: 'dddddddd-dddd-dddd-dddd-dddddddd<NNNN>' }
+              - column: { name: listing_id, value: 'bbbbbbbb-bbbb-bbbb-bbbb-bbbbbbbb<listing-per-pair>' }
+              - column: { name: buyer_id, value: 'aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaa<buyer>' }
+              - column: { name: seller_id, value: 'aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaa<seller-of-listing>' }
               - column: { name: status, value: '<PENDING|CONFIRMED|COMPLETED|CANCELLED per pair>' }
               - column: { name: message, value: 'Здравствуйте, хочу купить. Звоните.' }
 ```
@@ -388,19 +388,14 @@ Map each booking to its paired listing per the table above. Ensure `listing_id` 
 
 - [ ] **Step 2: Append the reviews changeSet**
 
-`id: 029-seed-demo-reviews`, same guard. 20 `insert` blocks into `reviews`, each on a distinct COMPLETED booking (`0019..0025` give 7; need 20 — so expand COMPLETED bookings to 20 by reusing the COMPLETED set is impossible (unique `booking_id`). Resolution: **increase COMPLETED bookings to 20** by reassigning the booking distribution:
-  - PENDING 7 (`0001..0007` → listings `0001..0007`)
-  - CONFIRMED 8 (`0008..0015` → listings `0061..0068`)
-  - COMPLETED 20 (`0016..0035` → listings `0071..0090` — extend SOLD listings from 15 to 20; update Task 3 distribution: SOLD = `0071..0090`)
-  - CANCELLED 5 (`0036..0040` → listings `0008..0012`)
-  - **Total bookings = 40, total listings SOLD = 20 (0071..0090), RESERVED = 8 (0061..0068), ACTIVE = 60 (0001..0060), PENDING_MODERATION = 10 (0091..0100), DRAFT = 0** — drop DRAFT to keep 100 listings. **Update Task 3 Step 1 distribution accordingly** before proceeding: listings `0001..0060` ACTIVE, `0061..0068` RESERVED, `0069..0090` SOLD (was 0071..0085), `0091..0100` PENDING_MODERATION, no DRAFT.
+`id: 029-seed-demo-reviews`, same guard. 20 `insert` blocks into `reviews`, each on a distinct COMPLETED booking (bookings `0016..0035` provide exactly 20 COMPLETED bookings — one review per booking satisfies the unique `booking_id` constraint). Reviews `0001..0015` → status APPROVED (on completed bookings `0016..0030`); reviews `0016..0020` → status PENDING (on completed bookings `0031..0035`).
 
   Each review insert columns:
 ```yaml
-              - column: { name: id, value: 'eeeeeeee-eeee-eeee-eeee-eeeeeeeeeeee<NNNN>' }
+              - column: { name: id, value: 'eeeeeeee-eeee-eeee-eeee-eeeeeeee<NNNN>' }
               - column: { name: author_id, value: '<buyer of that booking>' }
               - column: { name: recipient_id, value: '<seller of that booking/listing>' }
-              - column: { name: booking_id, value: 'dddddddd-dddd-dddd-dddd-dddddddddddd<completed-booking>' }
+              - column: { name: booking_id, value: 'dddddddd-dddd-dddd-dddd-dddddddd<completed-booking>' }
               - column: { name: rating, valueNumeric: <1..5> }
               - column: { name: comment, value: '<RU review text matching rating>' }
               - column: { name: status, value: 'APPROVED' }   # first 15; last 5 = 'PENDING'
@@ -439,16 +434,16 @@ Co-Authored-By: Claude <noreply@anthropic.com>"
 - Modify: `src/main/resources/db/changelog/changelogs/006-seed-demo-data.yaml` (append)
 
 **Interfaces:**
-- Consumes: users, listings. Produces: `messages` (UUIDs `12121212-1212-1212-1212-121212121201`..`30`), `favorites` (`13131313-...`), `subscriptions` (`14141414-...`).
+- Consumes: users, listings. Produces: `messages` (UUIDs `12121212-1212-1212-1212-121212120001`..`0030`), `favorites` (`13131313-...`), `subscriptions` (`14141414-...`).
 
 - [ ] **Step 1: Append messages changeSet**
 
-`id: 031-seed-demo-messages`, same guard. ~30 inserts across 6 chats (each chat = a buyer↔seller pair around one listing). UUID scheme `12121212-1212-1212-1212-1212121212<NN>`. Columns:
+`id: 031-seed-demo-messages`, same guard. ~30 inserts across 6 chats (each chat = a buyer↔seller pair around one listing). UUID scheme `12121212-1212-1212-1212-12121212<NNNN>` (last group = 8 hex + 4-digit suffix). Columns:
 ```yaml
-              - column: { name: id, value: '12121212-1212-1212-1212-1212121212<NN>' }
+              - column: { name: id, value: '12121212-1212-1212-1212-12121212<NNNN>' }
               - column: { name: sender_id, value: '<one side>' }
               - column: { name: receiver_id, value: '<other side>' }
-              - column: { name: listing_id, value: 'bbbbbbbb-bbbb-bbbb-bbbb-bbbbbbbbbbbb<listing>' }
+              - column: { name: listing_id, value: 'bbbbbbbb-bbbb-bbbb-bbbb-bbbbbbbb<listing>' }
               - column: { name: content, value: '<RU chat line>' }
               - column: { name: is_read, valueBoolean: <true|false> }
               - column: { name: created_at, valueComputed: "'2026-07-01 10:00:00+03' + interval '<N> minute'" }
@@ -457,20 +452,20 @@ Co-Authored-By: Claude <noreply@anthropic.com>"
 
 - [ ] **Step 2: Append favorites changeSet**
 
-`id: 032-seed-demo-favorites`, same guard. ~25 inserts. UUID scheme `13131313-1313-1313-1313-1313131313<NN>`. Columns:
+`id: 032-seed-demo-favorites`, same guard. ~25 inserts. UUID scheme `13131313-1313-1313-1313-13131313<NNNN>` (last group = 8 hex + 4-digit suffix, 0001..0025). Columns:
 ```yaml
-              - column: { name: id, value: '13131313-1313-1313-1313-1313131313<NN>' }
-              - column: { name: user_id, value: 'aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaa<buyer>' }
-              - column: { name: listing_id, value: 'bbbbbbbb-bbbb-bbbb-bbbb-bbbbbbbbbbbb<ACTIVE listing>' }
+              - column: { name: id, value: '13131313-1313-1313-1313-13131313<NNNN>' }
+              - column: { name: user_id, value: 'aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaa<buyer>' }
+              - column: { name: listing_id, value: 'bbbbbbbb-bbbb-bbbb-bbbb-bbbbbbbb<ACTIVE listing>' }
 ```
 Assign buyers `0019..0043` to ACTIVE listings `0001..0025` (unique pairs — each buyer favorites one distinct listing). Never favorite a SOLD/RESERVED listing.
 
 - [ ] **Step 3: Append subscriptions changeSet**
 
-`id: 033-seed-demo-subscriptions`, same guard. ~10 inserts. UUID scheme `14141414-1414-1414-1414-1414141414<NN>`. Columns:
+`id: 033-seed-demo-subscriptions`, same guard. ~10 inserts. UUID scheme `14141414-1414-1414-1414-14141414<NNNN>` (last group = 8 hex + 4-digit suffix, 0001..0010). Columns:
 ```yaml
-              - column: { name: id, value: '14141414-1414-1414-1414-1414141414<NN>' }
-              - column: { name: user_id, value: 'aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaa<buyer>' }
+              - column: { name: id, value: '14141414-1414-1414-1414-14141414<NNNN>' }
+              - column: { name: user_id, value: 'aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaa<buyer>' }
               - column: { name: filters, value: '{"categoryId":"<uuid>","city":"<RU city>","maxPrice":<n>}' }
               - column: { name: is_active, valueBoolean: true }
 ```
