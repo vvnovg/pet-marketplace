@@ -93,9 +93,19 @@ JWT properties come from `security.jwt.*` in `application.yml` or from environme
 ## Database and Migrations
 
 - PostgreSQL 16 with schema managed by Liquibase.
-- Master changelog: `src/main/resources/db/changelog/db.changelog-master.yaml`.
-- Initial schema and seed data (categories and breeds) are in `changelogs/001-init-schema.yaml`.
+- Master changelog: `src/main/resources/db/changelog/db.changelog-master.yaml` includes `changelogs/001`..`006` in order.
+- Initial schema and reference seed data (categories and breeds) are in `changelogs/001-init-schema.yaml`.
 - `hibernate.ddl-auto` is `none` — all schema changes must go through Liquibase.
+- **Liquibase contexts** select which changesets run per environment: `dev` (`application.yml`), `prod` (`application-prod.yml`), `stand` and `test` (`application-{stand,test}.yml`). The runtime profile sets its matching context.
+
+### Demo Data Seeding
+
+`changelogs/006-seed-demo-data.yaml` seeds a full demo dataset (~47 users, ~100 listings + one real breed photo each, ~40 bookings, ~20 reviews, ~30 messages, ~25 favorites, ~10 subscriptions). Key facts:
+
+- It runs only under `contextFilter: "prod or dev or stand"` — the `test` context (Testcontainers/`gradle test`) **skips** it, keeping integration tests on a clean database.
+- Each changeset is guarded by an empty-table precondition, so it seeds only on a fresh/empty database and is a no-op on re-run. To re-seed, wipe the volume: `docker compose down -v && docker compose up -d --build`.
+- Listing/booking statuses are seeded in consistent pairs (`CONFIRMED`↔`RESERVED`, `COMPLETED`↔`SOLD`). Image `url`s are root-relative paths (e.g. `/animals/labrador-retriever.jpg`) resolved by the frontend, not the backend.
+- Demo accounts (all password `Demo12345`, pre-verified): `admin@demo.local` (ADMIN), `moderator@demo.local` (MODERATOR), `seller1..5@demo.local` (SELLER), `buyer@demo.local` (BUYER).
 
 ## File Storage
 
@@ -134,7 +144,7 @@ Emails are sent asynchronously using a dedicated thread pool. Templates live in 
 
 ## Configuration
 
-Active profile is `dev` by default. Profile-specific settings are merged from `application.yml` sections. Important properties:
+Active profile is `dev` by default; the containerized deployment runs the `prod` profile (`application-prod.yml`). Each profile also selects the matching Liquibase context (see Database and Migrations). Important properties:
 
 - `server.servlet.context-path: /api/v1` — all endpoints are prefixed with `/api/v1`.
 - `spring.jackson.default-property-inclusion: non_null` — null fields are not serialized.
