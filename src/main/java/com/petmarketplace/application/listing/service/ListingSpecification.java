@@ -27,10 +27,17 @@ public final class ListingSpecification {
         return breedId == null ? null : (root, query, cb) -> cb.equal(root.get("breed").get("id"), breedId);
     }
 
-    public static Specification<Listing> cityEquals(String city) {
+    public static Specification<Listing> cityContains(String city) {
         return city == null || city.isBlank()
                 ? null
-                : (root, query, cb) -> cb.equal(cb.lower(root.get("locationCity")), city.toLowerCase().trim());
+                : (root, query, cb) -> cb.like(
+                        cb.lower(root.get("locationCity")),
+                        "%" + escapeLike(city.toLowerCase().trim()) + "%",
+                        '\\');
+    }
+
+    private static String escapeLike(String value) {
+        return value.replace("\\", "\\\\").replace("%", "\\%").replace("_", "\\_");
     }
 
     public static Specification<Listing> priceBetween(BigDecimal minPrice, BigDecimal maxPrice) {
@@ -71,7 +78,7 @@ public final class ListingSpecification {
         return Specification.allOf(Stream.of(
                         hasCategory(request.getCategoryId()),
                         hasBreed(request.getBreedId()),
-                        cityEquals(request.getCity()),
+                        cityContains(request.getCity()),
                         priceBetween(request.getMinPrice(), request.getMaxPrice()),
                         genderEquals(request.getGender()),
                         ageBetween(request.getMinAge(), request.getMaxAge()))

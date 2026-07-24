@@ -101,6 +101,65 @@ class ListingControllerTest extends IntegrationTestBase {
         assertThat(found).isTrue();
     }
 
+    @Test
+    void shouldFindListingByPartialCaseInsensitiveCityMatch() {
+        TestUser seller = createUniqueUser(Role.SELLER);
+        TestUser admin = createUniqueUser(Role.ADMIN);
+
+        ListingCreateRequest createRequest = new ListingCreateRequest(
+                DOGS_CATEGORY_ID,
+                LABRADOR_BREED_ID,
+                "Healthy Labrador puppy",
+                "Friendly and vaccinated puppy.",
+                BigDecimal.valueOf(50000),
+                "RUB",
+                ListingGender.MALE,
+                4,
+                "Yellow",
+                BigDecimal.valueOf(12.5),
+                "Vaccinated",
+                true,
+                true,
+                "Russia",
+                "Moscow"
+        );
+
+        ResponseEntity<ListingResponse> createResponse = restClient.post()
+                .uri("/listings")
+                .body(createRequest)
+                .headers(authHeaders(seller))
+                .retrieve()
+                .toEntity(ListingResponse.class);
+        ListingResponse created = createResponse.getBody();
+        assertThat(created).isNotNull();
+
+        ListingModerateRequest moderateRequest = new ListingModerateRequest(ListingStatus.ACTIVE, "Looks good");
+        restClient.put()
+                .uri("/admin/listings/" + created.id() + "/moderate")
+                .body(moderateRequest)
+                .headers(authHeaders(admin))
+                .retrieve()
+                .toEntity(ListingResponse.class);
+
+        // User types a lowercase substring of the city ("mosc"), not the exact full name.
+        String searchUrl = UriComponentsBuilder.fromPath("/listings")
+                .queryParam("city", "mosc")
+                .toUriString();
+
+        ResponseEntity<String> searchResponse = getStatus(searchUrl, null);
+
+        assertThat(searchResponse.getStatusCode()).isEqualTo(HttpStatus.OK);
+        JsonNode searchBody = parse(searchResponse);
+        boolean found = false;
+        for (JsonNode node : searchBody.get("content")) {
+            if (created.id().toString().equals(node.get("id").asText())) {
+                found = true;
+                break;
+            }
+        }
+        assertThat(found).isTrue();
+    }
+
     private JsonNode parse(ResponseEntity<String> res) {
         try {
             return new com.fasterxml.jackson.databind.ObjectMapper().readTree(res.getBody());
