@@ -52,6 +52,12 @@ public class ProfileService {
         User user = currentUser();
         Profile profile = findOrCreateProfile(user);
         profileMapper.updateProfileFromRequest(request, profile);
+        // firstName/lastName/phone живут в User, а не в Profile, поэтому маппер их
+        // не трогает — присваиваем явно. Семантика PUT: null затирает поле.
+        user.setFirstName(request.firstName());
+        user.setLastName(request.lastName());
+        user.setPhone(request.phone());
+        userRepository.save(user);
         return profileMapper.toUserProfileResponse(profileRepository.save(profile), user);
     }
 

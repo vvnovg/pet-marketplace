@@ -36,7 +36,7 @@ class UserControllerTest extends IntegrationTestBase {
         var buyer = createUniqueUser(com.petmarketplace.domain.user.entity.Role.BUYER);
         ResponseEntity<String> res = putStatus("/users/me",
                 new com.petmarketplace.application.user.dto.ProfileUpdateRequest(
-                        "new bio", "Russia", "Samara", "street", null, null), buyer);
+                        "new bio", "Russia", "Samara", "street", null, null, null, null, null), buyer);
         assertThat(res.getStatusCode()).isEqualTo(HttpStatus.OK);
         assertThat(parse(res).get("bio").asText()).isEqualTo("new bio");
         assertThat(parse(res).get("city").asText()).isEqualTo("Samara");
@@ -47,11 +47,11 @@ class UserControllerTest extends IntegrationTestBase {
         var buyer = createUniqueUser(com.petmarketplace.domain.user.entity.Role.BUYER);
         assertThat(putStatus("/users/me",
                 new com.petmarketplace.application.user.dto.ProfileUpdateRequest(
-                        null, null, null, null, new BigDecimal("-91"), null), buyer)
+                        null, null, null, null, new BigDecimal("-91"), null, null, null, null), buyer)
                 .getStatusCode()).isEqualTo(HttpStatus.BAD_REQUEST);
         assertThat(putStatus("/users/me",
                 new com.petmarketplace.application.user.dto.ProfileUpdateRequest(
-                        null, null, null, null, null, new BigDecimal("181")), buyer)
+                        null, null, null, null, null, new BigDecimal("181"), null, null, null), buyer)
                 .getStatusCode()).isEqualTo(HttpStatus.BAD_REQUEST);
     }
 
@@ -60,7 +60,43 @@ class UserControllerTest extends IntegrationTestBase {
         var buyer = createUniqueUser(com.petmarketplace.domain.user.entity.Role.BUYER);
         assertThat(putStatus("/users/me",
                 new com.petmarketplace.application.user.dto.ProfileUpdateRequest(
-                        "x".repeat(2001), null, null, null, null, null), buyer)
+                        "x".repeat(2001), null, null, null, null, null, null, null, null), buyer)
+                .getStatusCode()).isEqualTo(HttpStatus.BAD_REQUEST);
+    }
+
+    @Test
+    void updateProfilePersistsIdentityFields() {
+        var buyer = createUniqueUser(com.petmarketplace.domain.user.entity.Role.BUYER);
+        ResponseEntity<String> res = putStatus("/users/me",
+                new com.petmarketplace.application.user.dto.ProfileUpdateRequest(
+                        null, null, null, null, null, null, "Ivan", "Petrov", "+79990000000"), buyer);
+        assertThat(res.getStatusCode()).isEqualTo(HttpStatus.OK);
+        JsonNode body = parse(res);
+        assertThat(body.get("firstName").asText()).isEqualTo("Ivan");
+        assertThat(body.get("lastName").asText()).isEqualTo("Petrov");
+        assertThat(body.get("phone").asText()).isEqualTo("+79990000000");
+
+        JsonNode reread = parse(getStatus("/users/me", buyer));
+        assertThat(reread.get("firstName").asText()).isEqualTo("Ivan");
+        assertThat(reread.get("lastName").asText()).isEqualTo("Petrov");
+        assertThat(reread.get("phone").asText()).isEqualTo("+79990000000");
+    }
+
+    @Test
+    void updateProfileValidationRejectsTooLongPhone() {
+        var buyer = createUniqueUser(com.petmarketplace.domain.user.entity.Role.BUYER);
+        assertThat(putStatus("/users/me",
+                new com.petmarketplace.application.user.dto.ProfileUpdateRequest(
+                        null, null, null, null, null, null, null, null, "x".repeat(21)), buyer)
+                .getStatusCode()).isEqualTo(HttpStatus.BAD_REQUEST);
+    }
+
+    @Test
+    void updateProfileValidationRejectsTooLongFirstName() {
+        var buyer = createUniqueUser(com.petmarketplace.domain.user.entity.Role.BUYER);
+        assertThat(putStatus("/users/me",
+                new com.petmarketplace.application.user.dto.ProfileUpdateRequest(
+                        null, null, null, null, null, null, "x".repeat(101), null, null), buyer)
                 .getStatusCode()).isEqualTo(HttpStatus.BAD_REQUEST);
     }
 

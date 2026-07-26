@@ -24,6 +24,15 @@ public record ProfileUpdateRequest(
 
         @DecimalMin(value = "-180.0")
         @DecimalMax(value = "180.0")
-        BigDecimal longitude
+        BigDecimal longitude,
+
+        @Size(max = 100)
+        String firstName,
+
+        @Size(max = 100)
+        String lastName,
+
+        @Size(max = 20)
+        String phone
 ) {
 }
