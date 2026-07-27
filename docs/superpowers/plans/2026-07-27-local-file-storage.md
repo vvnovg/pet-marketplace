@@ -80,6 +80,7 @@ storage:
 package com.petmarketplace.infrastructure.storage;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatCode;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 import com.petmarketplace.exception.ResourceNotFoundException;
@@ -90,7 +91,6 @@ import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.UUID;
-import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.io.TempDir;
@@ -106,11 +106,6 @@ class LocalFileStorageServiceTest {
     @BeforeEach
     void setUp() {
         service = new LocalFileStorageService(tempDir.toString(), "/api/proxy/files");
-    }
-
-    @AfterEach
-    void tearDown() {
-        // @TempDir cleans itself up; nothing to do.
     }
 
     private static InputStream bytes(String content) {
@@ -177,8 +172,8 @@ class LocalFileStorageServiceTest {
 
     @Test
     void deleteIsSilentForMissingFile() {
-        service.delete("avatars", "never/existed.png");
-        // no exception expected
+        assertThatCode(() -> service.delete("avatars", "never/existed.png"))
+                .doesNotThrowAnyException();
     }
 
     @Test
