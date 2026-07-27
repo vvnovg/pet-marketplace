@@ -53,7 +53,7 @@ security:
 storage:
   provider: local
   local:
-    base-path: ./test-uploads
+    base-path: build/test-uploads
 
 mail:
   enabled: false

@@ -12,8 +12,10 @@ public class MinioFileStorageService implements FileStorageService {
 
     @Override
     public String store(String bucketName, String objectKey, InputStream data, long size, String contentType) {
-        log.info("Storing object {}/{} via MinIO (not implemented yet)", bucketName, objectKey);
-        return "";
+        // Возврат пустой строки заставлял вызывающий код записать пустой URL и ответить
+        // 200 при отсутствующем файле. Пока реализации нет, отказ должен быть явным.
+        throw new UnsupportedOperationException(
+                "MinIO storage is not implemented; set storage.provider=local");
     }
 
     @Override
@@ -28,6 +30,7 @@ public class MinioFileStorageService implements FileStorageService {
 
     @Override
     public String getPublicUrl(String bucketName, String objectKey) {
-        return "";
+        throw new UnsupportedOperationException(
+                "MinIO storage is not implemented; set storage.provider=local");
     }
 }

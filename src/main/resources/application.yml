@@ -93,6 +93,10 @@ security:
 
 storage:
   provider: local
+  # Префикс, из которого собирается публичный URL файла. По умолчанию указывает на
+  # проксирующий маршрут фронтенда: бэкенд закрыт файрволом, и браузер ходит только
+  # на фронтенд.
+  public-base-path: ${STORAGE_PUBLIC_BASE_PATH:/api/proxy/files}
   local:
     base-path: ${STORAGE_LOCAL_PATH:./uploads}
   minio:
