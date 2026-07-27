@@ -74,17 +74,49 @@ class FileControllerTest extends IntegrationTestBase {
                 .getStatusCode()).isEqualTo(HttpStatus.NOT_FOUND);
     }
 
+    // The traversal guard itself lives in LocalFileStorageService.resolve and is covered by
+    // LocalFileStorageServiceTest (traversing keys, absolute keys, "..", ".", traversing bucket
+    // names). A literal "../" never reaches this controller: the servlet container collapses it
+    // before the filter chain runs. These two tests cover the error paths that DO reach us.
+
     @Test
-    void traversingKeyIsRejected() {
-        // A literal "../../../" traversal is silently collapsed by the embedded servlet
-        // container's own URI normalisation before it ever reaches Spring (verified empirically:
-        // it lands outside the app's context path and comes back 404, not 400 — see the Task 2
-        // report for the investigation). A backslash-based traversal attempt survives that
-        // normalisation and is rejected upstream of the controller; either the container or
-        // Spring Security's StrictHttpFirewall answers, and distinguishing them would test
-        // framework internals, so this only asserts the 400.
-        assertThat(getStatus("/files/avatars/..\\..\\etc\\passwd", null).getStatusCode())
+    void requestingADirectoryReturnsNotFound() {
+        String key = storePng("avatars", "avatars/" + UUID.randomUUID());
+        String directory = key.substring(0, key.lastIndexOf('/'));
+
+        assertThat(getStatus("/files/avatars/" + directory, null).getStatusCode())
+                .isEqualTo(HttpStatus.NOT_FOUND);
+    }
+
+    @Test
+    void emptyObjectKeyIsRejected() {
+        assertThat(getStatus("/files/avatars/", null).getStatusCode())
                 .isEqualTo(HttpStatus.BAD_REQUEST);
+    }
+
+    @Test
+    void nonImageExtensionIsServedAsOctetStreamWithNosniff() {
+        String key = "avatars/" + UUID.randomUUID() + "/payload.html";
+        fileStorageService.store("avatars", key,
+                new ByteArrayInputStream("<script>alert(1)</script>".getBytes(StandardCharsets.UTF_8)),
+                25, "text/html");
+
+        ResponseEntity<String> res = getStatus("/files/avatars/" + key, null);
+
+        assertThat(res.getStatusCode()).isEqualTo(HttpStatus.OK);
+        assertThat(res.getHeaders().getContentType()).isEqualTo(MediaType.APPLICATION_OCTET_STREAM);
+        assertThat(res.getHeaders().getFirst("X-Content-Type-Options")).isEqualTo("nosniff");
+    }
+
+    @Test
+    void svgIsNotServedAsSvgBecauseItCanExecuteScript() {
+        String key = "avatars/" + UUID.randomUUID() + "/x.svg";
+        fileStorageService.store("avatars", key,
+                new ByteArrayInputStream("<svg/>".getBytes(StandardCharsets.UTF_8)),
+                6, "image/svg+xml");
+
+        assertThat(getStatus("/files/avatars/" + key, null).getHeaders().getContentType())
+                .isEqualTo(MediaType.APPLICATION_OCTET_STREAM);
     }
 
     @Test

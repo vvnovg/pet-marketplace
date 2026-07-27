@@ -35,12 +35,26 @@ public class FileController {
         // PathPattern's {*var} capture keeps the leading slash; the storage layer wants it bare.
         String key = objectKey.startsWith("/") ? objectKey.substring(1) : objectKey;
         InputStream stream = fileStorageService.retrieve(bucket, key);
-        MediaType contentType = MediaTypeFactory.getMediaType(key)
-                .orElse(MediaType.APPLICATION_OCTET_STREAM);
+        MediaType contentType = safeContentType(key);
         return ResponseEntity.ok()
                 // Object keys embed a UUID, so a stored file never changes under the same URL.
                 .cacheControl(CacheControl.maxAge(Duration.ofDays(365)).cachePublic())
                 .contentType(contentType)
+                .header("X-Content-Type-Options", "nosniff")
                 .body(new InputStreamResource(stream));
+    }
+
+    /**
+     * The object key's extension comes from the client-supplied filename at upload time, and
+     * upload validation only checks the (spoofable) declared Content-Type. Echoing the derived
+     * type back would let an attacker have arbitrary content served as text/html from the
+     * frontend's own origin, which proxies this endpoint. Only plain image types are honoured;
+     * SVG is excluded because it can execute script.
+     */
+    private static MediaType safeContentType(String objectKey) {
+        return MediaTypeFactory.getMediaType(objectKey)
+                .filter(type -> type.getType().equals("image"))
+                .filter(type -> !type.getSubtype().equals("svg+xml"))
+                .orElse(MediaType.APPLICATION_OCTET_STREAM);
     }
 }
