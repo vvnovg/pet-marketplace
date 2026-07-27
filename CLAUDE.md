@@ -120,10 +120,22 @@ because the backend is firewall-private in production and the browser only ever 
 the frontend. Every method normalises `{bucket}/{objectKey}` and refuses paths escaping
 the base directory: `objectKey` arrives straight from a request URL in `FileController`.
 
-`FileController` serves `GET /files/{bucket}/{*objectKey}`, deriving Content-Type from the
-key's extension. `SecurityConfig` opens `/files/avatars/**` and `/files/images/**` to
-anonymous callers (public profiles and catalog) and requires authentication for
-`/files/messages/**` (private chat attachments).
+`FileController` serves `GET /files/{bucket}/{*objectKey}`. It does **not** simply echo the
+Content-Type derived from the key's extension: that extension is copied verbatim from the
+client-supplied filename at upload time, and upload validation only checks the (spoofable)
+declared `Content-Type` header. Since the frontend proxies this endpoint under its own
+origin, echoing the derived type would let an attacker have arbitrary content served as
+`text/html` — stored XSS. So `safeContentType` honours a derived type only when it is an
+`image/*` other than `svg+xml` (SVG can execute script), and falls back to
+`application/octet-stream`; the response also carries `X-Content-Type-Options: nosniff`.
+Keep that shape if you touch this controller.
+
+`SecurityConfig` opens `/files/avatars/**` and `/files/images/**` to anonymous callers
+(public profiles and catalog) and requires authentication for `/files/messages/**` (private
+chat attachments). That is authentication only — there is no participant check, so any
+logged-in user who learns a key can read the attachment; the random UUID in the key is the
+only other barrier. Deliberate: tightening it needs a message lookup per request and is
+deferred to whenever the chat UI is built.
 
 `MinioFileStorageService` is NOT implemented: `store`/`getPublicUrl` throw
 `UnsupportedOperationException` rather than returning `""`. The empty-string version
