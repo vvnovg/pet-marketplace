@@ -31,6 +31,8 @@ import org.springframework.http.client.MultipartBodyBuilder;
  */
 class FileControllerTest extends IntegrationTestBase {
 
+    private static final String AVATAR_PREFIX = "avatars/";
+
     @Autowired
     private FileStorageService fileStorageService;
 
@@ -184,6 +186,64 @@ class FileControllerTest extends IntegrationTestBase {
 
         assertThat(download.getStatusCode()).isEqualTo(HttpStatus.OK);
         assertThat(download.getBody()).isEqualTo("real-avatar-bytes");
+    }
+
+    @Test
+    void replacingAnAvatarDeletesThePreviousFile() {
+        var buyer = createUniqueUser(Role.BUYER);
+
+        String firstUrl = uploadAvatar(buyer, "first-avatar-bytes");
+        String secondUrl = uploadAvatar(buyer, "second-avatar-bytes");
+        assertThat(secondUrl).isNotEqualTo(firstUrl);
+
+        // The replacement is readable; the object it replaced is gone rather than left
+        // orphaned on disk behind an immutable, publicly readable key.
+        assertThat(getStatus(secondUrl.replace("/api/proxy", ""), null).getStatusCode())
+                .isEqualTo(HttpStatus.OK);
+        assertThat(getStatus(firstUrl.replace("/api/proxy", ""), null).getStatusCode())
+                .isEqualTo(HttpStatus.NOT_FOUND);
+    }
+
+    @Test
+    void replacingAForeignAvatarUrlDeletesNothing() {
+        Assumptions.assumeFalse(STAND_MODE, "seeds through the local FileStorageService, not the stand's filesystem");
+        var buyer = createUniqueUser(Role.BUYER);
+
+        // A URL this service never stored — the demo seed uses frontend-static paths like this.
+        // Reconstructing a key from it by filename (as ListingService does for listing images)
+        // would target this innocent object, so the guard must skip deletion entirely.
+        var user = userRepository.findByEmail(buyer.email()).orElseThrow();
+        user.setAvatarUrl("/animals/beagle.jpg");
+        userRepository.save(user);
+        String bystanderKey = AVATAR_PREFIX + buyer.id() + "/beagle.jpg";
+        fileStorageService.store("avatars", bystanderKey,
+                new ByteArrayInputStream("bystander".getBytes(StandardCharsets.UTF_8)),
+                9, "image/png");
+
+        String newUrl = uploadAvatar(buyer, "replacement-bytes");
+
+        assertThat(getStatus(newUrl.replace("/api/proxy", ""), null).getBody())
+                .isEqualTo("replacement-bytes");
+        ResponseEntity<String> bystander = getStatus("/files/avatars/" + bystanderKey, null);
+        assertThat(bystander.getStatusCode()).isEqualTo(HttpStatus.OK);
+        assertThat(bystander.getBody()).isEqualTo("bystander");
+    }
+
+    /** Uploads an avatar through the real HTTP endpoint and returns the stored URL. */
+    private String uploadAvatar(com.petmarketplace.IntegrationTestBase.TestUser user, String content) {
+        MultipartBodyBuilder builder = new MultipartBodyBuilder();
+        builder.part("file", content.getBytes(StandardCharsets.UTF_8), MediaType.IMAGE_PNG)
+                .filename("a.png");
+
+        ResponseEntity<String> upload = restClient.post()
+                .uri("/users/me/avatar")
+                .body(builder.build())
+                .headers(authHeaders(user))
+                .retrieve()
+                .onStatus(s -> true, (req, r) -> { })
+                .toEntity(String.class);
+        assertThat(upload.getStatusCode()).isEqualTo(HttpStatus.OK);
+        return parseAvatarUrl(upload);
     }
 
     private String parseAvatarUrl(ResponseEntity<String> res) {

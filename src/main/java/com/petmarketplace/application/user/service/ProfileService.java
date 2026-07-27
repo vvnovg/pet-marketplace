@@ -34,6 +34,7 @@ import org.springframework.web.multipart.MultipartFile;
 public class ProfileService {
 
     private static final String AVATAR_BUCKET = "avatars";
+    private static final String AVATAR_PREFIX = "avatars/";
     private static final long MAX_AVATAR_SIZE_BYTES = 5L * 1024 * 1024;
 
     private final ProfileRepository profileRepository;
@@ -73,8 +74,9 @@ public class ProfileService {
         validateAvatar(file);
         User user = currentUser();
 
+        String previousUrl = user.getAvatarUrl();
         String extension = getFileExtension(file.getOriginalFilename());
-        String objectKey = "avatars/%s/%s%s".formatted(user.getId(), UUID.randomUUID(), extension);
+        String objectKey = "%s%s/%s%s".formatted(AVATAR_PREFIX, user.getId(), UUID.randomUUID(), extension);
 
         String storedUrl;
         try (InputStream inputStream = file.getInputStream()) {
@@ -91,8 +93,32 @@ public class ProfileService {
         user.setAvatarUrl(storedUrl);
         userRepository.save(user);
 
+        // Only after the new URL is persisted: a failed delete must never cost the user the
+        // avatar they just uploaded. Keys are immutable and publicly readable, so the previous
+        // object would otherwise stay reachable forever and grow the volume without bound.
+        deleteStoredAvatar(previousUrl, user.getId());
+
         Profile profile = findOrCreateProfile(user);
         return profileMapper.toUserProfileResponse(profile, user);
+    }
+
+    private void deleteStoredAvatar(String previousUrl, UUID userId) {
+        if (!StringUtils.hasText(previousUrl)) {
+            return;
+        }
+        String expectedPrefix = AVATAR_PREFIX + userId + "/";
+        int index = previousUrl.indexOf(expectedPrefix);
+        if (index < 0) {
+            // Not an object this service stored (an externally hosted or seeded URL) — deleting
+            // a guessed key here could remove something that isn't ours.
+            return;
+        }
+        String objectKey = previousUrl.substring(index);
+        try {
+            fileStorageService.delete(AVATAR_BUCKET, objectKey);
+        } catch (Exception ex) {
+            log.warn("Failed to delete previous avatar {}: {}", objectKey, ex.getMessage());
+        }
     }
 
     public Profile createEmptyProfile(User user) {
