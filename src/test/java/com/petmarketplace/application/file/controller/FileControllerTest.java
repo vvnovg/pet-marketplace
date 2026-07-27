@@ -8,6 +8,7 @@ import com.petmarketplace.infrastructure.storage.FileStorageService;
 import java.io.ByteArrayInputStream;
 import java.nio.charset.StandardCharsets;
 import java.util.UUID;
+import org.junit.jupiter.api.Assumptions;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -15,6 +16,16 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.http.client.MultipartBodyBuilder;
 
+/**
+ * {@link #storePng} and the other direct {@code fileStorageService.store} calls below write
+ * through the in-JVM {@link FileStorageService} (local disk, {@code build/test-uploads} on the
+ * host running the JVM). In stand mode ({@code gradle testOnStand}) the {@code restClient} talks
+ * HTTP to an external stand whose files live in that stand's own container/volume — an unrelated
+ * filesystem the test JVM never writes to — so any test that seeds a file this way would 404
+ * instead of 200. Those tests are skipped in stand mode via {@code Assumptions.assumeFalse}.
+ * {@code uploadedAvatarIsDownloadableAtTheReturnedUrl} seeds through the real HTTP upload
+ * endpoint instead, so it exercises the stand's own storage and correctly keeps running there.
+ */
 class FileControllerTest extends IntegrationTestBase {
 
     @Autowired
@@ -30,6 +41,7 @@ class FileControllerTest extends IntegrationTestBase {
 
     @Test
     void avatarIsServedToAnonymousWithImageContentType() {
+        Assumptions.assumeFalse(STAND_MODE, "seeds through the local FileStorageService, not the stand's filesystem");
         String key = storePng("avatars", "avatars/" + UUID.randomUUID());
 
         ResponseEntity<String> res = getStatus("/files/avatars/" + key, null);
@@ -41,6 +53,7 @@ class FileControllerTest extends IntegrationTestBase {
 
     @Test
     void listingImageIsServedToAnonymous() {
+        Assumptions.assumeFalse(STAND_MODE, "seeds through the local FileStorageService, not the stand's filesystem");
         String key = storePng("images", "listings/" + UUID.randomUUID());
 
         ResponseEntity<String> res = getStatus("/files/images/" + key, null);
@@ -59,6 +72,7 @@ class FileControllerTest extends IntegrationTestBase {
 
     @Test
     void messageAttachmentIsServedToAuthenticatedUser() {
+        Assumptions.assumeFalse(STAND_MODE, "seeds through the local FileStorageService, not the stand's filesystem");
         var buyer = createUniqueUser(Role.BUYER);
         String key = storePng("messages", "messages/" + UUID.randomUUID());
 
@@ -96,6 +110,7 @@ class FileControllerTest extends IntegrationTestBase {
 
     @Test
     void nonImageExtensionIsServedAsOctetStreamWithNosniff() {
+        Assumptions.assumeFalse(STAND_MODE, "seeds through the local FileStorageService, not the stand's filesystem");
         String key = "avatars/" + UUID.randomUUID() + "/payload.html";
         fileStorageService.store("avatars", key,
                 new ByteArrayInputStream("<script>alert(1)</script>".getBytes(StandardCharsets.UTF_8)),
@@ -110,6 +125,7 @@ class FileControllerTest extends IntegrationTestBase {
 
     @Test
     void svgIsNotServedAsSvgBecauseItCanExecuteScript() {
+        Assumptions.assumeFalse(STAND_MODE, "seeds through the local FileStorageService, not the stand's filesystem");
         String key = "avatars/" + UUID.randomUUID() + "/x.svg";
         fileStorageService.store("avatars", key,
                 new ByteArrayInputStream("<svg/>".getBytes(StandardCharsets.UTF_8)),

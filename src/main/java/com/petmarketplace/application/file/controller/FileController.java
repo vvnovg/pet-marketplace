@@ -38,10 +38,22 @@ public class FileController {
         MediaType contentType = safeContentType(key);
         return ResponseEntity.ok()
                 // Object keys embed a UUID, so a stored file never changes under the same URL.
-                .cacheControl(CacheControl.maxAge(Duration.ofDays(365)).cachePublic())
+                .cacheControl(cacheControlFor(bucket))
                 .contentType(contentType)
                 .header("X-Content-Type-Options", "nosniff")
                 .body(new InputStreamResource(stream));
+    }
+
+    /**
+     * "messages" requires authentication (see SecurityConfig), so it must never be marked
+     * cachePublic() — a shared/CDN cache introduced later could serve one user's attachment to
+     * another. No shared cache sits in front of this deployment today, so the distinction is
+     * inert, but cachePrivate() costs nothing and keeps the header honest. Other buckets (avatars,
+     * images) are public listing/profile content and keep the original public directive.
+     */
+    private static CacheControl cacheControlFor(String bucket) {
+        CacheControl cacheControl = CacheControl.maxAge(Duration.ofDays(365));
+        return "messages".equals(bucket) ? cacheControl.cachePrivate() : cacheControl.cachePublic();
     }
 
     /**

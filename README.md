@@ -229,6 +229,7 @@ For non-compose deployments, the operator runs the equivalent `kafka-topics` (or
 | `JWT_REFRESH_EXPIRATION_DAYS` | `7` | Refresh token lifetime in days |
 | `STORAGE_LOCAL_PATH` | `./uploads` | Base path for local file storage |
 | `STORAGE_PROVIDER` | `local` | Storage provider: `local` or `minio` |
+| `STORAGE_PUBLIC_BASE_PATH` | `/api/proxy/files` | Prefix used to build the public URL of a stored file. Defaults to the frontend's proxy route; change it if the frontend is ever mounted under a different prefix. |
 | `MINIO_ENDPOINT` | `http://localhost:9000` | MinIO endpoint URL |
 | `MINIO_ACCESS_KEY` | `minioadmin` | MinIO access key |
 | `MINIO_SECRET_KEY` | `minioadmin` | MinIO secret key |

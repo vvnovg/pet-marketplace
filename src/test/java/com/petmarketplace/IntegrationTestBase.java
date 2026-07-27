@@ -62,8 +62,14 @@ import org.testcontainers.utility.DockerImageName;
         mergeMode = MergeMode.MERGE_WITH_DEFAULTS)
 public abstract class IntegrationTestBase {
 
-    /** Set by the gradle {@code testOnStand} task via {@code -Dtests.mode=stand}. */
-    static final boolean STAND_MODE = "stand".equalsIgnoreCase(System.getProperty("tests.mode"));
+    /**
+     * Set by the gradle {@code testOnStand} task via {@code -Dtests.mode=stand}. Protected (not
+     * package-private) so subclasses outside {@code com.petmarketplace} can use it to skip tests
+     * that seed data through the in-JVM {@link com.petmarketplace.infrastructure.storage.FileStorageService}
+     * rather than through HTTP, which cannot reach a stand's storage. See
+     * {@code FileControllerTest}.
+     */
+    protected static final boolean STAND_MODE = "stand".equalsIgnoreCase(System.getProperty("tests.mode"));
 
     /**
      * Outcome of the embedded-mode container start, read by {@link TestModeCondition}. Stays
