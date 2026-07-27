@@ -109,7 +109,29 @@ JWT properties come from `security.jwt.*` in `application.yml` or from environme
 
 ## File Storage
 
-`FileStorageService` is the abstraction. The active implementation is selected by `storage.provider` (`local` or `minio`). Local storage writes to `storage.local.base-path` (default `./uploads`). MinIO settings are in `storage.minio.*`.
+`FileStorageService` is the abstraction. The active implementation is selected by
+`storage.provider` (`local` or `minio`); `local` is the default in every profile.
+
+`LocalFileStorageService` writes to `storage.local.base-path` (default `./uploads`,
+`/app/uploads` in the container, backed by the `app-uploads` volume). `store` returns a
+**root-relative** URL built from `storage.public-base-path` (default `/api/proxy/files`,
+override with `STORAGE_PUBLIC_BASE_PATH`) — it points at the frontend's proxy route,
+because the backend is firewall-private in production and the browser only ever talks to
+the frontend. Every method normalises `{bucket}/{objectKey}` and refuses paths escaping
+the base directory: `objectKey` arrives straight from a request URL in `FileController`.
+
+`FileController` serves `GET /files/{bucket}/{*objectKey}`, deriving Content-Type from the
+key's extension. `SecurityConfig` opens `/files/avatars/**` and `/files/images/**` to
+anonymous callers (public profiles and catalog) and requires authentication for
+`/files/messages/**` (private chat attachments).
+
+`MinioFileStorageService` is NOT implemented: `store`/`getPublicUrl` throw
+`UnsupportedOperationException` rather than returning `""`. The empty-string version
+caused uploads to answer 200 while storing nothing.
+
+Buckets in use: `avatars` (`ProfileService`), `images` (`ListingService`), `messages`
+(`MessageService`). The avatar and message object keys repeat their bucket name
+(`avatars/avatars/{userId}/...`) — cosmetic, left alone deliberately.
 
 ## Kafka Integration
 
