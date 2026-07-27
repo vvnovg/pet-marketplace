@@ -142,8 +142,52 @@ class LocalFileStorageServiceTest {
     @Test
     void traversalThatStaysInsideBaseIsAllowed() throws Exception {
         // "a/../b.png" normalises to "b.png", which is still under the base path.
-        service.store("avatars", "a/../b.png", bytes("ok"), 2, "image/png");
+        String url = service.store("avatars", "a/../b.png", bytes("ok"), 2, "image/png");
 
         assertThat(Files.readString(tempDir.resolve("avatars").resolve("b.png"))).isEqualTo("ok");
+        // The returned URL must agree with the file that was actually written, not the raw key.
+        assertThat(url).isEqualTo("/api/proxy/files/avatars/b.png");
+    }
+
+    @Test
+    void objectKeyOfParentDirIsRejectedByEveryMethod() {
+        assertThatThrownBy(() -> service.store("avatars", "..", bytes("x"), 1, "image/png"))
+                .isInstanceOf(ValidationException.class);
+        assertThatThrownBy(() -> service.retrieve("avatars", ".."))
+                .isInstanceOf(ValidationException.class);
+        assertThatThrownBy(() -> service.delete("avatars", ".."))
+                .isInstanceOf(ValidationException.class);
+        assertThatThrownBy(() -> service.getPublicUrl("avatars", ".."))
+                .isInstanceOf(ValidationException.class);
+    }
+
+    @Test
+    void objectKeyOfCurrentDirIsRejectedByEveryMethod() {
+        assertThatThrownBy(() -> service.store("avatars", ".", bytes("x"), 1, "image/png"))
+                .isInstanceOf(ValidationException.class);
+        assertThatThrownBy(() -> service.retrieve("avatars", "."))
+                .isInstanceOf(ValidationException.class);
+        assertThatThrownBy(() -> service.delete("avatars", "."))
+                .isInstanceOf(ValidationException.class);
+        assertThatThrownBy(() -> service.getPublicUrl("avatars", "."))
+                .isInstanceOf(ValidationException.class);
+    }
+
+    @Test
+    void traversingBucketNameIsRejected() {
+        assertThatThrownBy(() -> service.store("..", "a.png", bytes("x"), 1, "image/png"))
+                .isInstanceOf(ValidationException.class);
+        assertThatThrownBy(() -> service.retrieve("..", "a.png"))
+                .isInstanceOf(ValidationException.class);
+        assertThatThrownBy(() -> service.delete("..", "a.png"))
+                .isInstanceOf(ValidationException.class);
+        assertThatThrownBy(() -> service.getPublicUrl("..", "a.png"))
+                .isInstanceOf(ValidationException.class);
+    }
+
+    @Test
+    void getPublicUrlNormalisesAWithinBucketCancel() {
+        assertThat(service.getPublicUrl("avatars", "a/../b.png"))
+                .isEqualTo("/api/proxy/files/avatars/b.png");
     }
 }
