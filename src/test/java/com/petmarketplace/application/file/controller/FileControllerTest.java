@@ -25,6 +25,9 @@ import org.springframework.http.client.MultipartBodyBuilder;
  * instead of 200. Those tests are skipped in stand mode via {@code Assumptions.assumeFalse}.
  * {@code uploadedAvatarIsDownloadableAtTheReturnedUrl} seeds through the real HTTP upload
  * endpoint instead, so it exercises the stand's own storage and correctly keeps running there.
+ * {@code requestingADirectoryReturnsNotFound} also seeds via {@code storePng} but is deliberately
+ * left unguarded: its {@code NOT_FOUND} assertion holds either way, since the path is a directory
+ * in embedded mode and simply absent on the stand.
  */
 class FileControllerTest extends IntegrationTestBase {
 
@@ -80,6 +83,27 @@ class FileControllerTest extends IntegrationTestBase {
 
         assertThat(res.getStatusCode()).isEqualTo(HttpStatus.OK);
         assertThat(res.getBody()).isEqualTo("png-bytes");
+    }
+
+    @Test
+    void messageAttachmentIsServedWithPrivateCacheControl() {
+        Assumptions.assumeFalse(STAND_MODE, "seeds through the local FileStorageService, not the stand's filesystem");
+        var buyer = createUniqueUser(Role.BUYER);
+        String key = storePng("messages", "messages/" + UUID.randomUUID());
+
+        ResponseEntity<String> res = getStatus("/files/messages/" + key, buyer);
+
+        assertThat(res.getHeaders().getCacheControl()).contains("private");
+    }
+
+    @Test
+    void avatarIsServedWithPublicCacheControl() {
+        Assumptions.assumeFalse(STAND_MODE, "seeds through the local FileStorageService, not the stand's filesystem");
+        String key = storePng("avatars", "avatars/" + UUID.randomUUID());
+
+        ResponseEntity<String> res = getStatus("/files/avatars/" + key, null);
+
+        assertThat(res.getHeaders().getCacheControl()).contains("public");
     }
 
     @Test

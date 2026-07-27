@@ -53,7 +53,7 @@ public class FileController {
      */
     private static CacheControl cacheControlFor(String bucket) {
         CacheControl cacheControl = CacheControl.maxAge(Duration.ofDays(365));
-        return "messages".equals(bucket) ? cacheControl.cachePrivate() : cacheControl.cachePublic();
+        return "messages".equalsIgnoreCase(bucket) ? cacheControl.cachePrivate() : cacheControl.cachePublic();
     }
 
     /**
