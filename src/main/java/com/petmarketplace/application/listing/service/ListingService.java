@@ -56,7 +56,7 @@ import org.springframework.web.multipart.MultipartFile;
 @Transactional
 public class ListingService {
 
-    private static final String IMAGES_BUCKET = "petmarketplace";
+    private static final String IMAGES_BUCKET = "images";
     private static final String IMAGES_PREFIX = "listings/";
     private static final int MAX_IMAGES_PER_LISTING = 10;
     private static final long MAX_IMAGE_SIZE_BYTES = 5L * 1024 * 1024;

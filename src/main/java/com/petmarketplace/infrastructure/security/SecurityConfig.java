@@ -58,6 +58,10 @@ public class SecurityConfig {
                                 "/v3/api-docs.yaml")
                         .permitAll()
                         .requestMatchers("/actuator/health").permitAll()
+                        // Аватары и фотографии объявлений видны анонимам — публичные профили и
+                        // каталог открыты. Вложения в переписку требуют аутентификации.
+                        .requestMatchers(HttpMethod.GET, "/files/avatars/**", "/files/images/**").permitAll()
+                        .requestMatchers(HttpMethod.GET, "/files/messages/**").authenticated()
                         .requestMatchers("/admin/**").hasAnyRole("ADMIN", "MODERATOR")
                         .anyRequest().authenticated()
                 )
