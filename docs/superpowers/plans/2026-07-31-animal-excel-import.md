@@ -33,7 +33,7 @@
 **Interfaces:**
 - Produces: `includeBuild("../excel")` in settings, `implementation("org.novgorodtsev.excelimport:excel-import-spring-boot-starter:0.1.0-SNAPSHOT")` and `implementation("io.minio:minio:8.5.17")` in dependencies
 
-- [ ] **Step 1: Add includeBuild to settings.gradle.kts**
+- [x] **Step 1: Add includeBuild to settings.gradle.kts**
 
 Read `settings.gradle.kts`, add `includeBuild("../excel")`:
 
@@ -43,7 +43,7 @@ rootProject.name = "pet-marketplace"
 includeBuild("../excel")
 ```
 
-- [ ] **Step 2: Add dependencies to build.gradle.kts**
+- [x] **Step 2: Add dependencies to build.gradle.kts**
 
 Add excel-import starter and MinIO SDK to the `dependencies` block:
 
@@ -55,7 +55,7 @@ implementation("org.novgorodtsev.excelimport:excel-import-spring-boot-starter:0.
 implementation("io.minio:minio:8.5.17")
 ```
 
-- [ ] **Step 3: Verify build compiles**
+- [x] **Step 3: Verify build compiles**
 
 ```bash
 cd ~/pet-marketplace && gradle compileJava
@@ -63,7 +63,7 @@ cd ~/pet-marketplace && gradle compileJava
 
 Expected: BUILD SUCCESSFUL (excel-import modules are built from source via includeBuild)
 
-- [ ] **Step 4: Commit**
+- [x] **Step 4: Commit**
 
 ```bash
 git add settings.gradle.kts build.gradle.kts
@@ -81,7 +81,7 @@ git commit -m "build: add excel-import (includeBuild) and MinIO SDK dependencies
 **Interfaces:**
 - Produces: `MinioClient` bean (from `io.minio.MinioClient`), configured from `storage.minio.*` properties
 
-- [ ] **Step 1: Create MinioConfig.java**
+- [x] **Step 1: Create MinioConfig.java**
 
 ```java
 package com.petmarketplace.config;
@@ -115,7 +115,7 @@ public class MinioConfig {
 }
 ```
 
-- [ ] **Step 2: Verify application.yml has minio properties**
+- [x] **Step 2: Verify application.yml has minio properties**
 
 Check that `application.yml` already contains (it does — no change needed):
 
@@ -127,7 +127,7 @@ storage:
     secret-key: minioadmin
 ```
 
-- [ ] **Step 3: Verify build compiles**
+- [x] **Step 3: Verify build compiles**
 
 ```bash
 cd ~/pet-marketplace && gradle compileJava
@@ -135,7 +135,7 @@ cd ~/pet-marketplace && gradle compileJava
 
 Expected: BUILD SUCCESSFUL
 
-- [ ] **Step 4: Commit**
+- [x] **Step 4: Commit**
 
 ```bash
 git add src/main/java/com/petmarketplace/config/MinioConfig.java
@@ -153,13 +153,13 @@ git commit -m "feat: add MinIO client configuration bean"
 - Consumes: `MinioClient` bean from Task 2
 - Produces: Working `FileStorageService` implementation (replaces `UnsupportedOperationException` stub)
 
-- [ ] **Step 1: Read current MinioFileStorageService**
+- [x] **Step 1: Read current MinioFileStorageService**
 
 ```bash
 cat ~/pet-marketplace/src/main/java/com/petmarketplace/infrastructure/storage/MinioFileStorageService.java
 ```
 
-- [ ] **Step 2: Replace with full implementation**
+- [x] **Step 2: Replace with full implementation**
 
 ```java
 package com.petmarketplace.infrastructure.storage;
@@ -232,7 +232,7 @@ public class MinioFileStorageService implements FileStorageService {
 }
 ```
 
-- [ ] **Step 3: Verify build compiles**
+- [x] **Step 3: Verify build compiles**
 
 ```bash
 cd ~/pet-marketplace && gradle compileJava
@@ -240,7 +240,7 @@ cd ~/pet-marketplace && gradle compileJava
 
 Expected: BUILD SUCCESSFUL
 
-- [ ] **Step 4: Commit**
+- [x] **Step 4: Commit**
 
 ```bash
 git add src/main/java/com/petmarketplace/infrastructure/storage/MinioFileStorageService.java
@@ -258,7 +258,7 @@ git commit -m "feat: implement MinioFileStorageService with MinIO Java SDK"
 **Interfaces:**
 - Produces: `animal_import_jobs` table with columns: id (UUID PK), status, source_bucket, source_key, total_rows, inserted_rows, rejected_rows, report_bucket, report_key, error_message, started_at, finished_at, created_at
 
-- [ ] **Step 1: Create Liquibase changeset**
+- [x] **Step 1: Create Liquibase changeset**
 
 ```yaml
 databaseChangeLog:
@@ -326,7 +326,7 @@ databaseChangeLog:
                     nullable: false
 ```
 
-- [ ] **Step 2: Register in master changelog**
+- [x] **Step 2: Register in master changelog**
 
 Add after the 006 entry in `db.changelog-master.yaml`:
 
@@ -336,7 +336,7 @@ Add after the 006 entry in `db.changelog-master.yaml`:
       relativeToChangelogFile: true
 ```
 
-- [ ] **Step 3: Verify migration runs**
+- [x] **Step 3: Verify migration runs**
 
 ```bash
 cd ~/pet-marketplace && docker-compose up -d postgres && gradle bootRun
@@ -346,7 +346,7 @@ cd ~/pet-marketplace && docker-compose up -d postgres && gradle bootRun
 
 Expected: Liquibase runs 007 changeset without errors.
 
-- [ ] **Step 4: Commit**
+- [x] **Step 4: Commit**
 
 ```bash
 git add src/main/resources/db/changelog/changelogs/007-animal-import-jobs.yaml \
@@ -366,7 +366,7 @@ git commit -m "feat: add animal_import_jobs table migration"
 **Interfaces:**
 - Produces: `AnimalImportJob` entity (extends `BaseEntity`), `ImportJobStatus` enum, `AnimalImportJobRepository` (extends `JpaRepository<AnimalImportJob, UUID>`)
 
-- [ ] **Step 1: Create ImportJobStatus enum**
+- [x] **Step 1: Create ImportJobStatus enum**
 
 ```java
 package com.petmarketplace.domain.importjob.entity;
@@ -379,7 +379,7 @@ public enum ImportJobStatus {
 }
 ```
 
-- [ ] **Step 2: Create AnimalImportJob entity**
+- [x] **Step 2: Create AnimalImportJob entity**
 
 ```java
 package com.petmarketplace.domain.importjob.entity;
@@ -446,7 +446,7 @@ public class AnimalImportJob extends BaseEntity {
 }
 ```
 
-- [ ] **Step 3: Create AnimalImportJobRepository**
+- [x] **Step 3: Create AnimalImportJobRepository**
 
 ```java
 package com.petmarketplace.domain.importjob.repository;
@@ -462,7 +462,7 @@ public interface AnimalImportJobRepository extends JpaRepository<AnimalImportJob
 }
 ```
 
-- [ ] **Step 4: Verify build compiles**
+- [x] **Step 4: Verify build compiles**
 
 ```bash
 cd ~/pet-marketplace && gradle compileJava
@@ -470,7 +470,7 @@ cd ~/pet-marketplace && gradle compileJava
 
 Expected: BUILD SUCCESSFUL
 
-- [ ] **Step 5: Commit**
+- [x] **Step 5: Commit**
 
 ```bash
 git add src/main/java/com/petmarketplace/domain/importjob/
@@ -490,7 +490,7 @@ git commit -m "feat: add AnimalImportJob entity, status enum, and repository"
 - Consumes: excel-import annotations (`@ExcelSheet`, `@ExcelColumn`, `@Column`, `@TargetTable`), Jakarta Validation
 - Produces: `AnimalImportRow` POJO, `CellConverter<UUID>`, `CellConverter<ListingGender>`
 
-- [ ] **Step 1: Create UuidCellConverter**
+- [x] **Step 1: Create UuidCellConverter**
 
 ```java
 package com.petmarketplace.application.imports.convert;
@@ -518,7 +518,7 @@ public class UuidCellConverter implements CellConverter<UUID> {
 }
 ```
 
-- [ ] **Step 2: Create GenderCellConverter**
+- [x] **Step 2: Create GenderCellConverter**
 
 ```java
 package com.petmarketplace.application.imports.convert;
@@ -547,7 +547,7 @@ public class GenderCellConverter implements CellConverter<ListingGender> {
 }
 ```
 
-- [ ] **Step 3: Create AnimalImportRow**
+- [x] **Step 3: Create AnimalImportRow**
 
 ```java
 package com.petmarketplace.application.imports;
@@ -665,7 +665,7 @@ public class AnimalImportRow {
 }
 ```
 
-- [ ] **Step 4: Verify build compiles**
+- [x] **Step 4: Verify build compiles**
 
 ```bash
 cd ~/pet-marketplace && gradle compileJava
@@ -673,7 +673,7 @@ cd ~/pet-marketplace && gradle compileJava
 
 Expected: BUILD SUCCESSFUL
 
-- [ ] **Step 5: Commit**
+- [x] **Step 5: Commit**
 
 ```bash
 git add src/main/java/com/petmarketplace/application/imports/
@@ -692,7 +692,7 @@ git commit -m "feat: add AnimalImportRow model with UUID and Gender cell convert
 - Consumes: `UserRepository` (needs `findAllByEmailIn` method), `BatchValidator<AnimalImportRow>` interface
 - Produces: `OwnerValidationBatchValidator` — Spring `@Component`, resolves `sellerEmail` → `sellerId` (UUID), returns `RowError` with `ErrorKind.BATCH` and message "владелец не зарегистрирован: <email>" for missing owners
 
-- [ ] **Step 1: Add findAllByEmailIn to UserRepository**
+- [x] **Step 1: Add findAllByEmailIn to UserRepository**
 
 ```java
 // Add to UserRepository interface:
@@ -701,7 +701,7 @@ List<User> findAllByEmailIn(Collection<String> emails);
 
 Full import needed: `import java.util.Collection;` and `import java.util.List;`
 
-- [ ] **Step 2: Create OwnerValidationBatchValidator**
+- [x] **Step 2: Create OwnerValidationBatchValidator**
 
 ```java
 package com.petmarketplace.application.imports;
@@ -765,7 +765,7 @@ public class OwnerValidationBatchValidator implements BatchValidator<AnimalImpor
 }
 ```
 
-- [ ] **Step 3: Verify build compiles**
+- [x] **Step 3: Verify build compiles**
 
 ```bash
 cd ~/pet-marketplace && gradle compileJava
@@ -773,7 +773,7 @@ cd ~/pet-marketplace && gradle compileJava
 
 Expected: BUILD SUCCESSFUL
 
-- [ ] **Step 4: Commit**
+- [x] **Step 4: Commit**
 
 ```bash
 git add src/main/java/com/petmarketplace/application/imports/OwnerValidationBatchValidator.java \
@@ -792,7 +792,7 @@ git commit -m "feat: add OwnerValidationBatchValidator — resolves seller email
 - Consumes: `AnimalImportJobRepository`
 - Produces: `AnimalImportJobService` with methods: `create(bucket, key) → AnimalImportJob`, `markStarted(id) → AnimalImportJob`, `markCompleted(id, report, reportBucket, reportKey)`, `markFailed(id, errorMessage)`, `findById(id) → AnimalImportJob`, `findRecent() → List<AnimalImportJob>`
 
-- [ ] **Step 1: Create AnimalImportJobService**
+- [x] **Step 1: Create AnimalImportJobService**
 
 ```java
 package com.petmarketplace.application.imports;
@@ -870,7 +870,7 @@ public class AnimalImportJobService {
 }
 ```
 
-- [ ] **Step 2: Verify build compiles**
+- [x] **Step 2: Verify build compiles**
 
 ```bash
 cd ~/pet-marketplace && gradle compileJava
@@ -878,7 +878,7 @@ cd ~/pet-marketplace && gradle compileJava
 
 Expected: BUILD SUCCESSFUL
 
-- [ ] **Step 3: Commit**
+- [x] **Step 3: Commit**
 
 ```bash
 git add src/main/java/com/petmarketplace/application/imports/AnimalImportJobService.java
@@ -896,7 +896,7 @@ git commit -m "feat: add AnimalImportJobService — CRUD for import jobs"
 - Consumes: `ExcelImporterFactory`, `FileStorageService`, `AnimalImportJobService`, `OwnerValidationBatchValidator`, custom converters
 - Produces: `AnimalImportService.importAnimals(jobId, bucket, objectKey)` — `@Async`, downloads from MinIO, runs ExcelImporter, uploads report, updates job
 
-- [ ] **Step 1: Create AnimalImportService**
+- [x] **Step 1: Create AnimalImportService**
 
 ```java
 package com.petmarketplace.application.imports;
@@ -989,7 +989,7 @@ Better approach: inject `DataSource` directly and use `ExcelImporter.builder()` 
 
 Let me rewrite the service properly.
 
-- [ ] **Step 1 (revised): Create AnimalImportService**
+- [x] **Step 1 (revised): Create AnimalImportService**
 
 ```java
 package com.petmarketplace.application.imports;
@@ -1085,7 +1085,7 @@ public class AnimalImportService {
 }
 ```
 
-- [ ] **Step 2: Add importTaskExecutor to AsyncConfig**
+- [x] **Step 2: Add importTaskExecutor to AsyncConfig**
 
 Modify `src/main/java/com/petmarketplace/config/AsyncConfig.java` — add a second executor bean for imports:
 
@@ -1103,7 +1103,7 @@ public Executor importTaskExecutor() {
 }
 ```
 
-- [ ] **Step 3: Verify build compiles**
+- [x] **Step 3: Verify build compiles**
 
 ```bash
 cd ~/pet-marketplace && gradle compileJava
@@ -1111,7 +1111,7 @@ cd ~/pet-marketplace && gradle compileJava
 
 Expected: BUILD SUCCESSFUL
 
-- [ ] **Step 4: Commit**
+- [x] **Step 4: Commit**
 
 ```bash
 git add src/main/java/com/petmarketplace/application/imports/AnimalImportService.java \
@@ -1130,7 +1130,7 @@ git commit -m "feat: add AnimalImportService — async import orchestration"
 **Interfaces:**
 - Produces: `AnimalImportRequest` (record: bucket, objectKey), `AnimalImportJobResponse` (record: id, status, sourceBucket, sourceKey, totalRows, insertedRows, rejectedRows, reportUrl, errorMessage, startedAt, finishedAt, createdAt)
 
-- [ ] **Step 1: Create AnimalImportRequest**
+- [x] **Step 1: Create AnimalImportRequest**
 
 ```java
 package com.petmarketplace.application.imports.dto;
@@ -1143,7 +1143,7 @@ public record AnimalImportRequest(
 }
 ```
 
-- [ ] **Step 2: Create AnimalImportJobResponse**
+- [x] **Step 2: Create AnimalImportJobResponse**
 
 ```java
 package com.petmarketplace.application.imports.dto;
@@ -1189,7 +1189,7 @@ public record AnimalImportJobResponse(
 }
 ```
 
-- [ ] **Step 3: Verify build compiles**
+- [x] **Step 3: Verify build compiles**
 
 ```bash
 cd ~/pet-marketplace && gradle compileJava
@@ -1197,7 +1197,7 @@ cd ~/pet-marketplace && gradle compileJava
 
 Expected: BUILD SUCCESSFUL
 
-- [ ] **Step 4: Commit**
+- [x] **Step 4: Commit**
 
 ```bash
 git add src/main/java/com/petmarketplace/application/imports/dto/
@@ -1215,7 +1215,7 @@ git commit -m "feat: add import API DTOs — AnimalImportRequest and AnimalImpor
 - Consumes: `AnimalImportService`, `AnimalImportJobService`
 - Produces: `POST /api/v1/admin/imports/animals` (202), `GET /api/v1/admin/imports/{jobId}`, `GET /api/v1/admin/imports`
 
-- [ ] **Step 1: Create AnimalImportController**
+- [x] **Step 1: Create AnimalImportController**
 
 ```java
 package com.petmarketplace.application.imports;
@@ -1275,7 +1275,7 @@ public class AnimalImportController {
 }
 ```
 
-- [ ] **Step 2: Verify build compiles**
+- [x] **Step 2: Verify build compiles**
 
 ```bash
 cd ~/pet-marketplace && gradle compileJava
@@ -1283,7 +1283,7 @@ cd ~/pet-marketplace && gradle compileJava
 
 Expected: BUILD SUCCESSFUL
 
-- [ ] **Step 3: Commit**
+- [x] **Step 3: Commit**
 
 ```bash
 git add src/main/java/com/petmarketplace/application/imports/AnimalImportController.java
@@ -1302,7 +1302,7 @@ git commit -m "feat: add AnimalImportController — REST endpoints for animal im
 - Consumes: `MinioClient` (or `FileStorageService`), `AnimalImportJobService`, `AnimalImportService`
 - Produces: `@Scheduled` method that lists objects in the `imports` bucket and triggers import for new files
 
-- [ ] **Step 1: Add scheduler configuration to application.yml**
+- [x] **Step 1: Add scheduler configuration to application.yml**
 
 Add after the `storage:` block:
 
@@ -1315,7 +1315,7 @@ import:
     prefix: pending/
 ```
 
-- [ ] **Step 2: Create AnimalImportScheduler**
+- [x] **Step 2: Create AnimalImportScheduler**
 
 ```java
 package com.petmarketplace.application.imports;
@@ -1384,7 +1384,7 @@ public class AnimalImportScheduler {
 }
 ```
 
-- [ ] **Step 3: Verify build compiles**
+- [x] **Step 3: Verify build compiles**
 
 ```bash
 cd ~/pet-marketplace && gradle compileJava
@@ -1392,7 +1392,7 @@ cd ~/pet-marketplace && gradle compileJava
 
 Expected: BUILD SUCCESSFUL
 
-- [ ] **Step 4: Commit**
+- [x] **Step 4: Commit**
 
 ```bash
 git add src/main/java/com/petmarketplace/application/imports/AnimalImportScheduler.java \
@@ -1411,7 +1411,7 @@ git commit -m "feat: add AnimalImportScheduler — polls MinIO bucket for new im
 - Consumes: `IntegrationTestBase`, Testcontainers MinIO, POI `SXSSFWorkbook`
 - Produces: Integration test that generates 100K Excel records, uploads to MinIO, triggers import, verifies results
 
-- [ ] **Step 1: Create AnimalImportIntegrationTest**
+- [x] **Step 1: Create AnimalImportIntegrationTest**
 
 ```java
 package com.petmarketplace.application.imports;
@@ -1679,7 +1679,7 @@ class AnimalImportIntegrationTest extends IntegrationTestBase {
 }
 ```
 
-- [ ] **Step 2: Run the integration test**
+- [x] **Step 2: Run the integration test**
 
 ```bash
 cd ~/pet-marketplace && gradle test --tests "com.petmarketplace.application.imports.AnimalImportIntegrationTest" -x test
@@ -1693,7 +1693,7 @@ cd ~/pet-marketplace && gradle test --tests "com.petmarketplace.application.impo
 
 Expected: Test passes — 100K rows generated, ~92K inserted, ~8K rejected, report exists.
 
-- [ ] **Step 3: Commit**
+- [x] **Step 3: Commit**
 
 ```bash
 git add src/test/java/com/petmarketplace/application/imports/AnimalImportIntegrationTest.java
@@ -1727,3 +1727,28 @@ git commit -m "test: add integration test — 100K animal Excel import with form
 - `AnimalImportJobResponse.from(AnimalImportJob)` → used in `AnimalImportController` ✓
 - `AnimalImportRequest(bucket, objectKey)` → used in `AnimalImportController.importAnimals()` ✓
 - `ImportJobStatus` enum values match DB column and entity ✓
+
+---
+
+## Отклонения при выполнении
+
+Интеграционный тест (Task 13) выявил три дефекта модели `AnimalImportRow`, не видимые
+на этапе компиляции — все три проявляются только при вставке в реальную БД:
+
+1. **`gender` как Java-enum.** pgjdbc не выводит SQL-тип для enum-константы
+   (`Can't infer the SQL type ...`) и прерывает весь прогон. Поле стало `String`,
+   `GenderCellConverter` теперь `CellConverter<String>` и возвращает имя константы
+   `ListingGender`; проверка обязательна — CHECK-ограничения на `listings.gender` нет.
+2. **Отсутствие `id`.** `listings.id` — NOT NULL без DEFAULT, а библиотека вставляет
+   ровно перечисленные в модели колонки и ключей не генерирует. Добавлено db-only поле
+   `@Column("id") private UUID id = UUID.randomUUID()` (модель инстанцируется на каждую
+   строку, поэтому UUID у каждой строки свой).
+3. **`sellerEmail` → несуществующая колонка `seller_email`.** В библиотеке *каждое*
+   поле с `@ExcelColumn`/`@Column` попадало в `INSERT`, а имя выводилось `NamingStrategy`.
+   По решению владельца доработана сама библиотека: `@ExcelColumn(insertable = false)`
+   читает и валидирует колонку, но исключает её из вставки
+   (`/Users/vvnovg/projects/excel`, коммит `d6cf0ab`, README обновлён).
+
+Дополнительно: `settings.gradle.kts` искал `includeBuild("../projects/excel")` по
+фиксированному относительному пути и не разрешался из git-worktree — путь теперь ищется
+вверх по предкам корня, с переопределением через `-PexcelImportPath`.
