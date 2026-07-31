@@ -74,8 +74,9 @@ public class AnimalImportRow {
     @NotBlank
     private String locationCity;
 
-    // Только в Excel — не мапится на БД. Обрабатывается в OwnerValidationBatchValidator
-    @ExcelColumn(header = "Email владельца")
+    // Только в Excel — колонки seller_email в listings нет, поэтому insertable = false.
+    // В seller_id ниже email превращает OwnerValidationBatchValidator.
+    @ExcelColumn(header = "Email владельца", insertable = false)
     @NotBlank
     @Email
     private String sellerEmail;
