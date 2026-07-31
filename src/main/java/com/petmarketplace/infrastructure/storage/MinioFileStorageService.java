@@ -1,36 +1,68 @@
 package com.petmarketplace.infrastructure.storage;
 
+import io.minio.GetObjectArgs;
+import io.minio.MinioClient;
+import io.minio.PutObjectArgs;
+import io.minio.RemoveObjectArgs;
 import java.io.InputStream;
-import lombok.extern.slf4j.Slf4j;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
-import org.springframework.stereotype.Service;
+import org.springframework.stereotype.Component;
 
-@Slf4j
-@Service
-@ConditionalOnProperty(prefix = "storage", name = "provider", havingValue = "minio", matchIfMissing = false)
+@Component
+@ConditionalOnProperty(name = "storage.provider", havingValue = "minio")
 public class MinioFileStorageService implements FileStorageService {
 
-    @Override
-    public String store(String bucketName, String objectKey, InputStream data, long size, String contentType) {
-        // Возврат пустой строки заставлял вызывающий код записать пустой URL и ответить
-        // 200 при отсутствующем файле. Пока реализации нет, отказ должен быть явным.
-        throw new UnsupportedOperationException(
-                "MinIO storage is not implemented; set storage.provider=local");
+    private final MinioClient client;
+
+    public MinioFileStorageService(MinioClient client) {
+        this.client = client;
     }
 
     @Override
-    public InputStream retrieve(String bucketName, String objectKey) {
-        throw new UnsupportedOperationException("MinIO retrieve not implemented yet");
+    public String store(String bucket, String objectKey, InputStream data,
+                        long size, String contentType) {
+        try {
+            client.putObject(PutObjectArgs.builder()
+                    .bucket(bucket)
+                    .object(objectKey)
+                    .stream(data, size, -1)
+                    .contentType(contentType)
+                    .build());
+        } catch (Exception e) {
+            throw new RuntimeException("Failed to store object: " + bucket + "/" + objectKey, e);
+        }
+        return getPublicUrl(bucket, objectKey);
     }
 
     @Override
-    public void delete(String bucketName, String objectKey) {
-        log.info("Deleting object {}/{} via MinIO (not implemented yet)", bucketName, objectKey);
+    public InputStream retrieve(String bucket, String objectKey) {
+        try {
+            return client.getObject(GetObjectArgs.builder()
+                    .bucket(bucket)
+                    .object(objectKey)
+                    .build());
+        } catch (Exception e) {
+            throw new RuntimeException("Failed to retrieve object: " + bucket + "/" + objectKey, e);
+        }
     }
 
     @Override
-    public String getPublicUrl(String bucketName, String objectKey) {
-        throw new UnsupportedOperationException(
-                "MinIO storage is not implemented; set storage.provider=local");
+    public void delete(String bucket, String objectKey) {
+        try {
+            client.removeObject(RemoveObjectArgs.builder()
+                    .bucket(bucket)
+                    .object(objectKey)
+                    .build());
+        } catch (Exception e) {
+            throw new RuntimeException("Failed to delete object: " + bucket + "/" + objectKey, e);
+        }
+    }
+
+    @Override
+    public String getPublicUrl(String bucket, String objectKey) {
+        // MinIO public URL: endpoint/bucket/objectKey
+        // In production this would be a CDN URL; for now return a relative path
+        // that the frontend proxy resolves
+        return "/api/proxy/files/" + bucket + "/" + objectKey;
     }
 }
