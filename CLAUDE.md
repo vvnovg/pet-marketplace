@@ -93,7 +93,7 @@ JWT properties come from `security.jwt.*` in `application.yml` or from environme
 ## Database and Migrations
 
 - PostgreSQL 16 with schema managed by Liquibase.
-- Master changelog: `src/main/resources/db/changelog/db.changelog-master.yaml` includes `changelogs/001`..`007` in order.
+- Master changelog: `src/main/resources/db/changelog/db.changelog-master.yaml` includes `changelogs/001`..`008` in order.
 - Initial schema and reference seed data (categories and breeds) are in `changelogs/001-init-schema.yaml`.
 - `hibernate.ddl-auto` is `none` — all schema changes must go through Liquibase.
 - **Liquibase contexts** select which changesets run per environment: `dev` (`application.yml`), `prod` (`application-prod.yml`), `stand` and `test` (`application-{stand,test}.yml`). The runtime profile sets its matching context.
@@ -223,9 +223,12 @@ created job), `GET /admin/imports/{jobId}` and `GET /admin/imports` — all cove
 `AnimalImportScheduler` polls the import bucket on `import.scheduler.*` (`enabled`,
 `poll-interval-ms`, `bucket`, `prefix`). It injects `MinioClient` directly, so it is also
 conditional on `storage.provider=minio` and is simply absent in every profile that defaults
-to `local`. **It does not move or delete a file after importing it**, so any file left under
-the prefix is re-imported on every poll — drain the prefix externally, or fix this, before
-pointing a deployment at `minio`.
+to `local`. The import leaves the source object where it is, so every poll lists it again:
+what makes a file "new" is the *absence of an import job for that bucket+key*
+(`alreadyPickedUp`, backed by the index in `changelogs/008`). Without that guard each poll
+would re-insert every listing in the file. The index is deliberately not unique, so the
+admin endpoint can still re-import the same key on purpose — deleting the job row is what
+re-arms the scheduler for it.
 
 Tests: `AnimalImportIntegrationTest` builds a 100 000-row workbook in memory (5% with format
 errors, 3% naming an unregistered owner), imports it through the real service against the

@@ -1,0 +1,19 @@
+databaseChangeLog:
+  - logicalFilePath: db/changelog/changelogs/008-animal-import-jobs-source-index.yaml
+
+  - changeSet:
+      id: 008-create-index-animal-import-jobs-source
+      author: liquibase
+      comment: >-
+        AnimalImportScheduler asks "is there already a job for this object?" for every file in
+        the bucket on every poll. Deliberately not unique: re-importing the same key stays
+        possible through the admin endpoint.
+      changes:
+        - createIndex:
+            tableName: animal_import_jobs
+            indexName: idx_animal_import_jobs_source
+            columns:
+              - column:
+                  name: source_bucket
+              - column:
+                  name: source_key

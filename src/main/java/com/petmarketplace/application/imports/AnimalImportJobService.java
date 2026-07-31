@@ -65,6 +65,16 @@ public class AnimalImportJobService {
                 .orElseThrow(() -> new ResourceNotFoundException("Import job not found: " + jobId));
     }
 
+    /**
+     * Заводился ли уже импорт этого объекта хранилища — независимо от того, чем он кончился.
+     * Шедулер опрашивает бакет по расписанию и должен отличать новый файл от уже разобранного;
+     * сам файл при этом остаётся на месте и служит исходником для повторного разбора вручную.
+     */
+    @Transactional(readOnly = true)
+    public boolean alreadyPickedUp(String sourceBucket, String sourceKey) {
+        return repository.existsBySourceBucketAndSourceKey(sourceBucket, sourceKey);
+    }
+
     @Transactional(readOnly = true)
     public List<AnimalImportJob> findRecent() {
         return repository.findTop20ByOrderByCreatedAtDesc();

@@ -55,6 +55,13 @@ public class AnimalImportScheduler {
                         continue;
                     }
                     String objectKey = item.objectName();
+                    // Импорт файл не удаляет и не перемещает, поэтому на следующем опросе он
+                    // окажется в листинге снова. Признак «уже разобран» — заведённая на него
+                    // задача; без этой проверки каждый опрос плодил бы дубли объявлений.
+                    if (jobService.alreadyPickedUp(bucket, objectKey)) {
+                        log.debug("Skipping already imported file: {}/{}", bucket, objectKey);
+                        continue;
+                    }
                     log.info("Found new import file: {}/{}", bucket, objectKey);
                     AnimalImportJob job = jobService.create(bucket, objectKey);
                     importService.importAnimals(job.getId(), bucket, objectKey);
