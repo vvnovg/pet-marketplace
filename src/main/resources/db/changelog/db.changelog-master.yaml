@@ -17,3 +17,6 @@ databaseChangeLog:
   - include:
       file: changelogs/006-seed-demo-data.yaml
       relativeToChangelogFile: true
+  - include:
+      file: changelogs/007-animal-import-jobs.yaml
+      relativeToChangelogFile: true
