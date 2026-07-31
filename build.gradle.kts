@@ -34,6 +34,12 @@ dependencies {
     // Kafka integration (animal-info request/reply)
     implementation("org.springframework.kafka:spring-kafka")
 
+    // Excel import (streaming .xlsx → PostgreSQL)
+    implementation("org.novgorodtsev.excelimport:excel-import-spring-boot-starter:0.1.0-SNAPSHOT")
+
+    // MinIO S3-compatible storage client
+    implementation("io.minio:minio:8.5.17")
+
     // OpenAPI / Swagger
     implementation("org.springdoc:springdoc-openapi-starter-webmvc-ui:3.0.3")
 
