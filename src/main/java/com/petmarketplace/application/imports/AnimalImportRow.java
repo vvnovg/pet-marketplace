@@ -1,6 +1,6 @@
 package com.petmarketplace.application.imports;
 
-import com.petmarketplace.domain.listing.entity.ListingGender;
+import com.petmarketplace.application.imports.convert.GenderCellConverter;
 import jakarta.validation.constraints.DecimalMin;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.Min;
@@ -21,6 +21,12 @@ import org.novgorodtsev.excelimport.annotation.TargetTable;
 @Getter
 @Setter
 public class AnimalImportRow {
+
+    // Не из Excel. listings.id — NOT NULL без DEFAULT, а библиотека вставляет ровно те колонки,
+    // что есть в модели, и ключи не генерирует. Модель инстанцируется заново на каждую строку
+    // (MappingModel#newInstance), поэтому инициализатор поля даёт свой UUID каждой строке.
+    @Column("id")
+    private UUID id = UUID.randomUUID();
 
     // --- Обязательные колонки Excel ---
 
@@ -44,10 +50,12 @@ public class AnimalImportRow {
     @Min(0)
     private Integer ageMonths;
 
-    @ExcelColumn(header = "Пол")
+    // Строка, а не ListingGender: pgjdbc не выводит SQL-тип для Java-enum. Значение
+    // валидируется по ListingGender в GenderCellConverter.
+    @ExcelColumn(header = "Пол", converter = GenderCellConverter.class)
     @Column("gender")
     @NotNull
-    private ListingGender gender;
+    private String gender;
 
     @ExcelColumn(header = "Цена")
     @Column("price")

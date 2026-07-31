@@ -1,9 +1,7 @@
 package com.petmarketplace.application.imports;
 
-import com.petmarketplace.application.imports.convert.GenderCellConverter;
 import com.petmarketplace.application.imports.convert.UuidCellConverter;
 import com.petmarketplace.domain.importjob.entity.AnimalImportJob;
-import com.petmarketplace.domain.listing.entity.ListingGender;
 import com.petmarketplace.infrastructure.storage.FileStorageService;
 import java.io.FileInputStream;
 import java.io.InputStream;
@@ -55,8 +53,8 @@ public class AnimalImportService {
                     .builder(AnimalImportRow.class)
                     .dataSource(dataSource)
                     .config(config)
+                    // Пол разбирается своим конвертером, привязанным к полю в AnimalImportRow.
                     .converter(UUID.class, new UuidCellConverter())
-                    .converter(ListingGender.class, new GenderCellConverter())
                     .batchValidator(ownerValidator)
                     .build();
 
