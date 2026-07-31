@@ -91,6 +91,13 @@ security:
     access-expiration-minutes: 15
     refresh-expiration-days: 7
 
+import:
+  scheduler:
+    enabled: true
+    poll-interval-ms: 60000
+    bucket: imports
+    prefix: pending/
+
 storage:
   provider: local
   # Префикс, из которого собирается публичный URL файла. По умолчанию указывает на
