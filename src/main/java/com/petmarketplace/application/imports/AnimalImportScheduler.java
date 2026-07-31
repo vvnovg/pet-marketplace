@@ -13,6 +13,7 @@ import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 
 @Component
+@ConditionalOnProperty(name = "storage.provider", havingValue = "minio")
 @ConditionalOnProperty(name = "import.scheduler.enabled", havingValue = "true", matchIfMissing = true)
 public class AnimalImportScheduler {
 
@@ -48,17 +49,21 @@ public class AnimalImportScheduler {
                             .build());
 
             for (Result<Item> result : results) {
-                Item item = result.get();
-                if (item.isDir() || item.objectName().equals(prefix)) {
-                    continue;
+                try {
+                    Item item = result.get();
+                    if (item.isDir() || item.objectName().equals(prefix)) {
+                        continue;
+                    }
+                    String objectKey = item.objectName();
+                    log.info("Found new import file: {}/{}", bucket, objectKey);
+                    AnimalImportJob job = jobService.create(bucket, objectKey);
+                    importService.importAnimals(job.getId(), bucket, objectKey);
+                } catch (Exception e) {
+                    log.error("Error processing import file from bucket '{}'", bucket, e);
                 }
-                String objectKey = item.objectName();
-                log.info("Found new import file: {}/{}", bucket, objectKey);
-                AnimalImportJob job = jobService.create(bucket, objectKey);
-                importService.importAnimals(job.getId(), bucket, objectKey);
             }
         } catch (Exception e) {
-            log.error("Error polling import bucket", e);
+            log.error("Error listing objects in import bucket '{}'", bucket, e);
         }
     }
 }
