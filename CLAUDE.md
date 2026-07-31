@@ -53,7 +53,7 @@ The API is available at `http://localhost:8080/api/v1` and Swagger UI at `http:/
 
 The application follows a layered architecture under `src/main/java/com/petmarketplace`:
 
-- `application` — REST controllers, DTOs (Java records), MapStruct mappers and services. Organized by domain module: `auth`, `user`, `category`, `listing`, `booking`, `message`, `review`, `favorite`, `subscription`, `admin`.
+- `application` — REST controllers, DTOs (Java records), MapStruct mappers and services. Organized by domain module: `auth`, `user`, `category`, `listing`, `booking`, `message`, `review`, `favorite`, `subscription`, `admin`, `imports` (bulk Excel import, see below).
 - `domain` — JPA entities extending `BaseEntity` or `AuditEntity`, enums and Spring Data JPA repositories.
 - `infrastructure` — cross-cutting concerns: Spring Security/JWT, file storage (local or MinIO), email sending, localized name resolution, Kafka integration (animal-info request/reply, see below).
 - `config` — Spring configuration beans (cache, async, OpenAPI, JPA auditing).
@@ -93,7 +93,7 @@ JWT properties come from `security.jwt.*` in `application.yml` or from environme
 ## Database and Migrations
 
 - PostgreSQL 16 with schema managed by Liquibase.
-- Master changelog: `src/main/resources/db/changelog/db.changelog-master.yaml` includes `changelogs/001`..`006` in order.
+- Master changelog: `src/main/resources/db/changelog/db.changelog-master.yaml` includes `changelogs/001`..`007` in order.
 - Initial schema and reference seed data (categories and breeds) are in `changelogs/001-init-schema.yaml`.
 - `hibernate.ddl-auto` is `none` — all schema changes must go through Liquibase.
 - **Liquibase contexts** select which changesets run per environment: `dev` (`application.yml`), `prod` (`application-prod.yml`), `stand` and `test` (`application-{stand,test}.yml`). The runtime profile sets its matching context.
@@ -137,13 +137,19 @@ logged-in user who learns a key can read the attachment; the random UUID in the 
 only other barrier. Deliberate: tightening it needs a message lookup per request and is
 deferred to whenever the chat UI is built.
 
-`MinioFileStorageService` is NOT implemented: `store`/`getPublicUrl` throw
-`UnsupportedOperationException` rather than returning `""`. The empty-string version
-caused uploads to answer 200 while storing nothing.
+`MinioFileStorageService` is a real implementation over the MinIO Java SDK, activated by
+`storage.provider=minio` and fed the `MinioClient` bean from `config/MinioConfig`
+(`storage.minio.*`). It is not the default in any profile. Two differences from the local
+implementation to be aware of before relying on it: `getPublicUrl` hardcodes
+`/api/proxy/files/` instead of reading `storage.public-base-path`, and it does no
+path-traversal normalisation of `{bucket}/{objectKey}` — the object store has no parent
+directory to escape, but a key reaching it from a request URL is not sanitised the way
+`LocalFileStorageService` sanitises one.
 
 Buckets in use: `avatars` (`ProfileService`), `images` (`ListingService`), `messages`
-(`MessageService`). The avatar and message object keys repeat their bucket name
-(`avatars/avatars/{userId}/...`) — cosmetic, left alone deliberately.
+(`MessageService`), plus `imports` and `reports` (Excel import, see below). The avatar and
+message object keys repeat their bucket name (`avatars/avatars/{userId}/...`) — cosmetic,
+left alone deliberately.
 
 ## Kafka Integration
 
@@ -171,6 +177,61 @@ Tests: `gradle test` starts a shared `KafkaContainer` (Testcontainers, `apache/k
 stand's Kafka — the compose `kafka` service (`confluentinc/cp-kafka:7.6.1`, a different image but the
 same Kafka 3.x wire protocol) must be running first (`docker-compose up -d kafka`), or `STAND_KAFKA_*`
 env vars must point at a remote broker.
+
+## Excel Import
+
+Streaming bulk import of `.xlsx` files with animals straight into `listings`, under
+`application/imports`. It is built on the sibling `excel-import` library, wired in as a
+**source dependency**: `settings.gradle.kts` walks up from the repo root looking for a
+`projects/excel` checkout (`-PexcelImportPath=/path` overrides; the walk exists because a
+git worktree roots the build several levels deeper than the main checkout). There is no
+published artifact — without that checkout the build fails at configuration time.
+
+`AnimalImportRow` is the row model: `@ExcelColumn` for the file side, `@Column` for the DB
+side, Jakarta Validation for per-row checks. Three constraints of the library are easy to
+trip, and all three surface only when inserting against a real database — not at compile
+time — so keep them in mind if you touch the model:
+
+- **Every annotated field goes into the `INSERT`**, with the column name derived by
+  `NamingStrategy` when `@Column` is absent. A column that exists only in the file — here
+  `sellerEmail`, the lookup key — must be `@ExcelColumn(insertable = false)`, otherwise the
+  library targets a `seller_email` column that `listings` does not have and every batch fails.
+- **`listings.id` is NOT NULL with no DEFAULT** and the library generates no keys, so the
+  model carries a DB-only `@Column("id") private UUID id = UUID.randomUUID()`. The field
+  initializer is what makes each row unique: the model is instantiated once per row.
+- **Values are bound with `setObject`, and pgjdbc cannot infer a SQL type for a Java enum**
+  (`Can't infer the SQL type ...` aborts the whole run). `gender` is therefore a `String`,
+  and `GenderCellConverter` validates it against `ListingGender` — necessary, because
+  `listings.gender` is a plain VARCHAR with no CHECK constraint.
+
+`OwnerValidationBatchValidator` resolves the seller: one `findAllByEmailIn` per batch, which
+writes the resolved `sellerId` onto each row and returns a `BATCH`-kind `RowError` for every
+email with no account. Rejected rows never reach the table and are coloured red in the
+generated report.
+
+`AnimalImportService.importAnimals` is `@Async("importTaskExecutor")` — a dedicated 1–2
+thread pool in `AsyncConfig`, deliberately separate from the email pool. It streams the
+object out of `FileStorageService`, runs the importer, uploads the report to the `reports`
+bucket and updates the job row. Progress lives in `animal_import_jobs`
+(`changelogs/007-animal-import-jobs.yaml`) and is driven by `AnimalImportJobService`:
+`PENDING → IN_PROGRESS → COMPLETED | FAILED`, with row counters and the report location.
+
+`AnimalImportController` exposes `POST /admin/imports/animals` (202 Accepted, returns the
+created job), `GET /admin/imports/{jobId}` and `GET /admin/imports` — all covered by the
+`/admin/**` rule, so `ADMIN` or `MODERATOR`.
+
+`AnimalImportScheduler` polls the import bucket on `import.scheduler.*` (`enabled`,
+`poll-interval-ms`, `bucket`, `prefix`). It injects `MinioClient` directly, so it is also
+conditional on `storage.provider=minio` and is simply absent in every profile that defaults
+to `local`. **It does not move or delete a file after importing it**, so any file left under
+the prefix is re-imported on every poll — drain the prefix externally, or fix this, before
+pointing a deployment at `minio`.
+
+Tests: `AnimalImportIntegrationTest` builds a 100 000-row workbook in memory (5% with format
+errors, 3% naming an unregistered owner), imports it through the real service against the
+Testcontainers PostgreSQL, and asserts the job counters, the rows actually written and the
+report. It runs inside the normal `gradle test` suite (~20 s) and deletes its own listings
+afterwards, because the database is shared by every test class in the JVM run.
 
 ## Email and Notifications
 
