@@ -22,4 +22,16 @@ public class AsyncConfig implements AsyncConfigurer {
         executor.initialize();
         return executor;
     }
+
+    @Bean(name = "importTaskExecutor")
+    public Executor importTaskExecutor() {
+        ThreadPoolTaskExecutor executor = new ThreadPoolTaskExecutor();
+        executor.setCorePoolSize(1);
+        executor.setMaxPoolSize(2);
+        executor.setQueueCapacity(10);
+        executor.setThreadNamePrefix("import-");
+        executor.setRejectedExecutionHandler(new java.util.concurrent.ThreadPoolExecutor.CallerRunsPolicy());
+        executor.initialize();
+        return executor;
+    }
 }
