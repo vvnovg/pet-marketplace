@@ -181,11 +181,12 @@ env vars must point at a remote broker.
 ## Excel Import
 
 Streaming bulk import of `.xlsx` files with animals straight into `listings`, under
-`application/imports`. It is built on the sibling `excel-import` library, wired in as a
-**source dependency**: `settings.gradle.kts` walks up from the repo root looking for a
-`projects/excel` checkout (`-PexcelImportPath=/path` overrides; the walk exists because a
-git worktree roots the build several levels deeper than the main checkout). There is no
-published artifact — without that checkout the build fails at configuration time.
+`application/imports`. It is built on the `excel-import` library
+(`org.novgorodtsev.excelimport:excel-import-spring-boot-starter`), an ordinary Maven Central
+dependency — the source is in a separate repository, `github.com/vvnovg/excel-import`. It used
+to be wired in as a source dependency with `includeBuild` against a sibling checkout, which
+meant the build only worked on a machine that had that checkout; if you are looking for that
+arrangement, it is gone. Bump the version like any other dependency.
 
 `AnimalImportRow` is the row model: `@ExcelColumn` for the file side, `@Column` for the DB
 side, Jakarta Validation for per-row checks. Three constraints of the library are easy to

@@ -35,7 +35,7 @@ dependencies {
     implementation("org.springframework.kafka:spring-kafka")
 
     // Excel import (streaming .xlsx → PostgreSQL)
-    implementation("org.novgorodtsev.excelimport:excel-import-spring-boot-starter:0.1.0-SNAPSHOT")
+    implementation("org.novgorodtsev.excelimport:excel-import-spring-boot-starter:0.1.0")
 
     // MinIO S3-compatible storage client
     implementation("io.minio:minio:8.5.17")
