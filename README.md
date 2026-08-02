@@ -16,6 +16,7 @@ Backend REST API for a pet marketplace. Connects sellers (breeders, shelters, pr
 | API Docs | OpenAPI 3 + SpringDoc |
 | Build | Gradle (Kotlin DSL) |
 | Migrations | Liquibase |
+| Bulk import | excel-import 0.1.0 (streaming `.xlsx` → PostgreSQL) |
 | Tests | JUnit 5, Mockito, Testcontainers |
 | Containerization | Docker + Docker Compose |
 
@@ -27,7 +28,7 @@ The application follows a layered architecture:
 - `domain` — JPA entities, enums and Spring Data repositories
 - `infrastructure` — security, file storage, email notifications, Kafka integration and configuration
 
-Main modules: auth, users, listings, categories, bookings, messages, reviews, favorites, subscriptions and admin.
+Main modules: auth, users, listings, categories, bookings, messages, reviews, favorites, subscriptions, imports (bulk Excel import) and admin.
 
 ## How to Run Locally
 
