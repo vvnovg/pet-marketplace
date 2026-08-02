@@ -10,15 +10,15 @@
     <table style="border-collapse: collapse; width: 100%; max-width: 500px;">
         <tr>
             <td style="padding: 8px; border: 1px solid #ddd;"><strong>Title</strong></td>
-            <td style="padding: 8px; border: 1px solid #ddd;" th:text="${listing.title}">Title</td>
+            <td style="padding: 8px; border: 1px solid #ddd;" th:text="${listingTitle}">Title</td>
         </tr>
-        <tr th:if="${listing.price} != null">
+        <tr th:if="${listingPrice} != null">
             <td style="padding: 8px; border: 1px solid #ddd;"><strong>Price</strong></td>
-            <td style="padding: 8px; border: 1px solid #ddd;" th:text="${listing.price} + ' ' + (${listing.currency} ?: '')">Price</td>
+            <td style="padding: 8px; border: 1px solid #ddd;" th:text="${listingPrice} + ' ' + (${listingCurrency} ?: '')">Price</td>
         </tr>
-        <tr th:if="${listing.locationCity} != null">
+        <tr th:if="${listingCity} != null">
             <td style="padding: 8px; border: 1px solid #ddd;"><strong>City</strong></td>
-            <td style="padding: 8px; border: 1px solid #ddd;" th:text="${listing.locationCity}">City</td>
+            <td style="padding: 8px; border: 1px solid #ddd;" th:text="${listingCity}">City</td>
         </tr>
     </table>
     <p>
