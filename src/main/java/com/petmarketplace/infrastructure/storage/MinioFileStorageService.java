@@ -1,5 +1,7 @@
 package com.petmarketplace.infrastructure.storage;
 
+import io.minio.CopyObjectArgs;
+import io.minio.CopySource;
 import io.minio.GetObjectArgs;
 import io.minio.MinioClient;
 import io.minio.PutObjectArgs;
@@ -55,6 +57,29 @@ public class MinioFileStorageService implements FileStorageService {
                     .build());
         } catch (Exception e) {
             throw new RuntimeException("Failed to delete object: " + bucket + "/" + objectKey, e);
+        }
+    }
+
+    @Override
+    public void move(String bucket, String sourceKey, String targetKey) {
+        // Объектное хранилище не умеет переименовывать: copy + remove — единственный способ,
+        // и копирование целиком на стороне сервера, файл через приложение не течёт.
+        try {
+            client.copyObject(CopyObjectArgs.builder()
+                    .bucket(bucket)
+                    .object(targetKey)
+                    .source(CopySource.builder()
+                            .bucket(bucket)
+                            .object(sourceKey)
+                            .build())
+                    .build());
+            client.removeObject(RemoveObjectArgs.builder()
+                    .bucket(bucket)
+                    .object(sourceKey)
+                    .build());
+        } catch (Exception e) {
+            throw new RuntimeException(
+                    "Failed to move object: " + bucket + "/" + sourceKey + " to " + targetKey, e);
         }
     }
 

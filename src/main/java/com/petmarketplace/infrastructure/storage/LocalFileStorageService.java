@@ -69,6 +69,22 @@ public class LocalFileStorageService implements FileStorageService {
     }
 
     @Override
+    public void move(String bucketName, String sourceKey, String targetKey) {
+        Path source = resolve(bucketName, sourceKey);
+        Path target = resolve(bucketName, targetKey);
+        if (!Files.isRegularFile(source)) {
+            throw new ResourceNotFoundException("File not found: %s/%s".formatted(bucketName, sourceKey));
+        }
+        try {
+            Files.createDirectories(target.getParent());
+            Files.move(source, target, StandardCopyOption.REPLACE_EXISTING);
+        } catch (IOException ex) {
+            throw new BusinessException(
+                    "Failed to move object %s/%s to %s".formatted(bucketName, sourceKey, targetKey), ex);
+        }
+    }
+
+    @Override
     public String getPublicUrl(String bucketName, String objectKey) {
         // Validate and normalise: a key that cancels within the bucket ("a/../b.png")
         // must yield the URL of the file that was actually written ("b.png"), and a

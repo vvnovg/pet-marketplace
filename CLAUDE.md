@@ -221,14 +221,30 @@ created job), `GET /admin/imports/{jobId}` and `GET /admin/imports` — all cove
 `/admin/**` rule, so `ADMIN` or `MODERATOR`.
 
 `AnimalImportScheduler` polls the import bucket on `import.scheduler.*` (`enabled`,
-`poll-interval-ms`, `bucket`, `prefix`). It injects `MinioClient` directly, so it is also
-conditional on `storage.provider=minio` and is simply absent in every profile that defaults
-to `local`. The import leaves the source object where it is, so every poll lists it again:
-what makes a file "new" is the *absence of an import job for that bucket+key*
-(`alreadyPickedUp`, backed by the index in `changelogs/008`). Without that guard each poll
-would re-insert every listing in the file. The index is deliberately not unique, so the
-admin endpoint can still re-import the same key on purpose — deleting the job row is what
-re-arms the scheduler for it.
+`poll-interval-ms`, `bucket`, `prefix`, `processed-prefix`, `failed-prefix`). It injects
+`MinioClient` directly, so it is also conditional on `storage.provider=minio` and is simply
+absent in every profile that defaults to `local`.
+
+Two independent things keep a file from being imported twice, and both are needed:
+
+- **The archive.** Once the import finishes, the source object is moved out of the polled
+  prefix — into `processed/` on success, `failed/` otherwise, so a failure is visible without
+  cross-checking the job table. The name is prefixed with the job id, which ties the archived
+  file to its run and stops a re-upload of the same name from overwriting the old archive.
+  The move has to wait for the import to finish, hence `importAnimals` returning a
+  `CompletableFuture` the scheduler hangs `whenComplete` on — moving earlier would pull the
+  file out from under the reader. `FileStorageService.move` does it with the storage's own
+  primitives (`Files.move`; `copyObject` + `removeObject` on MinIO), never streaming tens of
+  megabytes through the app. A failed move is logged and swallowed: the file stays put.
+- **The job guard.** The import is asynchronous and can outlast the poll interval, so between
+  dispatch and archive the file is still listed. A file therefore counts as new only while no
+  import job exists for its bucket+key (`alreadyPickedUp`, backed by the index in
+  `changelogs/008`) — that also covers a move that failed. The index is deliberately not
+  unique, so the admin endpoint can still re-import the same key on purpose.
+
+Archiving updates the job's `source_key` to the new location, so the record points where the
+file actually is. That deliberately frees the old key: a file re-uploaded under the same name
+is a new file and gets imported again.
 
 Tests: `AnimalImportIntegrationTest` builds a 100 000-row workbook in memory (5% with format
 errors, 3% naming an unregistered owner), imports it through the real service against the

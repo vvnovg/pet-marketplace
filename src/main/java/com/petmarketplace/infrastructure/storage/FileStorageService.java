@@ -10,5 +10,11 @@ public interface FileStorageService {
 
     void delete(String bucketName, String objectKey);
 
+    /**
+     * Переносит объект внутри бакета, перезаписывая цель. Реализуется средствами самого
+     * хранилища, а не чтением в память: файлы импорта — десятки мегабайт.
+     */
+    void move(String bucketName, String sourceKey, String targetKey);
+
     String getPublicUrl(String bucketName, String objectKey);
 }

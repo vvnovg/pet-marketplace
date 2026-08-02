@@ -8,6 +8,7 @@ import java.io.InputStream;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.UUID;
+import java.util.concurrent.CompletableFuture;
 import javax.sql.DataSource;
 import org.novgorodtsev.excelimport.ExcelImporter;
 import org.novgorodtsev.excelimport.ImportConfig;
@@ -37,8 +38,14 @@ public class AnimalImportService {
         this.ownerValidator = ownerValidator;
     }
 
+    /**
+     * Возвращает future не ради результата — он всегда пустой, любая ошибка уже записана в
+     * задачу со статусом FAILED, — а чтобы вызывающий мог узнать о завершении. На этом
+     * построена уборка бакета в {@link AnimalImportScheduler}: перекладывать исходный файл
+     * можно только после того, как импорт его дочитал.
+     */
     @Async("importTaskExecutor")
-    public void importAnimals(UUID jobId, String bucket, String objectKey) {
+    public CompletableFuture<Void> importAnimals(UUID jobId, String bucket, String objectKey) {
         AnimalImportJob job = jobService.markStarted(jobId);
         log.info("Starting animal import job {}: {}/{}", jobId, bucket, objectKey);
 
@@ -85,5 +92,6 @@ public class AnimalImportService {
                 // best-effort cleanup
             }
         }
+        return CompletableFuture.completedFuture(null);
     }
 }

@@ -190,4 +190,44 @@ class LocalFileStorageServiceTest {
         assertThat(service.getPublicUrl("avatars", "a/../b.png"))
                 .isEqualTo("/api/proxy/files/avatars/b.png");
     }
+
+    @Test
+    void moveRelocatesTheFileAndCreatesMissingParents() throws Exception {
+        service.store("imports", "pending/animals.xlsx", bytes("rows"), 4, "application/vnd.ms-excel");
+
+        service.move("imports", "pending/animals.xlsx", "processed/job-animals.xlsx");
+
+        assertThat(tempDir.resolve("imports/pending/animals.xlsx")).doesNotExist();
+        Path moved = tempDir.resolve("imports/processed/job-animals.xlsx");
+        assertThat(moved).exists();
+        assertThat(Files.readString(moved)).isEqualTo("rows");
+    }
+
+    @Test
+    void moveOverwritesAnExistingTarget() throws Exception {
+        service.store("imports", "pending/a.xlsx", bytes("new"), 3, "application/vnd.ms-excel");
+        service.store("imports", "processed/a.xlsx", bytes("old"), 3, "application/vnd.ms-excel");
+
+        service.move("imports", "pending/a.xlsx", "processed/a.xlsx");
+
+        assertThat(Files.readString(tempDir.resolve("imports/processed/a.xlsx"))).isEqualTo("new");
+    }
+
+    @Test
+    void moveOfAMissingFileIsNotFound() {
+        assertThatThrownBy(() -> service.move("imports", "pending/absent.xlsx", "processed/absent.xlsx"))
+                .isInstanceOf(ResourceNotFoundException.class);
+    }
+
+    @Test
+    void moveRejectsTraversingKeys() {
+        service.store("imports", "pending/a.xlsx", bytes("x"), 1, "application/vnd.ms-excel");
+
+        assertThatThrownBy(() -> service.move("imports", "../a.xlsx", "processed/a.xlsx"))
+                .isInstanceOf(ValidationException.class);
+        assertThatThrownBy(() -> service.move("imports", "pending/a.xlsx", "../escaped.xlsx"))
+                .isInstanceOf(ValidationException.class);
+        assertThatThrownBy(() -> service.move("..", "a.xlsx", "b.xlsx"))
+                .isInstanceOf(ValidationException.class);
+    }
 }

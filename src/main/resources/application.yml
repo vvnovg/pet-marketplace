@@ -97,6 +97,9 @@ import:
     poll-interval-ms: 60000
     bucket: imports
     prefix: pending/
+    # Куда шедулер убирает разобранный файл, чтобы он не попадал в следующий опрос.
+    processed-prefix: processed/
+    failed-prefix: failed/
 
 storage:
   provider: local
